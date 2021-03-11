@@ -1,0 +1,15 @@
+{
+  "name": "calendar",
+  "version": "1.0.0",
+  "description": "calendar project",
+  "main": "index.js",
+  "repository": "https://github.com/dhouglasbn/Calendar.git",
+  "author": "Dhouglas Bandeira",
+  "license": "MIT",
+  "private": false,
+  "dependencies": {
+    "@types/express": "^4.17.11",
+    "express": "^4.17.1",
+    "typescript": "^4.2.3"
+  }
+}
