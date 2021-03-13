@@ -1,9 +1,12 @@
 import { Request, Response } from "express";
 import knex from "../database/connections";
+import { v4 as uuid } from "uuid";
 
 class UserController {
 
     async create(request: Request, response: Response) {
+        // gerando uma chave no formato uuid
+        const id = uuid();
         // coleta de dados de nome e email
         const { name, email } = request.body;
 
@@ -17,7 +20,7 @@ class UserController {
         }
 
         // inserindo os dados da requisição na minha tabela
-        await knex("users").insert({name, email})
+        await knex("users").insert({id, name, email})
 
         // retornando uma resposta de status code 200
         return response.status(200).json({ name, email });
