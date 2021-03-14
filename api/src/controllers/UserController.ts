@@ -30,12 +30,21 @@ class UserController {
         // coleta de dados da requisição
         const { name, email } = request.body;
 
+        // tentando encontrar os dados no banco de dados
         const data = await knex("users").select("*").where("email", email);
 
+        // se o email não foi encontrado o servidor retorna erro
         if(data.length < 1) {
             return response.status(404).json({"error": "this email does not exist!"})
         }
 
+        // se o email foi encontrado mas há incongruências entre banco de dados e requisição
+        // servidor retorna erro
+        if (data[0].name != name) {
+            return response.status(406).json({"error": "Wrong name"})
+        }
+
+        // retornando a tabela do usuário encontrado
         return response.json( data );
     }
 
