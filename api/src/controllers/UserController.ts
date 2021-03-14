@@ -26,6 +26,19 @@ class UserController {
         return response.status(200).json({ name, email });
     }
 
+    async logIn(request: Request, response: Response) {
+        // coleta de dados da requisição
+        const { name, email } = request.body;
+
+        const data = await knex("users").select("*").where("email", email);
+
+        if(data.length < 1) {
+            return response.status(404).json({"error": "this email does not exist!"})
+        }
+
+        return response.json( data );
+    }
+
 }
 
 export { UserController };
