@@ -12,9 +12,12 @@ export async function up(knex: Knex): Promise<void> {
         .references("id")
         .inTable("users")
 
-        table.string("name").notNullable(),
-        table.string("description").notNullable(),
-        table.string("date").notNullable()
+        table.string("title").notNullable(),
+        table.string("start_date").notNullable(),
+        table.string("finish_date").notNullable(),
+        table.string("people").nullable(),
+        table.string("location").nullable(),
+        table.string("description").nullable()
     })
 }
 
