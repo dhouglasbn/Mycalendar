@@ -12,11 +12,14 @@ const router = Router(); // usando as rotas do express
 const userController = new UserController;
 const reminderController = new ReminderController;
 const eventController = new EventController;
+const listController = new ListController; 
 
 router.post("/register", userController.create); // registrar usuário
 router.get("/login", userController.logIn); // verificar e logar conta do usuário
 
 router.post("/remindme", reminderController.create); // criar um remindme
 router.post("/create", eventController.create); // criar um evento
+
+router.get("/list", listController.index); // coletando todos os events e reminders do meu user
 
 export { router }
