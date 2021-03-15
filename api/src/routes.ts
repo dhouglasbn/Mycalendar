@@ -17,5 +17,6 @@ router.post("/register", userController.create); // registrar usuário
 router.get("/login", userController.logIn); // verificar e logar conta do usuário
 
 router.post("/remindme", reminderController.create); // criar um remindme
+router.post("/create", eventController.create); // criar um evento
 
 export { router }
