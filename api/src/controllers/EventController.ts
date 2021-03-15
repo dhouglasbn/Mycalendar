@@ -12,7 +12,6 @@ class EventController {
         const { title,
             start_date, 
             finish_date, 
-            people, 
             location, 
             description } = request.body;
         
@@ -33,7 +32,6 @@ class EventController {
             title,
             start_date: UTCStartDate,
             finish_date: UTCFinishDate,
-            people,
             location,
             description
         }
