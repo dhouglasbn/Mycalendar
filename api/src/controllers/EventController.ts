@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import moment from "moment";
 import { v4 as uuid } from "uuid";
 import knex from "../database/connections";
 
@@ -24,6 +25,20 @@ class EventController {
         // convertendo o formato da data da requisição para UTC
         const UTCStartDate = new Date(start_date).toISOString();
         const UTCFinishDate = new Date(finish_date).toISOString();
+
+        // verificar se as datas estão no momento correto
+        if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
+            return response.status(401).json({
+                "error": "this date is in the past!"
+            })
+        }
+
+        // verificar se a data de finish é posterior a data de start
+        if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
+            return response.status(401).json({
+                "error": "finish date must be after start date!"
+            })
+        }
 
         // armazenando todos os dados que vão para o banco de dados
         const data = {
