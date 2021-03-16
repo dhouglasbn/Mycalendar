@@ -15,8 +15,8 @@ describe("Users", () => {
 
     it("Should be able to create a user", async () => {
         const response = await request(app).post("/users").send({
-            name: "dhouglas",
-            email: "dhouglasbn@gmail.com"
+            name: "user_example",
+            email: "user@example.com"
         })
     })
 
