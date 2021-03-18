@@ -1,10 +1,10 @@
-import request from "supertest";
 import connection from "../database/connections";
+import request from "supertest";
 import { app } from "../app";
 import { response } from "express";
 
 describe("Users", () => {
-    beforeAll(async () => {
+    beforeEach(async () => {
         await connection.migrate.rollback();
         await connection.migrate.latest();
     });
@@ -14,7 +14,7 @@ describe("Users", () => {
     })
 
     it("Should be able to create a user", async () => {
-        const response = await request(app).post("/users").send({
+        const response = await request(app).post("/register").send({
             name: "user_example",
             email: "user@example.com"
         })
@@ -22,3 +22,5 @@ describe("Users", () => {
 
     expect(response.status).toBe(200);
 })
+
+// votlou ao normal
