@@ -1,26 +1,26 @@
-import connection from "../database/connections";
 import request from "supertest";
-import { app } from "../app";
 import { response } from "express";
+import { app } from "../app";
+import connection from "../database/connections";
 
-describe("Users", () => {
+describe("User", () => {
     beforeEach(async () => {
         await connection.migrate.rollback();
         await connection.migrate.latest();
-    });
+    })
 
     afterAll(async () => {
-        await connection.destroy();
+        await connection.destroy()
     })
 
     it("Should be able to create a user", async () => {
-        const response = await request(app).post("/register").send({
-            name: "user_example",
-            email: "user@example.com"
+        const response = await request(app)
+        .post('/register')
+        .send({
+            "name": "user example",
+            "email": "email@example.com"
         })
     })
 
     expect(response.status).toBe(200);
 })
-
-// votlou ao normal
