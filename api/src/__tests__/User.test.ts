@@ -4,14 +4,16 @@ import { app } from "../app";
 import connection from "../database/connections";
 
 describe("User", () => {
-    beforeEach(async () => {
+    beforeAll(async () => {
         await connection.migrate.rollback();
         await connection.migrate.latest();
     })
 
     afterAll(async () => {
-        await connection.destroy()
+        await connection.destroy();
     })
+
+    
 
     it("Should be able to create a user", async () => {
         const response = await request(app)
@@ -21,6 +23,5 @@ describe("User", () => {
             "email": "email@example.com"
         })
     })
-
-    expect(response.status).toBe(200);
+    expect(response.statusCode).toBe(200);
 })
