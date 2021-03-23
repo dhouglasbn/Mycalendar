@@ -9,10 +9,9 @@ describe("User", () => {
         await connection.migrate.latest();
     })
 
-    afterAll(async () => {
+    afterAll(async() => {
         await connection.destroy();
     })
-
     
 
     it("Should be able to create a user", async () => {
