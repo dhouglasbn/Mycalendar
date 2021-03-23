@@ -8,6 +8,8 @@ class EventController {
     async create(request: Request, response: Response) {
         // gerar nossa chave uuid
         const id = uuid();
+        // gerar tipo de item
+        const type = "event"
 
         // coletar nossos dados da requisição
         const { title,
@@ -44,6 +46,7 @@ class EventController {
         const data = {
             id,
             user_id,
+            type,
             title,
             start_date: UTCStartDate,
             finish_date: UTCFinishDate,

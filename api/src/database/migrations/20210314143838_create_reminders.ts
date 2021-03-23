@@ -10,6 +10,8 @@ export async function up(knex: Knex): Promise<void> {
         .references("id")
         .inTable("users"),
 
+        table.string("type").notNullable(),
+
         table.string("title").notNullable(),
         table.string("date").notNullable()
     } )

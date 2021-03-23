@@ -9,6 +9,8 @@ class ReminderController {
     async create (request: Request, response: Response) {
         // gerar minha chave uuid
         const id = uuid();
+        // gerar tipo de item
+        const type = "reminder"
 
         // coleta de dados da requisição
         const { title, date } = request.body;
@@ -35,6 +37,7 @@ class ReminderController {
         const data = {
             id,
             user_id,
+            type,
             title,
             date: UTCDate,
 

@@ -25,6 +25,20 @@ class ListController {
         // retornando meus reminders
         return response.json(data);
     }
+
+    async getOneItem(request: Request, response: Response) {
+        const { id, type } = request.params;
+
+        if(type == "reminder") {
+            const item = await knex("reminders").select("*").where("id", id);
+            return response.status(200).json({item});
+        }
+        if(type == "event") {
+            const item = await knex("events").select("*").where("id", id);
+            return response.status(200).json({item});
+        }
+
+    }
 }
 
 export { ListController }

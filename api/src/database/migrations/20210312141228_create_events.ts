@@ -12,6 +12,8 @@ export async function up(knex: Knex): Promise<void> {
         .references("id")
         .inTable("users")
 
+        table.string("type").notNullable(),
+
         table.string("title").notNullable(),
         table.string("start_date").notNullable(),
         table.string("finish_date").notNullable(),
