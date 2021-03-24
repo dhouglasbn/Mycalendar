@@ -20,14 +20,14 @@ router.get("/login", userController.logIn); // verificar e logar conta do usuár
 router.post("/remindme", reminderController.create); // criar um remindme
 router.post("/create", eventController.create); // criar um evento
 
-// router.put("/putreminder")
-// router.put("/putevent")
+router.put("/putreminder", reminderController.modify) // alterar informações de um reminder
+router.put("/putevent", eventController.modify) // alterar as informações de um event
 
 // router.delete("/delreminder")
 // router.delete("/delevent")
 
 router.get("/list", listController.index); // coletando todos os events e reminders do meu user
-router.get("/item") // coletar um unico item
+router.get("/item", listController.getOneItem) // coletar um unico item
 
 
 export { router }
