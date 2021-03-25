@@ -15,7 +15,7 @@ const eventController = new EventController;
 const listController = new ListController; 
 
 router.post("/register", userController.create); // registrar usuário
-router.get("/login", userController.logIn); // verificar e logar conta do usuário
+router.get("/login", userController.logIn); // verificar conta do usuário para login no frontend
 
 router.post("/remindme", reminderController.create); // criar um remindme
 router.post("/create", eventController.create); // criar um evento
@@ -23,8 +23,8 @@ router.post("/create", eventController.create); // criar um evento
 router.put("/putreminder", reminderController.modify) // alterar informações de um reminder
 router.put("/putevent", eventController.modify) // alterar as informações de um event
 
-// router.delete("/delreminder")
-// router.delete("/delevent")
+router.delete("/delreminder/:id", reminderController.delete) // deletar um reminder
+router.delete("/delevent/:id", eventController.delete) // deletar um event
 
 router.get("/list", listController.index); // coletando todos os events e reminders do meu user
 router.get("/item", listController.getOneItem) // coletar um unico item

@@ -3,6 +3,7 @@ import knex from "../database/connections";
 import { v4 as uuid } from "uuid";
 import "moment";
 import moment from "moment";
+import { userInfo } from "node:os";
 
 
 class ReminderController {
@@ -17,8 +18,7 @@ class ReminderController {
         const email = request.headers.email;
 
         // tentar encontrar o id do usuário do email no banco de dados
-        const user = await knex("users").select("id").where("email", email)
-        const user_id = user[0].id;
+        const user = await knex("users").select("id").where("email", email).first();
 
         // convertendo o formato da data da requisição para UTC
         const UTCDate = new Date(date).toISOString()
@@ -36,7 +36,7 @@ class ReminderController {
         // armazenando todos os dados que vão para o banco de dados
         const data = {
             id,
-            user_id,
+            user_id: user.id,
             type,
             title,
             date: UTCDate,
@@ -58,11 +58,17 @@ class ReminderController {
         const email = request.headers.email;
         const {id} = request.query;
 
-        // procurando o id do usuário logado para facilitar a busca do reminder
-        const userId = await knex("users").select("id").where("email", email);
+        // procurar o reminder no banco de dados
+        const reminder = await knex("reminders").select("id").where("id", String(id)).first();
 
-        // desestruturando o id
-        const user_id = userId[0].id;
+        // retornando erro caso o reminder não exista
+        if(!reminder) {
+            return response.status(400).json({"error": "This reminder does not exists!"})
+        }
+
+        // procurando o id do usuário logado para facilitar a busca do reminder
+        const user_id = await knex("users").select("id").where("email", email).first();
+        
 
         // convertendo o formato da data da requisição para UTC
         const UTCDate = new Date(date).toISOString()
@@ -77,7 +83,7 @@ class ReminderController {
         // atualizando os dados na database.sqlite
         try {
             await knex("reminders")
-            .where("user_id", user_id)
+            .where("user_id", user_id.id)
             .where("id", String(id))
             .update({
                 title: title,
@@ -95,6 +101,35 @@ class ReminderController {
         return response.status(200).json({
             "message": "data updated successfuly"
         })
+    }
+
+    async delete(request: Request, response: Response) {
+        // coleta de dados da requisição
+        const { id } = request.params;
+        const email = request.headers.email;
+
+        // coletando dados de id do usuário e user_id nas tabelas users e reminders
+        const user = await knex("users").where("email", email).select("id").first();
+        const user_id = await knex("reminders").where("id", id).select("user_id").first();
+
+        // verificando se a reminder pertence ao meu user
+        if(user.id != user_id.user_id) {
+            return response.status(400).json({"error": "Operation not Permitted!"})
+        }
+
+        // tentando deletar meu reminder
+        try {
+            await knex("reminders").delete("*").where("id", id);
+        } catch (error) {
+            // se por algum motivo o servidor não conseguir deletar é falha interna
+            return response.status(500).json({
+                "error": "Internal Server Error"
+            })
+        }
+
+        // retornando mensagem de sucesso
+        return response.status(200).json({"message": "reminder deleted successful!"})
+
     }
 }
 

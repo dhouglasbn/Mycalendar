@@ -11,14 +11,13 @@ class ListController {
         const email = request.headers.email;
 
         // buscando o id do meu usuário no banco de dados
-        const user = await knex("users").select("id").where("email", email);
-        const user_id = user[0].id;
+        const user = await knex("users").select("id").where("email", email).first();
 
         // coletando todos os reminders que tem o user_id do meu usuário
-        const reminders = await knex("reminders").select("*").where("user_id", user_id);
+        const reminders = await knex("reminders").select("*").where("user_id", user.id);
 
         // coletando todos os events que tem o user_id do meu usuário
-        const events = await knex("events").select("*").where("user_id", user_id);
+        const events = await knex("events").select("*").where("user_id", user.id);
 
         // atribuir minhas reminders a data
         const data = reminders;
@@ -36,17 +35,14 @@ class ListController {
         const email = request.headers.email;
 
         // coletando a id do usuário logado
-        const userId = await knex("users").select("id").where("email", email);
-        
-        // desestruturando minha id
-        const user_id = userId[0].id
+        const user_id = await knex("users").select("id").where("email", email).first();
 
 
         // procurando na tabela o reminder pelo id do user
         if(type == "reminder") {
             const item = await knex("reminders")
             .select("*")
-            .where("user_id", user_id)
+            .where("user_id", user_id.id)
             .where("id", String(id));
 
             return response.status(200).json(item);
@@ -56,7 +52,7 @@ class ListController {
         if(type == "event") {
             const item = await knex("events")
             .select("*")
-            .where("user_id", user_id)
+            .where("user_id", user_id.id)
             .where("id", String(id));
 
             return response.status(200).json(item);

@@ -21,8 +21,7 @@ class EventController {
         const email = request.headers.email;
 
         // tentando encontrar o id do usuário do email no banco de dados
-        const user = await knex("users").select("id").where("email", email);
-        const user_id = user[0].id;
+        const user_id = await knex("users").select("id").where("email", email).first();
 
         // convertendo o formato da data da requisição para UTC
         const UTCStartDate = new Date(start_date).toISOString();
@@ -45,7 +44,7 @@ class EventController {
         // armazenando todos os dados que vão para o banco de dados
         const data = {
             id,
-            user_id,
+            user_id: user_id.id,
             type,
             title,
             start_date: UTCStartDate,
@@ -72,10 +71,16 @@ class EventController {
         const email = request.headers.email;
         const {id} = request.query;
 
+        // tentar encontrar o event no banco de dados
+        const event = await knex("events").select("id").where("id", String(id)).first();
+
+        // retornar erro caso não haja event
+        if (!event) {
+            return response.status(400).json({"error": "This event does not exists!"})
+        }
+
         // procurando o id do usuário logado para facilitar a busca do reminder
-        // desestruturando o id
-        const userId = await knex("users").select("id").where("email", email);
-        const user_id = userId[0].id;
+        const user_id = await knex("users").select("id").where("email", email).first();
         
         // convertendo os formatos das datas da requisição para o formato UTC
         const UTCStartDate = new Date(start_date).toISOString();
@@ -98,7 +103,7 @@ class EventController {
         // atualizando os dados na database.sqlite
         try {
             await knex("events")
-            .where("user_id", user_id)
+            .where("user_id", user_id.id)
             .where("id", String(id))
             .update({
                 title: title,
@@ -118,6 +123,38 @@ class EventController {
         // retornando messagem de sucesso 
         return response.status(200).json({
             "message": "data updated successfuly"
+        })
+    }
+
+    async delete(request: Request, response: Response) {
+        // coleta de dados da requisição
+        const { id } = request.params;
+        const email = request.headers.email;
+
+        // coletando dados de id nas tabelas de user e events para verificação
+        const user = await knex("users").select("id").where("email", email).first();
+        const user_id = await knex("events").select("user_id").where("id", id).first();
+
+        // verificando se a event pertence ao usuário da requisição
+        if(user.id != user_id.user_id) {
+            return response.status(400).json({
+                "error": "Operation not permitted!"
+            })
+        }
+
+        // tentando deletar meu evento na tabela events
+        try {
+            await knex("events").delete("*").where("id", String(id))
+        } catch (error) {
+            // caso ocorra algum erro será problema de servidor
+            return response.status(500).json({
+                "error": "Internal Server Error!"
+            })
+        }
+        
+        // retornando mensagem de sucesso
+        return response.status(200).json({
+            "message": "Event deleted Successful!"
         })
     }
 }
