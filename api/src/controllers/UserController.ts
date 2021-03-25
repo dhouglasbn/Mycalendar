@@ -45,7 +45,7 @@ class UserController {
         }
 
         // retornando a tabela do usuário encontrado
-        return response.json( data );
+        return response.status(200).json( data );
     }
 
 }

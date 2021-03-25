@@ -47,7 +47,7 @@ class ReminderController {
         await knex("reminders").insert(data);
 
         // retornando minha data 
-        return response.json(data);
+        return response.status(200).json(data);
         
 
     }
