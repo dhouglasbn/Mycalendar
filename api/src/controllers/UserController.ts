@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import knex from "../database/connections";
 import { v4 as uuid } from "uuid";
+import { UserError } from "../errors/UserError";
 
 class UserController {
 
@@ -16,7 +17,7 @@ class UserController {
         // se não houver email ele retorna [], se houver email ele retorna um array de 1 item
         // logo se há um email meu código retorna erro
         if(emailAlreadyExists.length >= 1) {
-            return response.status(401).json({"error": "Email already exists!"})
+            throw new UserError("This user already exists!")
         }
 
         // inserindo os dados da requisição na minha tabela
@@ -41,7 +42,7 @@ class UserController {
         // se o email foi encontrado mas há incongruências entre banco de dados e requisição
         // servidor retorna erro
         if (data[0].name != name) {
-            return response.status(406).json({"error": "Wrong name"})
+            throw new UserController("Wrong name!")
         }
 
         // retornando a tabela do usuário encontrado
