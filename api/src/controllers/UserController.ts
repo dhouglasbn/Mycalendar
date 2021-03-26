@@ -42,7 +42,7 @@ class UserController {
         // se o email foi encontrado mas há incongruências entre banco de dados e requisição
         // servidor retorna erro
         if (data[0].name != name) {
-            throw new UserController("Wrong name!")
+            throw new UserError("Wrong name!")
         }
 
         // retornando a tabela do usuário encontrado
