@@ -3,7 +3,8 @@ import knex from "../database/connections";
 import { v4 as uuid } from "uuid";
 import "moment";
 import moment from "moment";
-import { userInfo } from "node:os";
+import { UserError } from "../errors/UserError";
+import { ServerError } from "../errors/ServerError";
 
 
 class ReminderController {
@@ -25,13 +26,15 @@ class ReminderController {
 
         // verificar se a data da requisição é antecessora da data atual
         if(moment(UTCDate).isBefore(new Date())) {
-            return response.status(401).json({
-                "error": "this date is in the past"
-            })
+            throw new UserError("Incorrect data")
         }
 
         // verificando se o reminder já existe
         const dateAlreadyExists = await knex("reminders").select("*").where("date", UTCDate);
+
+        if(dateAlreadyExists) {
+            throw new UserError("This reminder already exists!")
+        }
 
         // armazenando todos os dados que vão para o banco de dados
         const data = {
@@ -63,7 +66,7 @@ class ReminderController {
 
         // retornando erro caso o reminder não exista
         if(!reminder) {
-            return response.status(400).json({"error": "This reminder does not exists!"})
+            throw new UserError("This reminder does not exists!")
         }
 
         // procurando o id do usuário logado para facilitar a busca do reminder
@@ -75,9 +78,7 @@ class ReminderController {
 
         // verificando se o momento da data faz sentido
         if(moment(UTCDate).isBefore(new Date().toISOString())) {
-            return response.status(400).json({
-                "error": "this date is in the past!"
-            })
+            throw new UserError("Incorrect data")
         }
 
         // atualizando os dados na database.sqlite
@@ -91,9 +92,7 @@ class ReminderController {
         });
         } catch (error) {
             // retornando messagem de sucesso 
-            return response.status(500).json({
-                "error": "Something went wrong"
-        })
+            throw new ServerError("Internal Server Error")
         }
         
 
@@ -114,7 +113,7 @@ class ReminderController {
 
         // verificando se a reminder pertence ao meu user
         if(user.id != user_id.user_id) {
-            return response.status(400).json({"error": "Operation not Permitted!"})
+            throw new UserError("Operation not permitted!")
         }
 
         // tentando deletar meu reminder
@@ -122,9 +121,7 @@ class ReminderController {
             await knex("reminders").delete("*").where("id", id);
         } catch (error) {
             // se por algum motivo o servidor não conseguir deletar é falha interna
-            return response.status(500).json({
-                "error": "Internal Server Error"
-            })
+            throw new ServerError("Internal server error")
         }
 
         // retornando mensagem de sucesso
