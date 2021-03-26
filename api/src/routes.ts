@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { celebrate, Joi, Segments } from "celebrate";
 
 // import das classes dos controllers
 import { UserController } from "./controllers/UserController";
@@ -14,8 +15,20 @@ const reminderController = new ReminderController;
 const eventController = new EventController;
 const listController = new ListController; 
 
-router.post("/register", userController.create); // registrar usuário
-router.get("/login", userController.logIn); // verificar conta do usuário para login no frontend
+router.post("/register", celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        name: Joi.string().required(),
+        email: Joi.string().required().email()
+    })
+})
+, userController.create); // registrar usuário
+router.get("/login", celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        name: Joi.string().required(),
+        email: Joi.string().required().email()
+    })
+}),
+userController.logIn); // verificar conta do usuário para login no frontend
 
 router.post("/remindme", reminderController.create); // criar um remindme
 router.post("/create", eventController.create); // criar um evento
