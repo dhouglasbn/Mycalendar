@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import { v4 as uuid } from "uuid";
 import knex from "../database/connections";
 import moment from "moment";
+import { UserError } from "../errors/UserError";
+import { ServerError } from "../errors/ServerError";
 
 
 class EventController {
@@ -29,16 +31,12 @@ class EventController {
 
         // verificar se as datas estão no momento correto
         if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
-            return response.status(401).json({
-                "error": "this date is in the past!"
-            })
+            throw new UserError("Incorrect data")
         }
 
         // verificar se a data de finish é posterior a data de start
         if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
-            return response.status(401).json({
-                "error": "finish date must be after start date!"
-            })
+            throw new UserError("Incorrect data")
         }
 
         // armazenando todos os dados que vão para o banco de dados
@@ -76,7 +74,7 @@ class EventController {
 
         // retornar erro caso não haja event
         if (!event) {
-            return response.status(400).json({"error": "This event does not exists!"})
+            throw new UserError("This event does not exists!")
         }
 
         // procurando o id do usuário logado para facilitar a busca do reminder
@@ -88,16 +86,12 @@ class EventController {
 
         // verificar se as datas estão no momento correto
         if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
-            return response.status(401).json({
-                "error": "this date is in the past!"
-            })
+            throw new UserError("Incorrect data")
         }
 
         // verificar se a data de finish é posterior a data de start
         if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
-            return response.status(401).json({
-                "error": "finish date must be after start date!"
-            })
+            throw new UserError("Incorrect data")
         }
 
         // atualizando os dados na database.sqlite
@@ -114,9 +108,7 @@ class EventController {
         });
         } catch (error) {
             // retornando messagem de sucesso 
-            return response.status(500).json({
-                "error": "Something went wrong"
-        })
+            throw new ServerError("Internal server error")
         }
         
 
@@ -137,9 +129,7 @@ class EventController {
 
         // verificando se a event pertence ao usuário da requisição
         if(user.id != user_id.user_id) {
-            return response.status(400).json({
-                "error": "Operation not permitted!"
-            })
+            throw new UserError("Operation not permitted!")
         }
 
         // tentando deletar meu evento na tabela events
@@ -147,9 +137,7 @@ class EventController {
             await knex("events").delete("*").where("id", String(id))
         } catch (error) {
             // caso ocorra algum erro será problema de servidor
-            return response.status(500).json({
-                "error": "Internal Server Error!"
-            })
+            throw new ServerError("Internal server error")
         }
         
         // retornando mensagem de sucesso
