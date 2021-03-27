@@ -39,8 +39,22 @@ router.put("/putevent", eventController.modify) // alterar as informações de u
 router.delete("/delreminder/:id", reminderController.delete) // deletar um reminder
 router.delete("/delevent/:id", eventController.delete) // deletar um event
 
-router.get("/list", listController.index); // coletando todos os events e reminders do meu user
-router.get("/item", listController.getOneItem) // coletar um unico item
+router.get("/list", celebrate({
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown()
+})
+,listController.index); // coletando todos os events e reminders do meu user
+router.get("/item", celebrate({
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email
+    }).unknown(),
+    [Segments.QUERY]: {
+        id: Joi.string().required(),
+        type: Joi.string().required()
+    }
+})
+,listController.getOneItem) // coletar um unico item
 
 
 export { router }

@@ -4,6 +4,7 @@ import "express-async-errors";
 import "reflect-metadata";
 import { ServerError } from "./errors/ServerError";
 import { UserError } from "./errors/UserError";
+import { errors } from "celebrate";
 
 const app = express();
 
@@ -11,6 +12,7 @@ const app = express();
 
 app.use(express.json()) // para o nodejs entender o JSON
 app.use(router) // para conseguir realizar os processos com rotas
+app.use(errors()) // retornando os erros do celebrate
 
 app.use((err: Error, request: Request, response: Response, _next: NextFunction) => {
     if(err instanceof ServerError) {
@@ -24,6 +26,7 @@ app.use((err: Error, request: Request, response: Response, _next: NextFunction) 
         })
     }
 })
+
 
 
 export { app }
