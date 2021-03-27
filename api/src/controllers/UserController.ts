@@ -17,7 +17,7 @@ class UserController {
         // se não houver email ele retorna [], se houver email ele retorna um array de 1 item
         // logo se há um email meu código retorna erro
         if(emailAlreadyExists.length >= 1) {
-            throw new UserError("This user already exists!")
+            throw new UserError("Survey User does not exists!")
         }
 
         // inserindo os dados da requisição na minha tabela
@@ -36,7 +36,7 @@ class UserController {
 
         // se o email não foi encontrado o servidor retorna erro
         if(data.length < 1) {
-            return response.status(404).json({"error": "this email does not exist!"})
+            throw new UserError("This email does not exist!")
         }
 
         // se o email foi encontrado mas há incongruências entre banco de dados e requisição

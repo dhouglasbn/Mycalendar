@@ -15,18 +15,17 @@ app.use(router) // para conseguir realizar os processos com rotas
 app.use(errors()) // retornando os erros do celebrate
 
 app.use((err: Error, request: Request, response: Response, _next: NextFunction) => {
-    if(err instanceof ServerError) {
-        return response.status(err.statusCode).json({
-            message: err.message    
-        })
-    }
     if(err instanceof UserError) {
         return response.status(err.statusCode).json({
             message: err.message
         })
     }
-})
 
+    return response.status(500).json({
+        status: "Error",
+        message: `Internal server error ${err.message}`
+})
+})
 
 
 export { app }

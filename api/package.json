@@ -2,7 +2,7 @@
   "name": "mycalendar",
   "version": "1.0.0",
   "description": "calendar project",
-  "main": "index.js",
+  "main": "0",
   "repository": "https://github.com/dhouglasbn/Mycalendar.git",
   "author": "Dhouglas Bandeira",
   "license": "MIT",
@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
     "knex": "knex --knexfile knexfile.ts migrate:latest",
-    "test": "rm -rf src/database/database.test.sqlite && cross-env  NODE_ENV=test  jest -i"
+    "test": "rm -rf src/database/database.test.sqlite && NODE_ENV=test  jest -i"
   },
   "dependencies": {
     "celebrate": "^14.0.0",

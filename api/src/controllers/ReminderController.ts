@@ -30,9 +30,12 @@ class ReminderController {
         }
 
         // verificando se o reminder já existe
-        const dateAlreadyExists = await knex("reminders").select("*").where("date", UTCDate);
+        const dateAlreadyExists = await knex("reminders")
+        .select("*")
+        .where("user_id", user.id)
+        .where("date", UTCDate);
 
-        if(dateAlreadyExists) {
+        if(dateAlreadyExists.length >= 1) {
             throw new UserError("This reminder already exists!")
         }
 
