@@ -20,11 +20,11 @@ app.use((err: Error, request: Request, response: Response, _next: NextFunction) 
             message: err.message
         })
     }
-
-    return response.status(500).json({
-        status: "Error",
-        message: `Internal server error ${err.message}`
-})
+    if(err instanceof ServerError) {
+        return response.status(err.statusCode).json({
+            message: err.message
+        })
+    }
 })
 
 
