@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import knex from "../database/connections";
 import { v4 as uuid } from "uuid";
 import { UserError } from "../errors/UserError";
-import { ServerError } from "../errors/ServerError";
 
 class UserController {
 
@@ -22,7 +21,7 @@ class UserController {
                 throw new UserError("This email already exists!")
             }
         } catch (err) {
-            return response.json({"error": err})
+            return response.status(err.statusCode).json({"message":`${err.message}`});
         }
 
         // inserindo os dados da requisição na minha tabela
@@ -37,17 +36,20 @@ class UserController {
         const { name, email } = request.body;
 
         // tentando encontrar os dados no banco de dados
-        const data = await knex("users").select("*").where("email", email);
+        const data = await knex("users").select("*").where("email", email).first();
 
-        // se o email não foi encontrado o servidor retorna erro
-        if(data.length < 1) {
-            throw new UserError("This email does not exist!")
-        }
-
-        // se o email foi encontrado mas há incongruências entre banco de dados e requisição
-        // servidor retorna erro
-        if (data[0].name != name) {
-            throw new UserError("Wrong name!")
+        try {
+            // se o email foi encontrado mas há incongruências entre banco de dados e requisição
+            // servidor retorna erro
+            if(!data) {
+                throw new UserError("This email does not exist!")
+            }
+            // se o email não foi encontrado o servidor retorna erro
+            if (data.name != name) {
+                throw new UserError("Wrong name!")
+            }
+        } catch (err) {
+            return response.status(err.statusCode).json({"message": `${err.message}`});
         }
 
         // retornando a tabela do usuário encontrado
