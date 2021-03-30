@@ -29,14 +29,18 @@ class EventController {
         const UTCStartDate = new Date(start_date).toISOString();
         const UTCFinishDate = new Date(finish_date).toISOString();
 
-        // verificar se as datas estão no momento correto
-        if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
-            throw new UserError("Incorrect data")
+        try {
+            // verificar se as datas estão no momento correto
+            if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
+                throw new UserError("Incorrect data")
         }
 
-        // verificar se a data de finish é posterior a data de start
-        if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
-            throw new UserError("Incorrect data")
+            // verificar se a data de finish é posterior a data de start
+            if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
+                throw new UserError("Incorrect data")
+            }
+        } catch (err) {
+            return response.status(err.statusCode).json({"message": `${err.message}`})
         }
 
         // armazenando todos os dados que vão para o banco de dados
@@ -72,11 +76,6 @@ class EventController {
         // tentar encontrar o event no banco de dados
         const event = await knex("events").select("id").where("id", String(id)).first();
 
-        // retornar erro caso não haja event
-        if (!event) {
-            throw new UserError("This event does not exists!")
-        }
-
         // procurando o id do usuário logado para facilitar a busca do reminder
         const user_id = await knex("users").select("id").where("email", email).first();
         
@@ -84,32 +83,40 @@ class EventController {
         const UTCStartDate = new Date(start_date).toISOString();
         const UTCFinishDate = new Date(finish_date).toISOString();
 
-        // verificar se as datas estão no momento correto
-        if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
-            throw new UserError("Incorrect data")
-        }
 
-        // verificar se a data de finish é posterior a data de start
-        if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
-            throw new UserError("Incorrect data")
+        
+        try {
+            // retornar erro caso não haja event
+            if (!event) {
+                throw new UserError("This event does not exists!")
+            }
+
+        
+            // verificar se as datas estão no momento correto
+            if(moment(UTCStartDate).isBefore(new Date()) || moment(UTCFinishDate).isBefore(new Date())) {
+                throw new UserError("Incorrect data")
+            }
+
+            // verificar se a data de finish é posterior a data de start
+            if(moment(UTCFinishDate).isBefore(moment(UTCStartDate))) {
+                throw new UserError("Incorrect data")
+            }
+
+        } catch (err) {
+            return response.status(err.statusCode).json({"message": `${err.message}`})
         }
 
         // atualizando os dados na database.sqlite
-        try {
-            await knex("events")
-            .where("user_id", user_id.id)
-            .where("id", String(id))
-            .update({
-                title: title,
-                start_date: UTCStartDate,
-                finish_date: UTCFinishDate,
-                location: location,
-                description: description
+        await knex("events")
+        .where("user_id", user_id.id)
+        .where("id", String(id))
+        .update({
+            title: title,
+            start_date: UTCStartDate,
+            finish_date: UTCFinishDate,
+            location: location,
+            description: description
         });
-        } catch (error) {
-            // retornando messagem de sucesso 
-            throw new ServerError("Internal server error")
-        }
         
 
         // retornando messagem de sucesso 
@@ -127,18 +134,22 @@ class EventController {
         const user = await knex("users").select("id").where("email", email).first();
         const user_id = await knex("events").select("user_id").where("id", id).first();
 
-        // verificando se a event pertence ao usuário da requisição
-        if(user.id != user_id.user_id) {
-            throw new UserError("Operation not permitted!")
+        try {
+            // verificando se há event
+            if(!user_id) {
+                throw new UserError("This event does not exists!")
+            }
+
+            // verificando se a event pertence ao usuário da requisição
+            if(user.id != user_id.user_id) {
+                throw new UserError("Operation not permitted!")
+            }
+        } catch (err) {
+            return response.status(err.statusCode).json({"message": `${err.message}`})
         }
 
         // tentando deletar meu evento na tabela events
-        try {
-            await knex("events").delete("*").where("id", String(id))
-        } catch (error) {
-            // caso ocorra algum erro será problema de servidor
-            throw new ServerError("Internal server error")
-        }
+        await knex("events").delete("*").where("id", String(id))
         
         // retornando mensagem de sucesso
         return response.status(200).json({

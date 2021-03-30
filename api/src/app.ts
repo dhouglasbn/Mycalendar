@@ -2,7 +2,6 @@ import express, { NextFunction, Request, Response } from "express";
 import { router } from "./routes";
 import "express-async-errors";
 import "reflect-metadata";
-import { ServerError } from "./errors/ServerError";
 import { UserError } from "./errors/UserError";
 import { errors } from "celebrate";
 
@@ -20,11 +19,10 @@ app.use((err: Error, request: Request, response: Response, _next: NextFunction) 
             message: err.message
         })
     }
-    if(err instanceof ServerError) {
-        return response.status(err.statusCode).json({
-            message: err.message
-        })
-    }
+    
+    return response.status(500).json({
+        "message": `Internal Server Error ${err.message}`
+    })
 })
 
 

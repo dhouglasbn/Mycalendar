@@ -6,6 +6,7 @@ import { UserController } from "./controllers/UserController";
 import { ReminderController } from "./controllers/ReminderController";
 import { EventController } from "./controllers/EventController";
 import { ListController } from "./controllers/ListController";
+import { string } from "@hapi/joi";
 
 const router = Router(); // usando as rotas do express
 
@@ -30,8 +31,29 @@ router.get("/login", celebrate({
 }),
 userController.logIn); // verificar conta do usuário para login no frontend
 
-router.post("/remindme", reminderController.create); // criar um remindme
-router.post("/create", eventController.create); // criar um evento
+router.post("/remindme", celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        title: Joi.string().required(),
+        date: Joi.string().required().isoDate()
+    }),
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown()
+})
+,reminderController.create); // criar um remindme
+router.post("/create", celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        title: Joi.string().required(),
+        start_date: Joi.string().required().isoDate(),
+        finish_date: Joi.string().required().isoDate(),
+        location: Joi.string().optional().empty().alphanum(),
+        description: Joi.string().optional().alphanum()
+    }),
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown()
+})
+, eventController.create); // criar um evento
 
 router.put("/putreminder", reminderController.modify) // alterar informações de um reminder
 router.put("/putevent", eventController.modify) // alterar as informações de um event

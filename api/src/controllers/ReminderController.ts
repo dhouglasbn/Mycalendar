@@ -122,8 +122,12 @@ class ReminderController {
         const user = await knex("users").where("email", email).select("id").first();
         const user_id = await knex("reminders").where("id", id).select("user_id").first();
 
-        
+        console.log(user, user_id)
         try {
+            if(!user_id) {
+                throw new UserError("This reminder does not exists!")
+            }
+
             // verificando se a reminder pertence ao meu user
             if(user.id != user_id.user_id) {
                 throw new UserError("Operation not permitted!")
