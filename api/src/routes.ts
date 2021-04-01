@@ -88,8 +88,25 @@ router.put("/putevent", celebrate({
 eventController.modify) // alterar as informações de um event
 
 
-router.delete("/delreminder/:id", reminderController.delete) // deletar um reminder
-router.delete("/delevent/:id", eventController.delete) // deletar um event
+router.delete("/delreminder/:id", celebrate({
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown(),
+    [Segments.PARAMS]: {
+        id: Joi.string().required().uuid()
+    }
+}),
+reminderController.delete) // deletar um reminder
+router.delete("/delevent/:id", celebrate({
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown(),
+    [Segments.PARAMS]: {
+        id: Joi.string().required().uuid()
+    }
+})
+,eventController.delete) // deletar um event
+
 
 router.get("/list", celebrate({
     [Segments.HEADERS]: Joi.object({
