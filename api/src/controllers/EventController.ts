@@ -3,7 +3,6 @@ import { v4 as uuid } from "uuid";
 import knex from "../database/connections";
 import moment from "moment";
 import { UserError } from "../errors/UserError";
-import { ServerError } from "../errors/ServerError";
 
 
 class EventController {

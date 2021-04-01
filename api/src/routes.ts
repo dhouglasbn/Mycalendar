@@ -6,7 +6,6 @@ import { UserController } from "./controllers/UserController";
 import { ReminderController } from "./controllers/ReminderController";
 import { EventController } from "./controllers/EventController";
 import { ListController } from "./controllers/ListController";
-import { string } from "@hapi/joi";
 
 const router = Router(); // usando as rotas do express
 
@@ -46,12 +45,12 @@ router.post("/create", celebrate({
         title: Joi.string().required(),
         start_date: Joi.string().required().isoDate(),
         finish_date: Joi.string().required().isoDate(),
-        location: Joi.string().optional().empty().alphanum(),
-        description: Joi.string().optional().alphanum()
+        location : Joi.allow(),
+        description: Joi.allow()
     }),
     [Segments.HEADERS]: Joi.object({
         email: Joi.string().required().email()
-    }).unknown()
+    }).unknown() 
 })
 , eventController.create); // criar um evento
 
@@ -69,10 +68,10 @@ router.get("/list", celebrate({
 ,listController.index); // coletando todos os events e reminders do meu user
 router.get("/item", celebrate({
     [Segments.HEADERS]: Joi.object({
-        email: Joi.string().required().email
+        email: Joi.string().required().email()
     }).unknown(),
     [Segments.QUERY]: {
-        id: Joi.string().required(),
+        id: Joi.string().required().uuid(),
         type: Joi.string().required()
     }
 })

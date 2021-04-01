@@ -1,5 +1,6 @@
 import { Request, Response} from "express";
 import knex from "../database/connections";
+import { UserError } from "../errors/UserError";
 
 interface ItemResponse {
     id: String;
@@ -45,6 +46,14 @@ class ListController {
             .where("user_id", user_id.id)
             .where("id", String(id));
 
+            try {
+                if(item.length == 0) {
+                    throw new UserError(`${type} not found`, 404)
+                }
+            } catch (err) {
+                return response.status(err.statusCode).json({"message": `${err.message}`})
+            }
+
             return response.status(200).json(item);
         };
 
@@ -54,6 +63,14 @@ class ListController {
             .select("*")
             .where("user_id", user_id.id)
             .where("id", String(id));
+
+        try {
+            if(item.length == 0) {
+                throw new UserError(`${type} not found`, 404)
+            }
+        } catch (err) {
+            return response.status(err.statusCode).json({"message": `${err.message}`})
+        }
 
             return response.status(200).json(item);
         }
