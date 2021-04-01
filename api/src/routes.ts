@@ -15,6 +15,7 @@ const reminderController = new ReminderController;
 const eventController = new EventController;
 const listController = new ListController; 
 
+
 router.post("/register", celebrate({
     [Segments.BODY]: Joi.object().keys({
         name: Joi.string().required(),
@@ -29,6 +30,7 @@ router.get("/login", celebrate({
     })
 }),
 userController.logIn); // verificar conta do usuário para login no frontend
+
 
 router.post("/remindme", celebrate({
     [Segments.BODY]: Joi.object().keys({
@@ -54,6 +56,7 @@ router.post("/create", celebrate({
 })
 , eventController.create); // criar um evento
 
+
 router.put("/putreminder", celebrate({
     [Segments.BODY]: Joi.object().keys({
         title: Joi.string().required(),
@@ -67,7 +70,23 @@ router.put("/putreminder", celebrate({
     }
 }), 
 reminderController.modify) // alterar informações de um reminder
-router.put("/putevent", eventController.modify) // alterar as informações de um event
+router.put("/putevent", celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        title: Joi.string().required(),
+        start_date: Joi.string().required().isoDate(),
+        finish_date: Joi.string().required().isoDate(),
+        location : Joi.allow(),
+        description: Joi.allow()
+    }),
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown(),
+    [Segments.QUERY]: {
+        id: Joi.string().required().uuid()
+    }
+}),
+eventController.modify) // alterar as informações de um event
+
 
 router.delete("/delreminder/:id", reminderController.delete) // deletar um reminder
 router.delete("/delevent/:id", eventController.delete) // deletar um event

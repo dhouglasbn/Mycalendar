@@ -4,7 +4,6 @@ import { v4 as uuid } from "uuid";
 import "moment";
 import moment from "moment";
 import { UserError } from "../errors/UserError";
-import { ServerError } from "../errors/ServerError";
 
 
 class ReminderController {
@@ -71,10 +70,7 @@ class ReminderController {
         const {id} = request.query;
 
         // procurar o reminder no banco de dados
-        const reminder = await knex("reminders").where("id", String(id)).select("id").first();
-
-        // procurar user_id em reminders
-        const user_id = await knex("reminders").where("id", String(id)).select("user_id").first();
+        const reminder = await knex("reminders").where("id", String(id)).select("id").first()
 
         // procurando o id do usuário logado para facilitar a busca do reminder
         const user = await knex("users").select("id").where("email", email).first();
