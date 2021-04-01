@@ -54,7 +54,19 @@ router.post("/create", celebrate({
 })
 , eventController.create); // criar um evento
 
-router.put("/putreminder", reminderController.modify) // alterar informações de um reminder
+router.put("/putreminder", celebrate({
+    [Segments.BODY]: Joi.object().keys({
+        title: Joi.string().required(),
+        date: Joi.string().required().isoDate()
+    }),
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown(),
+    [Segments.QUERY]: {
+        id: Joi.string().required().uuid()
+    }
+}), 
+reminderController.modify) // alterar informações de um reminder
 router.put("/putevent", eventController.modify) // alterar as informações de um event
 
 router.delete("/delreminder/:id", reminderController.delete) // deletar um reminder

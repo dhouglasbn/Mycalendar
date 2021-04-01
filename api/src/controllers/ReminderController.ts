@@ -82,7 +82,6 @@ class ReminderController {
         // convertendo o formato da data da requisição para UTC
         const UTCDate = new Date(date).toISOString()
 
-        console.log([reminder, user_id, user, String(id)])
         try {
             // retornando erro caso o reminder não exista
             if(!reminder) {
