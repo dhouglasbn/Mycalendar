@@ -26,54 +26,33 @@ class ListController {
         // inserindo cada item de events ao final de data
         events.map(item => {data.push(item)});
 
-        // retornando meus reminders
+        // retornando meus dados
         return response.json(data);
     }
 
-    async getOneItem(request: Request, response: Response) {
+    async ListDayItems(request: Request, response: Response) {
         // coleta de dados da requisição
-        const { id , type } = request.query;
+        const { date } = request.query;
         const email = request.headers.email;
 
-        // coletando a id do usuário logado
-        const user_id = await knex("users").select("id").where("email", email).first();
+        // buscar o id do usuário da requisição
+        const user = await knex("users").where("email", email).select("id").first()
 
+        // buscar no meu banco de dados todos os reminders que fazem parte daquele dia
+        const reminders = await knex("reminders").where("user_id", user.id).where("date", String(date)).select("*");
 
-        // procurando na tabela o reminder pelo id do user
-        if(type == "reminder") {
-            const item = await knex("reminders")
-            .select("*")
-            .where("user_id", user_id.id)
-            .where("id", String(id));
+        // buscar no meu banco de dados todos os events que fazem parte daquele dia
+        const events = await knex("events").where("user_id", String(user.id)).where("start_date", String(date)).select("*");
 
-            try {
-                if(item.length == 0) {
-                    throw new UserError(`${type} not found`, 404)
-                }
-            } catch (err) {
-                return response.status(err.statusCode).json({"message": `${err.message}`})
-            }
+        // atribuir minhas reminders a data
+        const data = reminders;
 
-            return response.status(200).json(item);
-        };
+        // inserindo cada item de events ao final de data
 
-        // procurando na tabela o event pelo id do user
-        if(type == "event") {
-            const item = await knex("events")
-            .select("*")
-            .where("user_id", user_id.id)
-            .where("id", String(id));
+        events.map(item => {data.push(item)});
 
-        try {
-            if(item.length == 0) {
-                throw new UserError(`${type} not found`, 404)
-            }
-        } catch (err) {
-            return response.status(err.statusCode).json({"message": `${err.message}`})
-        }
-
-            return response.status(200).json(item);
-        }
+        // retornando meus dados
+        return response.json(data);
 
     }
 }

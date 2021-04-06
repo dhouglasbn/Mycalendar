@@ -119,11 +119,10 @@ router.get("/item", celebrate({
         email: Joi.string().required().email()
     }).unknown(),
     [Segments.QUERY]: {
-        id: Joi.string().required().uuid(),
-        type: Joi.string().required()
+        date: Joi.date().required()
     }
 })
-,listController.getOneItem) // coletar um unico item
+,listController.ListDayItems) // coletar um unico item
 
 
 export { router }
