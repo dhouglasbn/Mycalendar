@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import knex from "../database/connections";
 import { v4 as uuid } from "uuid";
-import "moment";
 import moment from "moment";
 import { UserError } from "../errors/UserError";
 
@@ -28,7 +27,6 @@ class ReminderController {
         .select("*")
         .where("user_id", user.id)
         .where("date", UTCDate);
-
 
         try {
             // verificar se a data da requisição é antecessora da data atual

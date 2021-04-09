@@ -114,15 +114,26 @@ router.get("/list", celebrate({
     }).unknown()
 })
 ,listController.index); // coletando todos os events e reminders do meu user
+router.get("/day-items", celebrate({
+    [Segments.HEADERS]: Joi.object({
+        email: Joi.string().required().email()
+    }).unknown(),
+    [Segments.QUERY]: {
+        date: Joi.string().required()
+    }
+})
+,listController.ListDayItems) // coletar todos os itens daquele dia
+
 router.get("/item", celebrate({
     [Segments.HEADERS]: Joi.object({
         email: Joi.string().required().email()
     }).unknown(),
     [Segments.QUERY]: {
-        date: Joi.date().required()
+        id: Joi.string().uuid().required(),
+        type: Joi.string().required()
     }
 })
-,listController.ListDayItems) // coletar um unico item
+,listController.getOneItem) // coletar um unico item
 
 
 export { router }
