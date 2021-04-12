@@ -39,15 +39,12 @@ class ListController {
         // buscar no meu banco de dados todos os reminders que fazem parte daquele dia
         const reminders = await knex("reminders")
         .where("user_id", user.id)
-        .groupBy("*")
-        .orderBy("date", "asc")
-        .having("date", "=", String(date))
+        .where("date", "like", String(date + "%"))
         .select("*");
 
         // buscar no meu banco de dados todos os events que começam parte daquele dia
         const events = await knex("events")
         .where("user_id", String(user.id))
-        .where("start_date", String(date))
         .select("*");
 
         console.log([date, email, user, reminders, events]);
