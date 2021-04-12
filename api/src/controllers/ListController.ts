@@ -45,7 +45,8 @@ class ListController {
         // buscar no meu banco de dados todos os events que começam parte daquele dia
         const events = await knex("events")
         .where("user_id", String(user.id))
-        .where("start_date", "like", String(date + "%"))
+        .where("start_date", "<=", new Date(String(date)).toISOString())
+        .andWhere("finish_date", ">=", new Date(String(date)).toISOString())
         .select("*");
 
         // atribuir minhas reminders a data
