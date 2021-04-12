@@ -45,23 +45,15 @@ class ListController {
         // buscar no meu banco de dados todos os events que começam parte daquele dia
         const events = await knex("events")
         .where("user_id", String(user.id))
+        .where("start_date", "like", String(date + "%"))
         .select("*");
-
-        console.log([date, email, user, reminders, events]);
 
         // atribuir minhas reminders a data
         const data = reminders;
 
         // inserindo cada item de events ao final de data
 
-        events.map(item => {
-            const startDate = item.start_date.substring(0, 10)
-            const finishDate = item.finish_date.substring(0, 10)
-            if(moment(startDate).isBefore(finishDate)) {
-                data.push(item)
-                data.push(item)
-            }
-            data.push(item)});
+        events.map(item => {data.push(item)});
 
         // retornando meus dados
         return response.json(data);
