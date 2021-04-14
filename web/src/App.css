@@ -1,0 +1,27 @@
+/*
+  The project has text with heights: 80, 60, 45, 35
+  so we has                          h1, h2, h3, p
+*/
+
+:root {
+  --main-color: rgba(255, 255, 255, 0.9);
+  --blue-color: #00A4ED;
+  --orange-color: #FF5D2F;
+  --green-color: #00BD6D;
+  --content-color: #14181C
+}
+
+
+h1 {
+  font-size: 80;
+  font-weight: 600;
+  font-family: Nunito;
+  color: var(--main-color);
+  }
+
+h2 {
+  font-size: 60;
+  font-weight: 600;
+  font-family: Nunito;
+  color: var(--main-color);
+}
