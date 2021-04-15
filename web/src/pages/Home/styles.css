@@ -1,11 +1,28 @@
+:root {
+    --main-color: rgba(255, 255, 255, 0.9);
+    --blue-color: #00A4ED;
+    --orange-color: #FF5D2F;
+    --green-color: #00BD6D;
+    --content-color: #14181C
+  }
+
 div#headers {
     width: 100%;
     height: 350px;
+    display: flex;
+    justify-content: center;
 }
 
 div#logo {
     width: 570px;
     height: 100%;
-    box-sizing: content-box;
-    
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+img {
+    border-color: var(--main-color);
 }
