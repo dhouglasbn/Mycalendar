@@ -11,6 +11,14 @@
   --content-color: #14181C
 }
 
+body {
+  margin: 0%;
+  height: 100vh;
+}
+
+div#root {
+  height: 100vh;
+}
 
 h1 {
   font-size: 80px;

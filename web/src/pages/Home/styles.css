@@ -4,13 +4,18 @@
     --orange-color: #FF5D2F;
     --green-color: #00BD6D;
     --content-color: #14181C
-  }
+}
 
-div#headers {
+header {
     width: 100%;
     height: 350px;
     display: flex;
     justify-content: center;
+}
+
+main {
+    width: 100%;
+    height: 100vh;
 }
 
 div#logo {
@@ -19,12 +24,15 @@ div#logo {
     align-items: flex-end;
     display: flex;
     justify-content: space-between;
+    line-height: 42px;
 }
 
 h1 {
     text-align: center;
     justify-content: center;
     margin: 0%;
+    width: 440px;
+    height: 100px;
 }
 
 iframe {
@@ -32,4 +40,5 @@ iframe {
     height: 130px;
     filter: invert(90%);
     border: none;
+    padding-bottom: 42px;
 }
