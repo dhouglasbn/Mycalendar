@@ -13,7 +13,17 @@ const Home = () => {
                 </div>
             </header>
             <main>
-                
+                <form action="" method="get">
+                    <div id="form-header">
+                        <button id="unselected" type="button">Sign Up</button>
+                        <button id="selected" type="button">Sign In</button>
+                    </div>
+                    <div id="form-content">
+                        <input type="text" name="nameN" id="nameI"/>
+                        <input type="text" name="emailN" id="emailI"/>
+                        <button id="form-content-button" type="submit">Sign In</button>
+                    </div>
+                </form>
             </main>
         </div>
     )

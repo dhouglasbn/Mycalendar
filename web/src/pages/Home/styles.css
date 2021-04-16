@@ -1,9 +1,10 @@
 :root {
     --main-color: rgba(255, 255, 255, 0.9);
+    --text-color: rgba(0, 0, 0, 0.8);
     --blue-color: #00A4ED;
     --orange-color: #FF5D2F;
     --green-color: #00BD6D;
-    --content-color: #14181C
+    --content-color: #14181C;
 }
 
 header {
@@ -16,6 +17,9 @@ header {
 main {
     width: 100%;
     height: 100vh;
+    align-items: flex-start;
+    justify-content: center;
+    display: flex;
 }
 
 div#logo {
@@ -33,6 +37,7 @@ h1 {
     margin: 0%;
     width: 440px;
     height: 100px;
+    margin-bottom: 22px;
 }
 
 iframe {
@@ -40,5 +45,78 @@ iframe {
     height: 130px;
     filter: invert(90%);
     border: none;
-    padding-bottom: 42px;
+    margin-bottom: 42px;
+}
+
+form {
+    width: 570px;
+    height: 430px;
+    background-color: var(--content-color);
+    border-radius: 20px;
+    display: inline-block;
+}
+
+div#form-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#unselected {
+    width: 284px;
+    height: 94px;
+    color: rgba(255, 255, 255, 0.4);
+    background-color: #080a0b;
+    border-top-left-radius: 20px;
+    border: none;
+    font-size: 60px;
+    text-align: center;
+    padding: 0%;
+}
+
+#selected {
+    height: 94px;
+    width: 284px;
+    color: var(--main-color);
+    background: none;
+    border: none;
+    font-size: 60px;
+    text-align: center;
+    padding: 0%;
+}
+
+div#form-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#nameI, #emailI, #form-content-button {
+    margin-bottom: 28px;
+    width: 430px;
+    height: 75px;
+    border-radius: 20px;
+    border: none;
+}
+
+#nameI, #emailI {
+    background-color: var(--main-color);
+    color: var(--text-color);
+    font-size: 25px;
+    font-family: Nunito;
+    font-weight: 600;
+    text-align: left;
+    padding: 0%;
+    padding-left: 10px;
+}
+
+#form-content-button {
+    background-color: var(--blue-color);
+    color: var(--main-color);
+    font-size: 60px;
+    font-family: Nunito;
+    font-weight: 600;
+    text-align: center;
+    margin: 0%;
+    padding: 0%;
 }
