@@ -7,7 +7,7 @@ const Home = () => {
     return (
         <div id="headers">
             <div id="logo">
-                <img src={logo} alt="MyCalendar"/>
+                <iframe title="logo" src={logo} />
                 <h1>MyCalendar</h1>
             </div>
         </div>

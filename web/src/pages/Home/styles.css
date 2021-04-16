@@ -16,13 +16,20 @@ div#headers {
 div#logo {
     width: 570px;
     height: 100%;
-    align-items: center;
+    align-items: flex-end;
+    display: flex;
+    justify-content: space-between;
 }
 
 h1 {
     text-align: center;
+    justify-content: center;
+    margin: 0%;
 }
 
-img {
-    border-color: var(--main-color);
+iframe {
+    width: 130px;
+    height: 130px;
+    filter: invert(90%);
+    border: none;
 }
