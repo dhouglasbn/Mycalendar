@@ -34,3 +34,15 @@ h2 {
   font-family: Nunito;
   color: var(--main-color);
 }
+
+h3 {
+  font-size: 45px;
+  font-weight: 500;
+  font-family: Roboto;
+  color: var(--main-color);
+}
+
+iframe.logo {
+  filter: invert(90%);
+  border: none;
+}

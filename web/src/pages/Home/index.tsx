@@ -8,7 +8,7 @@ const Home = () => {
         <div id="body">
             <header >
                 <div id="logo">
-                    <iframe title="logo" src={logo} />
+                    <iframe className="logo" title="logo" src={logo} />
                     <h1>MyCalendar</h1>
                 </div>
             </header>
