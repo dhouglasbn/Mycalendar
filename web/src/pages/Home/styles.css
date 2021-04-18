@@ -7,16 +7,16 @@
     --content-color: #14181C;
 }
 
-header {
+#home-page header {
     width: 100vw;
     height: 350px;
     display: flex;
     justify-content: center;
 }
 
-main {
+#home-page main {
     width: 100vw;
-    height: 60vh;
+    height: 100%;
     align-items: flex-start;
     justify-content: center;
     display: flex;

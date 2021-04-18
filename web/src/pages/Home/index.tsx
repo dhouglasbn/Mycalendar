@@ -5,7 +5,7 @@ import logo from "../../Assets/calendar.svg";
 
 const Home = () => {
     return (
-        <div id="body">
+        <div id="home-page">
             <header >
                 <div id="logo">
                     <iframe className="logo" title="logo" src={logo} />

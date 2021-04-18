@@ -6,7 +6,7 @@ import plus from "../../Assets/plus.svg";
 
 const Calendar = () => {
     return (
-        <div id="body">
+        <div id="calendar-page">
 
 
             <header>
