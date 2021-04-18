@@ -10,9 +10,12 @@ const Calendar = () => {
 
 
             <header>
-                <iframe className="logo" src={logo} title="MyCalendar"></iframe>
-                <h3>Bom dia Dhouglas!</h3>
-                <span>
+                <div id="salute">
+                    <iframe className="logo" src={logo} title="MyCalendar"></iframe>
+                    <h3>Bom dia Dhouglas!</h3>
+                </div>
+                
+                <span id="plus-button">
                     <iframe id="plus" src={plus} title="AddItem"></iframe>
                 </span>
                 
@@ -20,7 +23,14 @@ const Calendar = () => {
 
 
             <main>
+                <div id="calendar">
+                    <header id="calendar-header">
 
+                    </header>
+                    <main id="calendar-body">
+                        
+                    </main>
+                </div>
             </main>
         </div>
     )
