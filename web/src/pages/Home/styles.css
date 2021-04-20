@@ -22,7 +22,7 @@
     display: flex;
 }
 
-iframe.logo {
+div#logo iframe.logo {
     width: 130px;
     height: 130px;
     margin-bottom: 42px;
