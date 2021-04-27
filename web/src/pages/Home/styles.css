@@ -94,7 +94,8 @@ div#form-content {
     width: 430px;
     height: 75px;
     border-radius: 20px;
-    border: none;
+    border: 0;
+    outline: none;
 }
 
 #nameI, #emailI {
