@@ -1,9 +1,26 @@
+:root {
+    --main-color: rgba(255, 255, 255, 0.9);
+    --text-color: rgba(0, 0, 0, 0.8);
+    --blue-color: #00A4ED;
+    --orange-color: #FF5D2F;
+    --green-color: #00BD6D;
+    --content-color: #14181C
+  }
+
 #calendar-page header {
     width: 100vw;
     height: 184px;
     display: flex;
     align-items: flex-end;
     justify-content: space-between;
+}
+
+#calendar-page main {
+    width: 100vw;
+    height: 86vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 div#salute {
@@ -34,4 +51,12 @@ div#salute iframe.logo {
     height: 100px;
     width: 100px;
     margin-bottom: 25px;
+}
+
+#calendar {
+    position: relative;
+    top: 36px;
+    width: 1166px;
+    height: 706px;
+    background-color: var(--content-color);
 }
