@@ -60,19 +60,26 @@ div#form-header {
     justify-content: space-between;
 }
 
-#unselected {
+#signUp {
+    border-top-left-radius: 20px;
+}
+
+#signIn {
+    border-top-right-radius: 20px;
+}
+
+.unselected {
     width: 284px;
     height: 94px;
     color: rgba(255, 255, 255, 0.4);
     background-color: #080a0b;
-    border-top-left-radius: 20px;
     border: none;
     font-size: 60px;
     text-align: center;
     padding: 0%;
 }
 
-#selected {
+.selected {
     height: 94px;
     width: 284px;
     color: var(--main-color);
