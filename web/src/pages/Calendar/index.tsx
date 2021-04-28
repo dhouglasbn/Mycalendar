@@ -3,6 +3,8 @@ import "./styles.css";
 import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
 
+import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
+
 
 const Calendar = () => {
     return (
@@ -25,7 +27,13 @@ const Calendar = () => {
             <main>
                 <div id="calendar">
                     <header id="calendar-header">
-
+                        <span>
+                            <MdKeyboardArrowLeft  className="arrow"/>
+                        </span>
+                        <h3>April</h3>
+                        <span >
+                            <MdKeyboardArrowRight className="arrow"/>
+                        </span>
                     </header>
                     <main id="calendar-body">
                         

@@ -17,7 +17,8 @@
 
 #calendar-page main {
     width: 100vw;
-    height: 86vh;
+    height: 80vh;
+    padding-top: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -41,10 +42,10 @@ iframe#plus {
     border: none;
 }
 
-h3 {
+div#salute h3 {
     padding-left: 56px;
     align-items: center;
-    line-height: 54px;
+    line-height: 30px;
 }
 
 div#salute iframe.logo {
@@ -55,8 +56,29 @@ div#salute iframe.logo {
 
 #calendar {
     position: relative;
-    top: 36px;
     width: 1166px;
     height: 706px;
     background-color: var(--content-color);
+    border-radius: 10px;
+}
+
+header#calendar-header {
+    position: relative;
+    height: 92px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+span {
+    box-sizing: content-box;
+}
+
+.arrow {
+    box-sizing: border-box;
+    color: var(--main-color);
+    width: 60px;
+    height: 90px;
+    margin: 0 20px 0 20px;
 }
