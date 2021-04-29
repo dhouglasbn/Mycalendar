@@ -35,7 +35,7 @@ const Home = () => {
                         <button 
                         id="signUp" 
                         className={signValue === "0" ? "unselected" : "selected"} 
-                        onClick={() => {handleSelectedButton("signUp")}} 
+                        onClick={() => {handleSelectedButton("signUp")}}
                         type="button">Sign Up
                         </button>
 
@@ -48,8 +48,20 @@ const Home = () => {
 
                     </div>
                     <div id="form-content">
-                        <input type="text" name="nameN" id="nameI"/>
-                        <input type="text" name="emailN" id="emailI"/>
+                        <input 
+                        type="text" 
+                        name="nameN" 
+                        id="nameI"
+                        placeholder="Name"
+                        />
+
+                        <input 
+                        type="text" 
+                        name="emailN" 
+                        id="emailI"
+                        placeholder="Email"
+                        />
+
                         <button id="form-content-button" type="submit">{signValue === "0"? "Sign In" : "Sign Up"}</button>
                     </div>
                 </form>
