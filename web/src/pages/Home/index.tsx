@@ -54,7 +54,7 @@ const Home = () => {
 
                 history.push("/calendar")
             } catch (error) {
-                alert(`falha ao registrar: ${error}`)
+                alert(`falha ao realizar login, tente novamente`)
             }
         }
         // registrar
@@ -62,20 +62,20 @@ const Home = () => {
             // coleta de dados da requisição
             const { name, email } = formData;
 
-            // criando objeto para inserir dados
-            const data = new FormData();
-
-            // inserindo dados
-            data.append("name", name);
-            data.append("email", email);
+            // criando objeto com meus dados para requisição
+            const data = {
+                name,
+                email
+            }
 
             try {
+                console.log(data)
                 await api.post("register", data)
                 alert("email registrado com sucesso!");
 
                 setSignValue("0");
             } catch (error) {
-                alert(`Falha ao registrar: ${error}`);
+                alert(`Falha ao registrar, tente novamente`);
             }
         }
     }
