@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from "express";
+import cors from "cors"
 import { router } from "./routes";
 import "express-async-errors";
 import "reflect-metadata";
@@ -9,6 +10,7 @@ const app = express();
 
 // instanceof testa se há uma constructor em um objeto
 
+app.use(cors())
 app.use(express.json()) // para o nodejs entender o JSON
 app.use(router) // para conseguir realizar os processos com rotas
 app.use(errors()) // retornando os erros do celebrate

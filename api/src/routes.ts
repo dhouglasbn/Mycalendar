@@ -24,10 +24,10 @@ router.post("/register", celebrate({
 })
 , userController.create); // registrar usuário
 router.get("/login", celebrate({
-    [Segments.BODY]: Joi.object().keys({
+    [Segments.QUERY]: {
         name: Joi.string().required(),
         email: Joi.string().required().email()
-    })
+    }
 }),
 userController.logIn); // verificar conta do usuário para login no frontend
 

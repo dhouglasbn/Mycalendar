@@ -33,10 +33,10 @@ class UserController {
 
     async logIn(request: Request, response: Response) {
         // coleta de dados da requisição
-        const { name, email } = request.body;
+        const { name, email } = request.query;
 
         // tentando encontrar os dados no banco de dados
-        const data = await knex("users").select("*").where("email", email).first();
+        const data = await knex("users").select("*").where("email", String(email)).first();
 
         try {
             // se o email foi encontrado mas há incongruências entre banco de dados e requisição
