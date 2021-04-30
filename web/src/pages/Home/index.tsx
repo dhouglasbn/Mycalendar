@@ -47,10 +47,7 @@ const Home = () => {
             const { name, email } = formData;
 
             try {
-                await api.get("login", {data: {
-                    "name": name,
-                    "email": email
-                }})
+                await api.get("login", {params: formData})
 
                 localStorage.setItem("name", name);
                 localStorage.setItem("email", email)
