@@ -62,10 +62,12 @@ div#form-header {
 
 #signUp {
     border-top-left-radius: 20px;
+    cursor: pointer;    
 }
 
 #signIn {
     border-top-right-radius: 20px;
+    cursor: pointer;
 }
 
 .unselected {

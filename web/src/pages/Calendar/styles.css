@@ -81,4 +81,5 @@ span {
     width: 60px;
     height: 90px;
     margin: 0 20px 0 20px;
+    cursor: pointer;
 }

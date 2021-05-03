@@ -7,6 +7,9 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 
 const Calendar = () => {
+    const name = localStorage.getItem("name");
+    // const email = localStorage.getItem("email");
+
     return (
         <div id="calendar-page">
 
@@ -14,7 +17,7 @@ const Calendar = () => {
             <header>
                 <div id="salute">
                     <iframe className="logo" src={logo} title="MyCalendar"></iframe>
-                    <h3>Bom dia Dhouglas!</h3>
+                    <h3>Bom dia {name}!</h3>
                 </div>
                 
                 <span id="plus-button">
