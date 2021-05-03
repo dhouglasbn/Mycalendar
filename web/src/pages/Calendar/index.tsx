@@ -47,11 +47,15 @@ const Calendar = () => {
                 <div id="calendar">
                     <header id="calendar-header">
                         <span>
-                            <MdKeyboardArrowLeft  className="arrow"/>
+                            <MdKeyboardArrowLeft  
+                            onClick={() => {setMonth(month - 1)}}
+                            className="arrow"/>
                         </span>
                         <h3>{monthNames[month]}</h3>
                         <span >
-                            <MdKeyboardArrowRight className="arrow"/>
+                            <MdKeyboardArrowRight
+                            onClick={() => {setMonth(month + 1)}} 
+                            className="arrow"/>
                         </span>
                     </header>
                     <main id="calendar-body">
