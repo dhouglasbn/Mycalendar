@@ -1,14 +1,30 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles.css";
 import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
+import moment from "moment";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 
 const Calendar = () => {
+    const [month, setMonth] = useState(moment(new Date()).month())
     const name = localStorage.getItem("name");
+    
     // const email = localStorage.getItem("email");
+    const monthNames = ["january",
+                        "february",
+                        "march",
+                        "april",
+                        "may",
+                        "june",
+                        "july",
+                        "august",
+                        "september",
+                        "october",
+                        "november",
+                        "december"
+                    ]
 
     return (
         <div id="calendar-page">
@@ -33,7 +49,7 @@ const Calendar = () => {
                         <span>
                             <MdKeyboardArrowLeft  className="arrow"/>
                         </span>
-                        <h3>April</h3>
+                        <h3>{monthNames[month]}</h3>
                         <span >
                             <MdKeyboardArrowRight className="arrow"/>
                         </span>
