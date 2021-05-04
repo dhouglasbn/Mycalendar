@@ -29,17 +29,30 @@ const Calendar = () => {
                         "december"
                     ];
 
+    useEffect(() => {
+        const days = <div id="days"></div>
+        for (let i = 0; i <= 35; i++) {
+            days.props.children += <a><h3></h3></a>
+            
+        }
+    }, [])
+
     function handleSubtractMonth() {
-        if(month == 0) {
+        if(month === 0) {
             setYear(year - 1);
             setMonth(11)
+        } else {
+            setMonth(month - 1);
         }
+        
     }
     
     function handleAddMonth() {
-        if(month == 11) {
+        if(month === 11) {
             setYear(year + 1);
             setMonth(0);
+        } else {
+            setMonth(month + 1);
         }
     }
 
@@ -76,6 +89,15 @@ const Calendar = () => {
                         </span>
                     </header>
                     <main id="calendar-body">
+                        <div id="weekdays">
+                            <h3>S</h3>
+                            <h3>M</h3>
+                            <h3>T</h3>
+                            <h3>W</h3>
+                            <h3>T</h3>
+                            <h3>F</h3>
+                            <h3>S</h3>
+                        </div>
                         
                     </main>
                 </div>
