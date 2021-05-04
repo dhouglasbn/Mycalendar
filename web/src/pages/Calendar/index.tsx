@@ -8,10 +8,13 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 
 const Calendar = () => {
+    const [year, setYear] =useState(moment(new Date()).year())
     const [month, setMonth] = useState(moment(new Date()).month())
     const name = localStorage.getItem("name");
     
     // const email = localStorage.getItem("email");
+
+    // array para mostrar o nome dos meses
     const monthNames = ["january",
                         "february",
                         "march",
@@ -24,7 +27,21 @@ const Calendar = () => {
                         "october",
                         "november",
                         "december"
-                    ]
+                    ];
+
+    function handleSubtractMonth() {
+        if(month == 0) {
+            setYear(year - 1);
+            setMonth(11)
+        }
+    }
+    
+    function handleAddMonth() {
+        if(month == 11) {
+            setYear(year + 1);
+            setMonth(0);
+        }
+    }
 
     return (
         <div id="calendar-page">
@@ -48,13 +65,13 @@ const Calendar = () => {
                     <header id="calendar-header">
                         <span>
                             <MdKeyboardArrowLeft  
-                            onClick={() => {setMonth(month - 1)}}
+                            onClick={() => {handleSubtractMonth()}}
                             className="arrow"/>
                         </span>
-                        <h3>{monthNames[month]}</h3>
+                        <h3>{monthNames[month]}, {year}</h3>
                         <span >
                             <MdKeyboardArrowRight
-                            onClick={() => {setMonth(month + 1)}} 
+                            onClick={() => {handleAddMonth()}} 
                             className="arrow"/>
                         </span>
                     </header>
