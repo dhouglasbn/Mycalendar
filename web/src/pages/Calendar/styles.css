@@ -88,17 +88,28 @@ main#calendar-body {
     position: relative;
     display: grid;
     width: 100%;
+    max-width: 100%;
     height: 600px;
+    align-items: flex-start;
+    overflow-wrap: break-word;
     
 }
 
 div#weekdays {
+    position: relative;
     display: flex;
+    width: 1082px;
+    height: 70px;
     flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
 }
 
 div#weekdays h3 {
+    width: 100px;
+    height: 70px;
     font-family: Nunito;
     font-size: 600;
     color: rgba(255, 255, 255, 0.65);
+    text-align: center;
 }

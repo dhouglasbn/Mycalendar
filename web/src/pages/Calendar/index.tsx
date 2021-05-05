@@ -9,8 +9,9 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 
 const Calendar = () => {
-    const [year, setYear] =useState(moment(new Date()).year())
+    const [year, setYear] = useState(moment(new Date()).year())
     const [month, setMonth] = useState(moment(new Date()).month())
+    const [message, setMessage] = useState("") 
     const name = localStorage.getItem("name");
     
     // const email = localStorage.getItem("email");
@@ -29,15 +30,31 @@ const Calendar = () => {
                         "november",
                         "december"
                     ];
+                    
+    useEffect(() => {
+        const messages = ["Bom dia", "Boa tarde", "Boa noite"]
+        const hour = moment(new Date()).hour()
+
+        if (hour >= 6 && hour <= 12) {
+            setMessage(messages[0]);
+        } else if (hour >= 12 && hour <= 18) {
+            setMessage(messages[1]);
+        } else {
+            setMessage(messages[2]);
+        }
+    }, [])
 
     useEffect(() => {
-        const days = <div id="days"></div>
-        ReactDOM.render(days, document.getElementById("calendar-body"))
-        for (let i = 0; i <= 35; i++) {
-            ReactDOM.render( 
-                <h3></h3>, document.getElementById("days"))
+        const numbers = []
+        for (let index = 0; index <= 35; index++) {
+            numbers.push(index)
             
         }
+        
+        numbers.map(number => {
+            ReactDOM.render(<h3 id={String(number)}></h3>, document.getElementById("days"))
+            return 1;
+        })
 
         
     }, [])
@@ -68,7 +85,7 @@ const Calendar = () => {
             <header>
                 <div id="salute">
                     <iframe className="logo" src={logo} title="MyCalendar"></iframe>
-                    <h3>Bom dia {name}!</h3>
+                    <h3>{message} {name}!</h3>
                 </div>
                 
                 <span id="plus-button">
@@ -102,6 +119,9 @@ const Calendar = () => {
                             <h3>T</h3>
                             <h3>F</h3>
                             <h3>S</h3>
+                        </div>
+                        <div id="days">
+
                         </div>
                         
                     </main>
