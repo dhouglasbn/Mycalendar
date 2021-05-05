@@ -12,6 +12,7 @@ const Calendar = () => {
     const [year, setYear] = useState(moment(new Date()).year())
     const [month, setMonth] = useState(moment(new Date()).month())
     const [message, setMessage] = useState("") 
+
     const name = localStorage.getItem("name");
     
     // const email = localStorage.getItem("email");
@@ -30,7 +31,8 @@ const Calendar = () => {
                         "november",
                         "december"
                     ];
-                    
+    
+    // alterando a mensagem de saudação de acordo com o horário do dia
     useEffect(() => {
         const messages = ["Bom dia", "Boa tarde", "Boa noite"]
         const hour = moment(new Date()).hour()
@@ -45,16 +47,23 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
+
+        /**
+         * const numbers = [1, 2, 3, 4, 5];
+         * const listItems = numbers.map((number) =>
+         * <li>{number}</li>
+         * ); 
+         */
+
         const numbers = []
-        for (let index = 0; index <= 35; index++) {
+        for (let index = 0; index < 35; index++) {
             numbers.push(index)
-            
         }
         
-        numbers.map(number => {
-            ReactDOM.render(<h3 id={String(number)}></h3>, document.getElementById("days"))
-            return 1;
-        })
+        const days = numbers.map(number => <h3 key={number} id={String(number)}>{number}</h3>)
+        
+
+        ReactDOM.render( days, document.getElementById("days"));
 
         
     }, [])
