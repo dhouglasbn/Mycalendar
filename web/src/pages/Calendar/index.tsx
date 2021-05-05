@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import ReactDOM from "react-dom";
 import "./styles.css";
 import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
@@ -31,10 +32,14 @@ const Calendar = () => {
 
     useEffect(() => {
         const days = <div id="days"></div>
+        ReactDOM.render(days, document.getElementById("calendar-body"))
         for (let i = 0; i <= 35; i++) {
-            days.props.children += <a><h3></h3></a>
+            ReactDOM.render( 
+                <h3></h3>, document.getElementById("days"))
             
         }
+
+        
     }, [])
 
     function handleSubtractMonth() {
