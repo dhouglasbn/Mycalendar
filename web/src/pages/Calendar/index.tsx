@@ -53,6 +53,10 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
+        buildCalendar()
+    }, []);
+
+    function buildCalendar() {
 
         // posição para inserir a weekday pra cada componente
         let weekDay = 0;
@@ -76,26 +80,26 @@ const Calendar = () => {
         const days = numbers.map(number => {
             if ( weekDay === 7 ) {
                 weekDay = 0;
-                weekDay++
+                weekDay++;
                 return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>;
             } else {
-                weekDay++
-                return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>
+                weekDay++;
+                return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>;
             }
         });
         
         // renderizando days na div "days"
         ReactDOM.render( days, document.getElementById("days"));
-
-        
-    }, [])
+    };
 
     function handleSubtractMonth() {
         if(month === 0) {
             setYear(year - 1);
             setMonth(11)
+            buildCalendar()
         } else {
             setMonth(month - 1);
+            buildCalendar()
         }
         
     }
@@ -107,8 +111,10 @@ const Calendar = () => {
         if(month === 11) {
             setYear(year + 1);
             setMonth(0);
+            buildCalendar()
         } else {
             setMonth(month + 1);
+            buildCalendar()
         }
     }
 
