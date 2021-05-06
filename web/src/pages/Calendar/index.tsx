@@ -37,7 +37,7 @@ const Calendar = () => {
     // alterando a mensagem de saudação de acordo com o horário do dia
     useEffect(() => {
         // cada mensagem a ser mostrada
-        const messages = ["Bom dia", "Boa tarde", "Boa noite"]
+        const messages = ["Good morning", "Good afternoon", "Good evening"]
 
         // consultando a hora do computador assim que a página carregar
         const hour = moment(new Date()).hour()
@@ -62,6 +62,7 @@ const Calendar = () => {
             numbers.push(index)
         }
         
+        console.log(moment(month).calendar())
         // percorrendo cada item da array e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => <h3 key={number} id={String(number)}>{number}</h3>)
         
