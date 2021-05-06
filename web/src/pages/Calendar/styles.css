@@ -122,7 +122,7 @@ div#days {
     height: 100%;
     width: 1082px;
     display: grid;
-    grid-template-columns: 5fr 5fr 5fr 5fr 5fr 5fr 5fr;
+    grid-template-columns: 6fr 6fr 6fr 6fr 6fr 6fr 6fr;
     align-items: center;
     justify-content: center;
 }

@@ -56,13 +56,18 @@ const Calendar = () => {
 
         // criando uma array numbers
         const numbers = [];
+        const monthDays = []
         
-        // inserindo 35 números dessa array
-        for (let index = 0; index < 35; index++) {
+        // inserindo 42 números dessa array
+        for (let index = 0; index < 42; index++) {
+            if (index <= moment(month).daysInMonth() && index > 0 ) {
+                let day = `${year}-${month + 1}-${index}`;
+                monthDays.push(new Date(day).toISOString());
+            }
             numbers.push(index)
         }
-        
-        console.log(moment(month).calendar())
+        console.log(monthDays)
+        monthDays.map(day => console.log(moment(day).weekday()))
         // percorrendo cada item da array e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => <h3 key={number} id={String(number)}>{number}</h3>)
         
