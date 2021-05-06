@@ -54,9 +54,14 @@ const Calendar = () => {
 
     useEffect(() => {
 
+        // posição para inserir a weekday pra cada componente
+        let weekDay = 0;
+
         // criando uma array numbers
         const numbers = [];
-        const monthDays = []
+
+        // criando uma array para os 31 dias do mês em formato ISO
+        const monthDays = [];
         
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
@@ -66,10 +71,18 @@ const Calendar = () => {
             }
             numbers.push(index)
         }
-        console.log(monthDays)
-        monthDays.map(day => console.log(moment(day).weekday()))
+
         // percorrendo cada item da array e atribuindo uma h3 para cada item a days
-        const days = numbers.map(number => <h3 key={number} id={String(number)}>{number}</h3>)
+        const days = numbers.map(number => {
+            if ( weekDay === 7 ) {
+                weekDay = 0;
+                weekDay++
+                return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>;
+            } else {
+                weekDay++
+                return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>
+            }
+        });
         
         // renderizando days na div "days"
         ReactDOM.render( days, document.getElementById("days"));
