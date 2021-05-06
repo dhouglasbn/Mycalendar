@@ -9,8 +9,10 @@ import logo from "../../Assets/calendar.svg";
 
 const Home = () => {
 
-    const history = useHistory()
+    // criando função para fzr a responsividade de páginas
+    const history = useHistory();
 
+    // states que serão usadas no código
     const [signValue, setSignValue] = useState("0");
     const [formData, setFormData] = useState({
         name: "",
@@ -18,26 +20,40 @@ const Home = () => {
     })
 
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
+        // quando algo for acrescentado no input ....
+        // atribuir nome e valor do target do event
+        // ex: nome do name e valor que é o name q foi digitado, mas serve para o email tbm
         const { name, value } = event.target;
+
+        // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
         setFormData({...formData, [name]: value})
         // pus name em array pra referenciar o name da target do event
     }
 
     function handleSelectedButton(buttonId: string) {
+        // pegando a button do html(seja signIn ou signUp)
         const button = document.getElementById(buttonId)
         
+        // se o botão já estiver selecionado nada vai acontecer
         if(button?.className === "selected") {
             return;
         }
+        
+        // lembrando q signValue começa como 0 ao carregar a página
         if(signValue === "1") {
+            // depois de signValue ser alterado para um eu posso alterar para 0 novamente
             setSignValue("0")
             return;
         }  
+
+        // o propósito é alterar para 1
         setSignValue("1");
         return;
     }
 
     async function handleSubmit(event: FormEvent) {
+
+        // tornar esse evento cancelável para evitar problemas
         event.preventDefault()
 
         // iniciar sessão
@@ -47,13 +63,17 @@ const Home = () => {
             const { name, email } = formData;
 
             try {
+                // fazendo requisição get no backend e passando os dados
                 await api.get("login", {params: formData})
 
+                // setando em localStorage name e email que vão ser utilizados na /calendar
                 localStorage.setItem("name", name);
                 localStorage.setItem("email", email)
 
+                // empurrando o usuário para calendar
                 history.push("/calendar")
             } catch (error) {
+                // se por algum motivo ocorrer um erro, o usuário será alertado
                 alert(`falha ao realizar login, tente novamente`)
             }
         }
@@ -69,12 +89,17 @@ const Home = () => {
             }
 
             try {
-                console.log(data)
+                // fazendo requisição post no backend passando a minha data
                 await api.post("register", data)
+
+                // alertando o sucesso da requisição
                 alert("email registrado com sucesso!");
 
+                // retornando o usuário para o login
                 setSignValue("0");
             } catch (error) {
+
+                // se ocorrer algum erro, o usuário é alertado
                 alert(`Falha ao registrar, tente novamente`);
             }
         }
