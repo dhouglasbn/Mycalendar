@@ -37,7 +37,7 @@ const Calendar = () => {
     // alterando a mensagem de saudação de acordo com o horário do dia
     useEffect(() => {
         // cada mensagem a ser mostrada
-        const messages = ["Good morning", "Good afternoon", "Good evening"]
+        const messages = ["Good morning", "Good afternoon", "Good evening"];
 
         // consultando a hora do computador assim que a página carregar
         const hour = moment(new Date()).hour()
@@ -54,7 +54,7 @@ const Calendar = () => {
 
     useEffect(() => {
         buildCalendar()
-    }, []);
+    });
 
     function buildCalendar() {
 
@@ -93,6 +93,9 @@ const Calendar = () => {
     };
 
     function handleSubtractMonth() {
+
+        // uma simples lógica para aumentar o mês ao clicar na seta
+        // se estivermos em dezembro o programa passa para o ano posterior e vai para janeiro
         if(month === 0) {
             setYear(year - 1);
             setMonth(11)
