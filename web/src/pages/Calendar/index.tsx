@@ -12,7 +12,7 @@ const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
     const [year, setYear] = useState(moment(new Date()).year())
     const [month, setMonth] = useState(moment(new Date()).month())
-    const [message, setMessage] = useState("") 
+    const [message, setMessage] = useState<String>("") 
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -36,20 +36,24 @@ const Calendar = () => {
     
     // alterando a mensagem de saudação de acordo com o horário do dia
     useEffect(() => {
-        // cada mensagem a ser mostrada
-        const messages = ["Good morning", "Good afternoon", "Good evening"];
 
-        // consultando a hora do computador assim que a página carregar
-        const hour = moment(new Date()).hour()
+        function isInTurn(array: Array<Number>, message: String) {
+            // consultando a hora do computador assim que a página carregar
+            const hour = moment(new Date()).hour();
+            
+            if (array.find(number => number === hour)) {
+                setMessage(message);
+            } else {
+                return;
+            }
+        };
 
-        // lógica básica de programação para setar a mensagem
-        if (hour >= 6 && hour <= 12) {
-            setMessage(messages[0]);
-        } else if (hour >= 12 && hour <= 18) {
-            setMessage(messages[1]);
-        } else {
-            setMessage(messages[2]);
-        }
+        isInTurn([5,6,7,8,9,10,11], "Good morning");
+        isInTurn([12,13,14,15,16,17], "Good afternoon");
+        isInTurn([18,19,20,21,22,23,0,1,2,3,4], "Good evening");        
+
+        
+        
     }, [])
 
     useEffect(() => {
@@ -66,27 +70,47 @@ const Calendar = () => {
 
         // criando uma array para os 31 dias do mês em formato ISO
         const monthDays = [];
+
+        function weekCounter() {
+            
+
+            // atribuindo um dia da semana pra cada componete
+            if ( weekDay === 7 ) {
+
+                // quando o dia chega em 7 o contador volta a 0
+                weekDay = 0;
+                weekDay++;
+                return weekDay;
+            } else {
+                weekDay++;
+                return weekDay;
+            }
+        } 
         
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
+
+            // enquanto index for maior q 0 e menor q o numero de dias do mes
             if (index <= moment(month).daysInMonth() && index > 0 ) {
+
+                // atribuir a day uma ISO com ano-mes-dia
                 let day = `${year}-${month + 1}-${index}`;
+
+                // adicionando esse dia a monthDays
                 monthDays.push(new Date(day).toISOString());
             }
+            // adicionando um numero a numbers
             numbers.push(index)
         }
+        
+        console.log(monthDays)
 
         // percorrendo cada item da array e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
-            if ( weekDay === 7 ) {
-                weekDay = 0;
-                weekDay++;
-                return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>;
-            } else {
-                weekDay++;
-                return <h3 key={number} className={String(weekDay - 1)}>{number}</h3>;
+            const weekDay = weekCounter()
+                return <h3 key={number} className={String(weekDay - 1)}>Day</h3>;
             }
-        });
+        );
         
         // renderizando days na div "days"
         ReactDOM.render( days, document.getElementById("days"));
