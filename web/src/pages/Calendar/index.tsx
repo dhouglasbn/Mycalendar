@@ -80,10 +80,10 @@ const Calendar = () => {
                 // quando o dia chega em 7 o contador volta a 0
                 weekDay = 0;
                 weekDay++;
-                return weekDay;
+                return weekDay - 1;
             } else {
                 weekDay++;
-                return weekDay;
+                return weekDay - 1;
             }
         } 
         
@@ -102,13 +102,11 @@ const Calendar = () => {
             // adicionando um numero a numbers
             numbers.push(index)
         }
-        
-        console.log(monthDays)
 
-        // percorrendo cada item da array e atribuindo uma h3 para cada item a days
+        // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
             const weekDay = weekCounter()
-                return <h3 key={number} className={String(weekDay - 1)}>Day</h3>;
+                return <h3 key={number} className={String(weekDay)}>Day</h3>;
             }
         );
         
