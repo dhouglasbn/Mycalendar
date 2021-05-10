@@ -69,7 +69,13 @@ const Calendar = () => {
         const numbers = [];
 
         // criando uma array para os 31 dias do mês em formato ISO
-        const monthDays = [];
+        const currentMonthDays = [];
+
+        // criando uma array para os dias remanescentes do mes passado
+        const previousMonthDays = [];
+
+        // criando uma array para os dias remanescentes do mes que vem
+        const nextMonthDays = [];
 
         function weekCounter() {
             
@@ -91,13 +97,13 @@ const Calendar = () => {
         for (let index = 0; index < 42; index++) {
 
             // enquanto index for maior q 0 e menor q o numero de dias do mes
-            if (index <= moment(month).daysInMonth() && index > 0 ) {
+            if (index <= moment(new Date()).daysInMonth() && index > 0 ) {
 
                 // atribuir a day uma ISO com ano-mes-dia
                 let day = `${year}-${month + 1}-${index}`;
 
-                // adicionando esse dia a monthDays
-                monthDays.push(new Date(day).toISOString());
+                // adicionando esse dia a currentMonthDays
+                currentMonthDays.push(new Date(day).toISOString());
             }
             // adicionando um numero a numbers
             numbers.push(index)
@@ -106,8 +112,10 @@ const Calendar = () => {
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
             // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
-            const weekDay = weekCounter()
-            const lastMonth = `${moment(new Date()).year()}-${moment(new Date()).month()}-01`
+            const weekDay = weekCounter();
+            const lastMonth = `${moment(new Date()).year()}-${moment(new Date()).month()}-01`;
+
+            
 
             console.log(moment(lastMonth).daysInMonth())
 
