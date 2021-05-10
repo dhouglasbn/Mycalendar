@@ -58,7 +58,7 @@ const Calendar = () => {
 
     useEffect(() => {
         buildCalendar()
-    });
+    }, []);
 
     function buildCalendar() {
 
@@ -99,11 +99,20 @@ const Calendar = () => {
             // enquanto index for maior q 0 e menor q o numero de dias do mes
             if (index <= moment(new Date()).daysInMonth() && index > 0 ) {
 
-                // atribuir a day uma ISO com ano-mes-dia
-                let day = `${year}-${month + 1}-${index}`;
+                // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes atual
+                let day = `${year}-${moment(new Date()).add(1, "months").month()}-${index}`;
 
                 // adicionando esse dia a currentMonthDays
                 currentMonthDays.push(new Date(day).toISOString());
+            }
+
+            if (index >= moment(new Date()).daysInMonth()) {
+
+                // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes que vem
+                let day = `${year}-${moment(new Date()).add(2, "months").month()}-${index}`;
+
+                // adicionando esse dia a nextMonthDays
+                nextMonthDays.push(new Date(day).toISOString());
             }
             // adicionando um numero a numbers
             numbers.push(index)
