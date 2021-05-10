@@ -105,7 +105,12 @@ const Calendar = () => {
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
+            // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
             const weekDay = weekCounter()
+            const lastMonth = `${moment(new Date()).year()}-${moment(new Date()).month()}-01`
+
+            console.log(moment(lastMonth).daysInMonth())
+
                 return <h3 key={number} className={String(weekDay)}>Day</h3>;
             }
         );
