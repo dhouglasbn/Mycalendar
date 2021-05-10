@@ -102,18 +102,22 @@ const Calendar = () => {
                 // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes atual
                 let day = `${year}-${moment(new Date()).add(1, "months").month()}-${index}`;
 
+                console.log(day)
                 // adicionando esse dia a currentMonthDays
                 currentMonthDays.push(new Date(day).toISOString());
             }
 
-            if (index >= moment(new Date()).daysInMonth()) {
 
-                // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes que vem
-                let day = `${year}-${moment(new Date()).add(2, "months").month()}-${index}`;
+            // if (index > moment(new Date()).daysInMonth()) {
+                
+            //     // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes que vem
+            //     let day = `${year}-${moment(new Date()).add(2, "months").month()}-${index - moment(new Date()).daysInMonth()}`;
 
-                // adicionando esse dia a nextMonthDays
-                nextMonthDays.push(new Date(day).toISOString());
-            }
+            //     console.log(day)
+            //     // adicionando esse dia a nextMonthDays
+            //     nextMonthDays.push(new Date(day).toISOString());
+            // }
+
             // adicionando um numero a numbers
             numbers.push(index)
         }
@@ -122,11 +126,9 @@ const Calendar = () => {
         const days = numbers.map(number => {
             // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
             const weekDay = weekCounter();
-            const lastMonth = `${moment(new Date()).year()}-${moment(new Date()).month()}-01`;
 
             
 
-            console.log(moment(lastMonth).daysInMonth())
 
                 return <h3 key={number} className={String(weekDay)}>Day</h3>;
             }
