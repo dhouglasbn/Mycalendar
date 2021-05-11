@@ -10,7 +10,7 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
-    const [referencedDate, setReferencedDate] = useState(`${moment(new Date()).year()}-${moment(new Date()).month()}-01`)
+    const [referencedDate, setReferencedDate] = useState(`${moment(new Date()).year()}-${moment(new Date()).month() + 1}-01`)
     const [message, setMessage] = useState<String>("") 
 
     // pegando o name que foi setado no localStorage durante o login
@@ -56,11 +56,7 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
-        buildCalendar()
-    });
-
-    function buildCalendar() {
-
+        
         const lastMonthDays = moment(referencedDate).subtract(1, "months").daysInMonth()
 
         const thisWeekDay = moment(referencedDate).weekday();
@@ -100,10 +96,9 @@ const Calendar = () => {
         for (let index = 0; index < 42; index++) {
 
             // gerar a primeira array com itens do mes passado
-            if (index <= thisWeekDay) {
-                previousMonthDays.push(lastMonthDays - (thisWeekDay - index))
+            if (index < thisWeekDay) {
+                previousMonthDays.push(lastMonthDays - (thisWeekDay - (index + 1)))
             }
-
 
             // gerar a segunda array com itens do mes atual
 
@@ -112,7 +107,6 @@ const Calendar = () => {
             //  gerando os 42 itens de numbers para ser a referencia de componentes h3
             numbers.push(index)
         }
-
         console.log(previousMonthDays)
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
@@ -129,7 +123,8 @@ const Calendar = () => {
         
         // renderizando days na div "days"
         ReactDOM.render( days, document.getElementById("days"));
-    };
+
+    });
 
 
     return (
@@ -156,7 +151,6 @@ const Calendar = () => {
                             <MdKeyboardArrowLeft  
                             onClick={() => { 
                                 setReferencedDate(String(moment(referencedDate).subtract(1, "months"))) 
-                                buildCalendar()
                             }}
                             className="arrow"/>
                         </span>
@@ -165,7 +159,6 @@ const Calendar = () => {
                             <MdKeyboardArrowRight
                             onClick={() => { 
                                 setReferencedDate(String(moment(referencedDate).add(1, "months"))) 
-                                buildCalendar()
                             }} 
                             className="arrow"/>
                         </span>
