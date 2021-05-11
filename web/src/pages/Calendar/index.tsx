@@ -103,18 +103,22 @@ const Calendar = () => {
             }
 
             // gerar a segunda array com itens do mes atual
-
             if ( index <= moment(referencedDate).daysInMonth() && index > 0 ) {
                 currentMonthDays.push(index);
             }
 
             // gerar a terceira array com itens do mes que vem
+            if ( index >= (previousMonthDays.length + currentMonthDays.length) ) {
+                nextMonthDays.push(index - (previousMonthDays.length + currentMonthDays.length) + 1);
+            }
+
 
             //  gerando os 42 itens de numbers para ser a referencia de componentes h3
             numbers.push(index)
         }
         console.log(previousMonthDays);
         console.log(currentMonthDays);
+        console.log(nextMonthDays);
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
