@@ -117,15 +117,20 @@ const Calendar = () => {
             numbers.push(index)
         }
 
+        const calendar = previousMonthDays;
+        currentMonthDays.map(day => calendar.push(day));
+        nextMonthDays.map(day => calendar.push(day));
+
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
             // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
             const weekDay = weekCounter();
-
+            
+            
             
 
 
-                return <h3 key={number} className={String(weekDay)}>Day</h3>;
+                return <h3 key={number} className={String(weekDay)}>{calendar[number]}</h3>;
             }
         );
         
