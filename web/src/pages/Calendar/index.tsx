@@ -116,9 +116,6 @@ const Calendar = () => {
             //  gerando os 42 itens de numbers para ser a referencia de componentes h3
             numbers.push(index)
         }
-        console.log(previousMonthDays);
-        console.log(currentMonthDays);
-        console.log(nextMonthDays);
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
