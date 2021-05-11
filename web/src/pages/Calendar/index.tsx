@@ -10,8 +10,7 @@ import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
-    const [year, setYear] = useState(moment(new Date()).year())
-    const [month, setMonth] = useState(moment(new Date()).month())
+    const [referencedDate, setReferencedDate] = useState(`${moment(new Date()).year()}-${moment(new Date()).month()}-01`)
     const [message, setMessage] = useState<String>("") 
 
     // pegando o name que foi setado no localStorage durante o login
@@ -58,9 +57,13 @@ const Calendar = () => {
 
     useEffect(() => {
         buildCalendar()
-    }, []);
+    });
 
     function buildCalendar() {
+
+        const lastMonthDays = moment(referencedDate).subtract(1, "months").daysInMonth()
+
+        const thisWeekDay = moment(referencedDate).weekday();
 
         // posição para inserir a weekday pra cada componente
         let weekDay = 0;
@@ -96,31 +99,21 @@ const Calendar = () => {
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
 
-            // enquanto index for maior q 0 e menor q o numero de dias do mes
-            if (index <= moment(new Date()).daysInMonth() && index > 0 ) {
-
-                // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes atual
-                let day = `${year}-${moment(new Date()).add(1, "months").month()}-${index}`;
-
-                console.log(day)
-                // adicionando esse dia a currentMonthDays
-                currentMonthDays.push(new Date(day).toISOString());
+            // gerar a primeira array com itens do mes passado
+            if (index <= thisWeekDay) {
+                previousMonthDays.push(lastMonthDays - (thisWeekDay - index))
             }
 
 
-            // if (index > moment(new Date()).daysInMonth()) {
-                
-            //     // atribuir a day o que vai ser uma ISO com ano-mes-dia do mes que vem
-            //     let day = `${year}-${moment(new Date()).add(2, "months").month()}-${index - moment(new Date()).daysInMonth()}`;
+            // gerar a segunda array com itens do mes atual
 
-            //     console.log(day)
-            //     // adicionando esse dia a nextMonthDays
-            //     nextMonthDays.push(new Date(day).toISOString());
-            // }
+            // gerar a terceira array com itens do mes que vem
 
-            // adicionando um numero a numbers
+            //  gerando os 42 itens de numbers para ser a referencia de componentes h3
             numbers.push(index)
         }
+
+        console.log(previousMonthDays)
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
@@ -138,34 +131,6 @@ const Calendar = () => {
         ReactDOM.render( days, document.getElementById("days"));
     };
 
-    function handleSubtractMonth() {
-
-        // uma simples lógica para aumentar o mês ao clicar na seta
-        // se estivermos em dezembro o programa passa para o ano posterior e vai para janeiro
-        if(month === 0) {
-            setYear(year - 1);
-            setMonth(11)
-            buildCalendar()
-        } else {
-            setMonth(month - 1);
-            buildCalendar()
-        }
-        
-    }
-    
-    function handleAddMonth() {
-
-        // uma simples lógica para reduzir o mês ao clicar na seta
-        // se estivermos em janeiro o programa passa para o ano passado e vai para dezembero
-        if(month === 11) {
-            setYear(year + 1);
-            setMonth(0);
-            buildCalendar()
-        } else {
-            setMonth(month + 1);
-            buildCalendar()
-        }
-    }
 
     return (
         <div id="calendar-page">
@@ -189,13 +154,19 @@ const Calendar = () => {
                     <header id="calendar-header">
                         <span>
                             <MdKeyboardArrowLeft  
-                            onClick={() => {handleSubtractMonth()}}
+                            onClick={() => { 
+                                setReferencedDate(String(moment(referencedDate).subtract(1, "months"))) 
+                                buildCalendar()
+                            }}
                             className="arrow"/>
                         </span>
-                        <h3>{monthNames[month]}, {year}</h3>
+                        <h3>{monthNames[moment(referencedDate).month()]}, {moment(referencedDate).year()}</h3>
                         <span >
                             <MdKeyboardArrowRight
-                            onClick={() => {handleAddMonth()}} 
+                            onClick={() => { 
+                                setReferencedDate(String(moment(referencedDate).add(1, "months"))) 
+                                buildCalendar()
+                            }} 
                             className="arrow"/>
                         </span>
                     </header>
