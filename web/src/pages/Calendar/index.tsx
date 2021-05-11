@@ -92,7 +92,17 @@ const Calendar = () => {
                 weekDay++;
                 return weekDay - 1;
             }
-        } 
+        }
+
+        // formatar qualquer número em string, se for de uma casa haverá um 0 a esquerda
+        function formatNumber(number: Number) {
+            if (number < 10) {
+                return `0${number}`;
+            } else {
+                return String(number);
+            }
+            
+        }
         
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
@@ -117,19 +127,17 @@ const Calendar = () => {
             numbers.push(index)
         }
 
-        const calendar = previousMonthDays;
-        currentMonthDays.map(day => calendar.push(day));
-        nextMonthDays.map(day => calendar.push(day));
+
+        // juntando as 3 arrays em uma só
+        const calendar: Array<String> = [];
+        previousMonthDays.map(day => calendar.push(formatNumber(day)))
+        currentMonthDays.map(day => calendar.push(formatNumber(day)));
+        nextMonthDays.map(day => calendar.push(formatNumber(day)));
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
             // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
             const weekDay = weekCounter();
-            
-            
-            
-
-
                 return <h3 key={number} className={String(weekDay)}>{calendar[number]}</h3>;
             }
         );
