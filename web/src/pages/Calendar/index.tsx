@@ -57,8 +57,10 @@ const Calendar = () => {
 
     useEffect(() => {
         
+        // referencia de total de dias do mes passado para inserção no previousMonthDays
         const lastMonthDays = moment(referencedDate).subtract(1, "months").daysInMonth()
 
+        // dia da semana do primeiro de do mes atual para inserção em previousMonthDays
         const thisWeekDay = moment(referencedDate).weekday();
 
         // posição para inserir a weekday pra cada componente
@@ -97,17 +99,22 @@ const Calendar = () => {
 
             // gerar a primeira array com itens do mes passado
             if (index < thisWeekDay) {
-                previousMonthDays.push(lastMonthDays - (thisWeekDay - (index + 1)))
+                previousMonthDays.push((lastMonthDays - (thisWeekDay - (index + 1))))
             }
 
             // gerar a segunda array com itens do mes atual
+
+            if ( index <= moment(referencedDate).daysInMonth() && index > 0 ) {
+                currentMonthDays.push(index);
+            }
 
             // gerar a terceira array com itens do mes que vem
 
             //  gerando os 42 itens de numbers para ser a referencia de componentes h3
             numbers.push(index)
         }
-        console.log(previousMonthDays)
+        console.log(previousMonthDays);
+        console.log(currentMonthDays);
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
