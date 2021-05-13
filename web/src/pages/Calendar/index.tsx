@@ -9,12 +9,11 @@ import api from "../../services/api";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
 
-
 const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
-    const [items, setItems] = useState<Object[]>([])
+    const [items, setItems] = useState<any>([])
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -35,19 +34,17 @@ const Calendar = () => {
                         "december"
                     ];
 
-
     useEffect(() => {
-        // fazendo requisição no banco de dados para receber todos os items do usuário logado
+        if(email) {
+            // fazendo requisição no banco de dados para receber todos os items do usuário logado
         api.get("list", {
             headers: {
-                email: String(email)
+                email: email
             }
         }).then(response => {
-            setItems(response.data)
+            setItems(response.data);
         })
-
-        console.log(email)
-        console.log(items)
+        }
     }, [email])
     
     // alterando a mensagem de saudação de acordo com o horário do dia
@@ -73,7 +70,6 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
-
         // primeiro dia do mes, no primeiro dia daquela semana
         const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
 
