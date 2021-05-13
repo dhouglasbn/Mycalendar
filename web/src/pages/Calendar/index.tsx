@@ -4,6 +4,7 @@ import "./styles.css";
 import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
 import moment, { MomentInput } from "moment";
+import api from "../../services/api";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
@@ -15,8 +16,7 @@ const Calendar = () => {
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
-    
-    // const email = localStorage.getItem("email");
+    const email = localStorage.getItem("email");
 
     // array para mostrar o nome dos meses
     const monthNames = ["january",
@@ -88,7 +88,19 @@ const Calendar = () => {
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
-                return <h3 key={number} className={String(moment(monthDays[number]).weekday())}>{moment(monthDays[number]).format("DD")}</h3>;
+                if(moment(monthDays[number]).date() === moment().date()) {
+
+                    return <h3 
+                    id="Today"
+                    key={number} 
+                    className={String(moment(monthDays[number]).weekday())}>{moment(monthDays[number]).format("DD")}
+                    </h3>;
+                }
+
+                return <h3 
+                key={number} 
+                className={String(moment(monthDays[number]).weekday())}>{moment(monthDays[number]).format("DD")}
+                </h3>;
             }
         );
         
