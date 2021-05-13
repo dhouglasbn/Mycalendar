@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import "./styles.css";
 import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
-import moment from "moment";
+import moment, { MomentInput } from "moment";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md"
 
 
 const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
-    const [referencedDate, setReferencedDate] = useState(`${moment(new Date()).year()}-${moment(new Date()).month() + 1}-01`)
+    const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"))
     const [message, setMessage] = useState<String>("") 
 
     // pegando o name que foi setado no localStorage durante o login
@@ -71,7 +71,7 @@ const Calendar = () => {
         const numbers = [];
 
         // criando a array de dias do mes
-        const monthDays = []
+        const monthDays: Array<MomentInput> = []
 
         function weekCounter() {
             
@@ -93,7 +93,7 @@ const Calendar = () => {
             if (monthDay !== moment(monthEnd).add(1, "day")) {
 
                 // adicionando o dia de monthDay à array monthDays
-                monthDays.push(monthDay.toISOString());
+                monthDays.push(moment(monthDay).format("yyyy-MM-DD"));
 
                 // adicionando 1 dia ao dia de monthDay
                 monthDay.add(1, "day");
@@ -104,19 +104,11 @@ const Calendar = () => {
             numbers.push(index)
         }
 
-        console.log(monthDays)
-
-        // // juntando as 3 arrays em uma só
-        // const calendar: Array<String> = [];
-        // previousMonthDays.map(day => calendar.push(formatNumber(day)))
-        // currentMonthDays.map(day => calendar.push(formatNumber(day)));
-        // nextMonthDays.map(day => calendar.push(formatNumber(day)));
-
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
             // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
             const weekDay = weekCounter();
-                return <h3 key={number} className={String(weekDay)}>day</h3>;
+                return <h3 key={number} className={String(weekDay)}>{moment(monthDays[number]).format("DD")}</h3>;
             }
         );
         
