@@ -61,31 +61,13 @@ const Calendar = () => {
         const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
 
         // fim do mes
-
         const monthEnd = moment(moment(referencedDate).endOf("month")).endOf("week")
-
-        // posição para inserir a weekday pra cada componente
-        let weekDay = -1;
 
         // criando uma array numbers
         const numbers = [];
 
         // criando a array de dias do mes
         const monthDays: Array<MomentInput> = []
-
-        function weekCounter() {
-            
-            // ao atingir 7 weekDay volta para segunda
-            if(weekDay === 6) {
-                weekDay = -1;
-            }
-
-            // mais um dia
-            weekDay++
-
-            // retornando o dia
-            return weekDay;
-            }
         
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
@@ -106,8 +88,6 @@ const Calendar = () => {
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
-            // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
-            const weekDay = weekCounter();
                 return <h3 key={number} className={String(weekDay)}>{moment(monthDays[number]).format("DD")}</h3>;
             }
         );
