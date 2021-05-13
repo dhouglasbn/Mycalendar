@@ -56,43 +56,37 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
-        
-        // referencia de total de dias do mes passado para inserção no previousMonthDays
-        const lastMonthDays = moment(referencedDate).subtract(1, "months").daysInMonth()
 
-        // dia da semana do primeiro de do mes atual para inserção em previousMonthDays
-        const thisWeekDay = moment(referencedDate).weekday();
+        // inicio do mes
+        const monthStart = moment(moment().startOf("month")).startOf("week")
+
+        // fim do mes
+
+        const monthENd = moment(moment().endOf("month")).endOf("week")
 
         // posição para inserir a weekday pra cada componente
-        let weekDay = 0;
+        let weekDay = -1;
 
         // criando uma array numbers
         const numbers = [];
 
-        // criando uma array para os 31 dias do mês em formato ISO
-        const currentMonthDays = [];
-
-        // criando uma array para os dias remanescentes do mes passado
-        const previousMonthDays = [];
-
-        // criando uma array para os dias remanescentes do mes que vem
-        const nextMonthDays = [];
+        // criando a array de dias do mes
+        const monthDays = []
 
         function weekCounter() {
             
-
-            // atribuindo um dia da semana pra cada componete
-            if ( weekDay === 7 ) {
-
-                // quando o dia chega em 7 o contador volta a 0
-                weekDay = 0;
-                weekDay++;
-                return weekDay - 1;
-            } else {
-                weekDay++;
-                return weekDay - 1;
+            // ao atingir 7 weekDay volta para segunda
+            if(weekDay === 6) {
+                weekDay = -1;
             }
-        }
+
+            // mais um dia
+            weekDay++
+
+            // retornando o dia
+            return weekDay;
+            }
+        
 
         // formatar qualquer número em string, se for de uma casa haverá um 0 a esquerda
         function formatNumber(number: Number) {
@@ -107,20 +101,6 @@ const Calendar = () => {
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
 
-            // gerar a primeira array com itens do mes passado
-            if (index < thisWeekDay) {
-                previousMonthDays.push((lastMonthDays - (thisWeekDay - (index + 1))))
-            }
-
-            // gerar a segunda array com itens do mes atual
-            if ( index <= moment(referencedDate).daysInMonth() && index > 0 ) {
-                currentMonthDays.push(index);
-            }
-
-            // gerar a terceira array com itens do mes que vem
-            if ( index >= (previousMonthDays.length + currentMonthDays.length) ) {
-                nextMonthDays.push(index - (previousMonthDays.length + currentMonthDays.length) + 1);
-            }
 
 
             //  gerando os 42 itens de numbers para ser a referencia de componentes h3
@@ -128,11 +108,11 @@ const Calendar = () => {
         }
 
 
-        // juntando as 3 arrays em uma só
-        const calendar: Array<String> = [];
-        previousMonthDays.map(day => calendar.push(formatNumber(day)))
-        currentMonthDays.map(day => calendar.push(formatNumber(day)));
-        nextMonthDays.map(day => calendar.push(formatNumber(day)));
+        // // juntando as 3 arrays em uma só
+        // const calendar: Array<String> = [];
+        // previousMonthDays.map(day => calendar.push(formatNumber(day)))
+        // currentMonthDays.map(day => calendar.push(formatNumber(day)));
+        // nextMonthDays.map(day => calendar.push(formatNumber(day)));
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
