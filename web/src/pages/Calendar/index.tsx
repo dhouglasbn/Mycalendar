@@ -58,11 +58,11 @@ const Calendar = () => {
     useEffect(() => {
 
         // primeiro dia do mes, no primeiro dia daquela semana
-        const monthDay = moment(moment().startOf("month")).startOf("week")
+        const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
 
         // fim do mes
 
-        const monthEnd = moment(moment().endOf("month")).endOf("week")
+        const monthEnd = moment(moment(referencedDate).endOf("month")).endOf("week")
 
         // posição para inserir a weekday pra cada componente
         let weekDay = -1;
@@ -87,24 +87,13 @@ const Calendar = () => {
             return weekDay;
             }
         
-
-        // formatar qualquer número em string, se for de uma casa haverá um 0 a esquerda
-        function formatNumber(number: Number) {
-            if (number < 10) {
-                return `0${number}`;
-            } else {
-                return String(number);
-            }
-            
-        }
-        
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
 
             if (monthDay !== moment(monthEnd).add(1, "day")) {
 
                 // adicionando o dia de monthDay à array monthDays
-                monthDays.push(monthDay);
+                monthDays.push(monthDay.toISOString());
 
                 // adicionando 1 dia ao dia de monthDay
                 monthDay.add(1, "day");
@@ -115,6 +104,7 @@ const Calendar = () => {
             numbers.push(index)
         }
 
+        console.log(monthDays)
 
         // // juntando as 3 arrays em uma só
         // const calendar: Array<String> = [];
