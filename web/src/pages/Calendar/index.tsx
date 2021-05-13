@@ -57,12 +57,12 @@ const Calendar = () => {
 
     useEffect(() => {
 
-        // inicio do mes
-        const monthStart = moment(moment().startOf("month")).startOf("week")
+        // primeiro dia do mes, no primeiro dia daquela semana
+        const monthDay = moment(moment().startOf("month")).startOf("week")
 
         // fim do mes
 
-        const monthENd = moment(moment().endOf("month")).endOf("week")
+        const monthEnd = moment(moment().endOf("month")).endOf("week")
 
         // posição para inserir a weekday pra cada componente
         let weekDay = -1;
@@ -101,7 +101,15 @@ const Calendar = () => {
         // inserindo 42 números dessa array
         for (let index = 0; index < 42; index++) {
 
+            if (monthDay !== moment(monthEnd).add(1, "day")) {
 
+                // adicionando o dia de monthDay à array monthDays
+                monthDays.push(monthDay);
+
+                // adicionando 1 dia ao dia de monthDay
+                monthDay.add(1, "day");
+            }
+            
 
             //  gerando os 42 itens de numbers para ser a referencia de componentes h3
             numbers.push(index)
@@ -118,7 +126,7 @@ const Calendar = () => {
         const days = numbers.map(number => {
             // usando um contador de dia da semana e atribuir a weekday e definir como classe da h3
             const weekDay = weekCounter();
-                return <h3 key={number} className={String(weekDay)}>{calendar[number]}</h3>;
+                return <h3 key={number} className={String(weekDay)}>day</h3>;
             }
         );
         
