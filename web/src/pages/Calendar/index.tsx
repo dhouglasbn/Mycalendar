@@ -88,7 +88,7 @@ const Calendar = () => {
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
-                return <h3 key={number} className={String(weekDay)}>{moment(monthDays[number]).format("DD")}</h3>;
+                return <h3 key={number} className={String(moment(monthDays[number]).weekday())}>{moment(monthDays[number]).format("DD")}</h3>;
             }
         );
         
