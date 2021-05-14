@@ -8,12 +8,11 @@ import api from "../../services/api";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
-
 const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
-    const [items, setItems] = useState<any>([])
+    const [items, setItems] = useState([])
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -35,8 +34,8 @@ const Calendar = () => {
                     ];
 
     useEffect(() => {
-        if(email) {
-            // fazendo requisição no banco de dados para receber todos os items do usuário logado
+
+        // fazendo requisição no banco de dados para receber todos os items do usuário logado
         api.get("list", {
             headers: {
                 email: email
@@ -44,7 +43,7 @@ const Calendar = () => {
         }).then(response => {
             setItems(response.data);
         })
-        }
+        
     }, [email])
     
     // alterando a mensagem de saudação de acordo com o horário do dia
@@ -70,6 +69,7 @@ const Calendar = () => {
     }, [])
 
     useEffect(() => {
+
         // primeiro dia do mes, no primeiro dia daquela semana
         const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
 
@@ -101,18 +101,9 @@ const Calendar = () => {
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
-                if(moment(monthDays[number]).date() === moment().date()) {
 
-                    return <h3 
-                    id="Today"
-                    key={number} 
-                    className={String(moment(monthDays[number]).weekday())}>{moment(monthDays[number]).format("DD")}
-                    </h3>;
-                }
-
-                return <h3 
-                key={number} 
-                className={String(moment(monthDays[number]).weekday())}>{moment(monthDays[number]).format("DD")}
+                return <h3 key={number}>
+                    {moment(monthDays[number]).format("DD")}
                 </h3>;
             }
         );
