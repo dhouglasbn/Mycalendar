@@ -133,6 +133,13 @@ div#days h3 {
     margin: 0;
     font-family: Nunito;
     font-size: 600;
-    color: var(--main-color);
     text-align: center;
+}
+
+div#days h3.currentMonth {
+    color: var(--main-color);
+}
+
+div#days h3.anotherMonth {
+    color: rgba(255, 255, 255, 0.5)
 }
