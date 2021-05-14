@@ -70,6 +70,16 @@ const Calendar = () => {
 
     useEffect(() => {
 
+        const CalendarMarker = {
+            isCurrentMonth: (date: MomentInput) => {
+                if(moment(date).month() === moment().month()) {
+                    return "anotherMonth";
+                } else {
+                    return "currentMonth";
+                }
+            }
+        }
+
         // primeiro dia do mes, no primeiro dia daquela semana
         const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
 
