@@ -72,7 +72,7 @@ const Calendar = () => {
 
         const CalendarMarker = {
             isCurrentMonth: (date: MomentInput) => {
-                if(moment(date).month() !== moment().month()) {
+                if(moment(date).month() !== moment(referencedDate).month()) {
                     return "anotherMonth";
                 } else {
                     return "currentMonth";
@@ -112,12 +112,12 @@ const Calendar = () => {
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
 
-                return <h3 
+                return <div><h3 
                 key={number}
                 className={CalendarMarker.isCurrentMonth(monthDays[number])}
                 >
                     {moment(monthDays[number]).format("DD")}
-                </h3>;
+                </h3></div>;
             }
         );
         
