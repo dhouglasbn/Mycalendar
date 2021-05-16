@@ -114,7 +114,7 @@ const Calendar = () => {
         const days = numbers.map(number => {
 
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
-                return <a className="numberDays" id={moment(monthDays[number]).format("DD")}><h3 
+                return <a href="" className="numberDays" id={moment(monthDays[number]).format("DD")}><h3 
                 key={number}
                 className={CalendarMarker.isCurrentMonth(monthDays[number])}
                 >
