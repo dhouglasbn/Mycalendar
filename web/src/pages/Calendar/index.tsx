@@ -114,12 +114,12 @@ const Calendar = () => {
         const days = numbers.map(number => {
 
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
-                return <a href="" className="numberDays" id={moment(monthDays[number]).format("DD")}><h3 
+                return <button className="numberDays" id={moment(monthDays[number]).format("DD")}><h3 
                 key={number}
                 className={CalendarMarker.isCurrentMonth(monthDays[number])}
                 >
                     {moment(monthDays[number]).format("DD")}
-                </h3></a>;
+                </h3></button>;
             }
         );
         
@@ -129,7 +129,7 @@ const Calendar = () => {
     });
 
     // useEffect(() => {
-        
+    //     ReactDOM.render(<iframe id="circle" title="circle" src={circle}/>, document.getElementsByClassName("numberDays"))
     // },
     //  [items])
 
