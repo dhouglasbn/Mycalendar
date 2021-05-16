@@ -97,14 +97,10 @@ main#calendar-body {
 }
 
 div#weekdays {
-    position: relative;
-    box-sizing: content-box;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
     width: 1082px;
     height: 70px;
-    margin: 0;
-    align-items: center;
     justify-content: center;
     text-align: center;
 }
@@ -119,27 +115,37 @@ div#weekdays h3 {
 }
 
 div#days {
-    height: 100%;
-    width: 1082px;
     display: grid;
     grid-template-columns: 6fr 6fr 6fr 6fr 6fr 6fr 6fr;
-    align-items: center;
+    width: 1082px;
+    height: 100%;
     justify-content: center;
+    text-align: center;
 }
 
-div#days h3 {
+a.numberDays {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    height: 100%;
     width: 100%;
+}
+
+div#days a.numberDays h3 {
+    width: 70px;
     height: 70px;
     margin: 0;
     font-family: Nunito;
     font-size: 600;
-    text-align: center;
 }
 
-div#days h3.currentMonth {
+a.numberDays h3.currentMonth {
     color: var(--main-color);
 }
 
-div#days h3.anotherMonth {
-    color: rgba(255, 255, 255, 0.5)
+a.numberDays h3.anotherMonth {
+    color: rgba(255, 255, 255, 0.5);
+    
+    
 }
