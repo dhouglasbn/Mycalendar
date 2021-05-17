@@ -5,7 +5,6 @@ import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
 import moment, { MomentInput } from "moment";
 import api from "../../services/api";
-import "styled-components";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
@@ -130,9 +129,14 @@ const Calendar = () => {
             
 
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
-                return <button className="numberDays" id={moment(monthDays[number]).format("yyyy-MM-DD")}><h3 
-                key={number}
-                className={CalendarMarker.isCurrentMonth(monthDays[number])}
+                return <button 
+                name={moment(monthDays[number]).format("yyyy-MM-DD")}
+                className="numberDays" 
+                >
+                    <h3 
+                    
+                    key={number}
+                    className={CalendarMarker.isCurrentMonth(monthDays[number])}
                 >
                     {moment(monthDays[number]).format("DD")}
                 </h3></button>;
@@ -147,22 +151,24 @@ const Calendar = () => {
     useEffect(() => {
         items.map(item => {
             if(item.type === "reminder") {
-                const elementDay = document.getElementById(moment(item.date).format("yyyy-MM-DD"));
+                const elementDay = document.getElementsByName(moment(item.date).format("yyyy-MM-DD"));
                 if(elementDay) {
-                elementDay?.style.border = "3px solid #00BD6D"
+                    // elementDay.id = ""
+                    return true;
                 } else {
-                    return;
+                    return false;
                 }
             }
             if(item.type === "event") {
-                const elementDay = document.getElementById(moment(item.start_date).format("yyyy-MM-DD"));
+                const elementDay = document.getElementsByName(moment(item.start_date).format("yyyy-MM-DD"));
                 if(elementDay) {
-                    elementDay?.style = "box-shadow: 0.2px 0.2px 0px 5px var(--orange-color)"
+                    // elementDay?.style = "box-shadow: 0.2px 0.2px 0px 5px var(--orange-color)"
+                    return true;
                 } else {
-                    return;
+                    return false;
                 }
             }
-
+            return true;
             
         })
     },
