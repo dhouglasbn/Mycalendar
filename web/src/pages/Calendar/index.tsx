@@ -122,11 +122,14 @@ const Calendar = () => {
             numbers.push(index)
         }
 
+
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
 
+            
+
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
-                return <button className="numberDays" id={moment(monthDays[number]).format("DD")}><h3 
+                return <button className="numberDays" id={moment(monthDays[number]).format("yyyy-MM-DD")}><h3 
                 key={number}
                 className={CalendarMarker.isCurrentMonth(monthDays[number])}
                 >
@@ -134,16 +137,25 @@ const Calendar = () => {
                 </h3></button>;
             }
         );
-        
+
         // renderizando days na div "days"
         ReactDOM.render( days, document.getElementById("days"));
 
-    });
+    }, [referencedDate]);
 
-    useEffect(() => {
-        items.map(item => console.log(item.title))
-    },
-     [items])
+    // useEffect(() => {
+    //     items.map(item => {
+    //         if(item.type === "reminder") {
+    //             const elementDay = document.getElementById(moment(item.date).format("DD"));
+    //         }
+    //         if(item.type === "event") {
+    //             const elementDay = document.getElementById(moment(item.start_date).format("DD"));
+    //         }
+
+            
+    //     })
+    // },
+    //  [items])
 
 
     return (
