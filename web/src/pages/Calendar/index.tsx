@@ -7,13 +7,25 @@ import moment, { MomentInput } from "moment";
 import api from "../../services/api";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
-// import circle from "../../Assets/circle.svg";
+
+interface Item {
+    id: string;
+    user_id: string;
+    type: string;
+    title: string;
+    date: string;
+    start_date: string;
+    finish_date: string;
+    description: string;
+    location: string;
+
+}
 
 const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState<Item[]>([])
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -128,10 +140,10 @@ const Calendar = () => {
 
     });
 
-    // useEffect(() => {
-    //     ReactDOM.render(<iframe id="circle" title="circle" src={circle}/>, document.getElementsByClassName("numberDays"))
-    // },
-    //  [items])
+    useEffect(() => {
+        items.map(item => console.log(item.title))
+    },
+     [items])
 
 
     return (

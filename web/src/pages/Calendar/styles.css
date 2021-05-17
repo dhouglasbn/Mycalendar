@@ -133,6 +133,7 @@ button.numberDays {
     background: none;
     border: none;
     padding: none;
+    outline: none;
 }
 
 div#days button.numberDays h3 {
@@ -153,7 +154,12 @@ button.numberDays h3.anotherMonth {
     border-radius: 155.5px;
     padding: 8px;
 
-
+    /* TODAY */
     background-color: var(--blue-color);
-    border: 2.5px solid var(--green-color);
+
+    /* REMINDER */
+    border: 3px solid var(--green-color);
+
+    /* EVENT */
+    box-shadow: 0.2px 0.2px 0px 5px var(--orange-color);
 }
