@@ -5,6 +5,7 @@ import logo from "../../Assets/calendar2.svg";
 import plus from "../../Assets/plus.svg";
 import moment, { MomentInput } from "moment";
 import api from "../../services/api";
+import "styled-components";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
@@ -143,19 +144,29 @@ const Calendar = () => {
 
     }, [referencedDate]);
 
-    // useEffect(() => {
-    //     items.map(item => {
-    //         if(item.type === "reminder") {
-    //             const elementDay = document.getElementById(moment(item.date).format("DD"));
-    //         }
-    //         if(item.type === "event") {
-    //             const elementDay = document.getElementById(moment(item.start_date).format("DD"));
-    //         }
+    useEffect(() => {
+        items.map(item => {
+            if(item.type === "reminder") {
+                const elementDay = document.getElementById(moment(item.date).format("yyyy-MM-DD"));
+                if(elementDay) {
+                elementDay?.style.border = "3px solid #00BD6D"
+                } else {
+                    return;
+                }
+            }
+            if(item.type === "event") {
+                const elementDay = document.getElementById(moment(item.start_date).format("yyyy-MM-DD"));
+                if(elementDay) {
+                    elementDay?.style = "box-shadow: 0.2px 0.2px 0px 5px var(--orange-color)"
+                } else {
+                    return;
+                }
+            }
 
             
-    //     })
-    // },
-    //  [items])
+        })
+    },
+     [items])
 
 
     return (
