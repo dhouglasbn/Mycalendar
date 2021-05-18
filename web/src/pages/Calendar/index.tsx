@@ -25,7 +25,7 @@ const Calendar = () => {
     // states que vão ser utilizadas na página: year, month e message
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
-    const [items, setItems] = useState<Item[]>([])
+    const [items, setItems] = useState<Item[]>([]);
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -86,11 +86,19 @@ const Calendar = () => {
         const CalendarMarker = {
             isCurrentMonth: (date: MomentInput) => {
                 if(moment(date).month() !== moment(referencedDate).month()) {
-                    return "anotherMonth";
+                    return "rgba(255, 255, 255, 0.5)";
                 } else {
-                    return "currentMonth";
+                    return "rgba(255, 255, 255, 0.9)";
+                }
+            },
+            isToday: (date: MomentInput) => {
+                if(moment(date).date() === moment(referencedDate).date()) {
+                    return "#00A4ED"
+                } else {
+                    return "";
                 }
             }
+            
         }
 
         // primeiro dia do mes, no primeiro dia daquela semana
@@ -133,10 +141,15 @@ const Calendar = () => {
                 name={moment(monthDays[number]).format("yyyy-MM-DD")}
                 className="numberDays" 
                 >
-                    <h3 
-                    
+                    <h3
+                    style={{
+                        backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("yyyy-MM-DD")),
+                        // border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("yyyy-MM-DD")),
+                        // boxShadow: CalendarMarker.isEventDay(moment(monthDays[number]).format("yyyy-MM-DD")),
+                        color: CalendarMarker.isCurrentMonth(moment(monthDays[number]).format("yyyy-MM-DD"))
+                    }}
+                    id={moment(monthDays[number]).format("yyyy-MM-DD")}
                     key={number}
-                    className={CalendarMarker.isCurrentMonth(monthDays[number])}
                 >
                     {moment(monthDays[number]).format("DD")}
                 </h3></button>;
@@ -146,28 +159,7 @@ const Calendar = () => {
         // renderizando days na div "days"
         ReactDOM.render( days, document.getElementById("days"));
 
-    }, [referencedDate]);
-
-    useEffect(() => {
-
-        if(items.length > 0) {
-            items.map(item => {
-            if(item.type === "reminder") {
-                const elementDay = document.getElementsByName(moment(item.date).format("yyyy-MM-DD"));
-                elementDay
-                
-            }
-            if(item.type === "event") {
-                const elementDay = document.getElementsByName(moment(item.start_date).format("yyyy-MM-DD"));
-                
-            }
-            return true;
-            
-        })
-        }
-        
-    },
-     [items])
+    }, [referencedDate, items]);
 
 
     return (

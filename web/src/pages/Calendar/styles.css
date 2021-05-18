@@ -142,24 +142,27 @@ div#days button.numberDays h3 {
     margin: 0;
     font-family: Nunito;
     font-size: 600;
+    border-radius: 155.5px;
+    padding: 8px;
+    color: var(--main-color);
     
 }
 
-button.numberDays h3.currentMonth {
-    color: var(--main-color);
+/* button.numberDays h3.currentMonth {
+    
 }
 
 button.numberDays h3.anotherMonth {
     color: rgba(255, 255, 255, 0.5);
-    border-radius: 155.5px;
-    padding: 8px;
-
-    /* TODAY */
-    background-color: var(--blue-color);
-
-    /* REMINDER */
     
 
-    /* EVENT */
+    TODAY
+    background-color: var(--blue-color);
+
+    REMINDER
+    border: #00BD6D solid 4px;
+
+    EVENT 
     box-shadow: 0.2px 0.2px 0px 5px var(--orange-color);
 }
+*/
