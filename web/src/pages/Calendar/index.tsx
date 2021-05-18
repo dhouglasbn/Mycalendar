@@ -149,28 +149,23 @@ const Calendar = () => {
     }, [referencedDate]);
 
     useEffect(() => {
-        items.map(item => {
+
+        if(items.length > 0) {
+            items.map(item => {
             if(item.type === "reminder") {
                 const elementDay = document.getElementsByName(moment(item.date).format("yyyy-MM-DD"));
-                if(elementDay) {
-                    // elementDay.id = ""
-                    return true;
-                } else {
-                    return false;
-                }
+                elementDay
+                
             }
             if(item.type === "event") {
                 const elementDay = document.getElementsByName(moment(item.start_date).format("yyyy-MM-DD"));
-                if(elementDay) {
-                    // elementDay?.style = "box-shadow: 0.2px 0.2px 0px 5px var(--orange-color)"
-                    return true;
-                } else {
-                    return false;
-                }
+                
             }
             return true;
             
         })
+        }
+        
     },
      [items])
 
