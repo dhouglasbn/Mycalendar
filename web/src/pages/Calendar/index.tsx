@@ -102,13 +102,16 @@ const Calendar = () => {
             },
             // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
             isReminderDay: (date: MomentInput) => {
-                items.map(item => {
-                    let border;
+                if (items.length > 0) {
+                    items.map(item => {
                     if(new Date(item.date).toLocaleDateString() === date) {
-                        border = "border: #00BD6D solid 4px;"
+                        return "border: #00BD6D solid 4px";
                     }
-                    return border;
                 })
+                } else{
+                    return "";
+                }
+                
             },
             // verificar se há eventos que iniciam no dia tal, se houver, retorna um circulo externo laranja
             isEventDay: (date: MomentInput) => {
@@ -160,7 +163,7 @@ const Calendar = () => {
                     <h3
                     style={{
                         backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("DD/MM/yyyy")),
-                        // border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("yyyy-MM-DD")),
+                        border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("DD/MM/yyyy")),
                         // boxShadow: CalendarMarker.isEventDay(moment(monthDays[number]).format("yyyy-MM-DD")),
                         color: CalendarMarker.isCurrentMonth(moment(monthDays[number]).format("yyyy-MM-DD"))
                     }}
