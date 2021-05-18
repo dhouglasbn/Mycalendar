@@ -84,6 +84,7 @@ const Calendar = () => {
     useEffect(() => {
 
         const CalendarMarker = {
+            // verificar se é mês atual, se for, retorna fonte branco clara, se não for, retorna fonte acinzentada
             isCurrentMonth: (date: MomentInput) => {
                 if(moment(date).month() !== moment(referencedDate).month()) {
                     return "rgba(255, 255, 255, 0.5)";
@@ -91,12 +92,27 @@ const Calendar = () => {
                     return "rgba(255, 255, 255, 0.9)";
                 }
             },
+            // verificar se é o dia de hoje, se for, retorna uma cor azul para backgroundColor
             isToday: (date: MomentInput) => {
-                if(moment(date).date() === moment(referencedDate).date()) {
+                if(date === new Date().toLocaleDateString()) {
                     return "#00A4ED"
                 } else {
                     return "";
                 }
+            },
+            // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
+            isReminderDay: (date: MomentInput) => {
+                items.map(item => {
+                    let border;
+                    if(new Date(item.date).toLocaleDateString() === date) {
+                        border = "border: #00BD6D solid 4px;"
+                    }
+                    return border;
+                })
+            },
+            // verificar se há eventos que iniciam no dia tal, se houver, retorna um circulo externo laranja
+            isEventDay: (date: MomentInput) => {
+
             }
             
         }
@@ -143,7 +159,7 @@ const Calendar = () => {
                 >
                     <h3
                     style={{
-                        backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("yyyy-MM-DD")),
+                        backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("DD/MM/yyyy")),
                         // border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("yyyy-MM-DD")),
                         // boxShadow: CalendarMarker.isEventDay(moment(monthDays[number]).format("yyyy-MM-DD")),
                         color: CalendarMarker.isCurrentMonth(moment(monthDays[number]).format("yyyy-MM-DD"))
