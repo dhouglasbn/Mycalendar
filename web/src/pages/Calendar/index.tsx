@@ -103,11 +103,12 @@ const Calendar = () => {
             // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
             isReminderDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    items.map(item => {
-                    if(new Date(item.date).toLocaleDateString() === date) {
-                        return "border: #00BD6D solid 4px";
+                    const itemFound = items.find(item => new Date(item.date).toLocaleDateString() === date);
+
+                    if(itemFound !== undefined) {
+                        return "#00BD6D solid 4px;";
                     }
-                })
+                    return "";
                 } else{
                     return "";
                 }
