@@ -100,7 +100,7 @@ const Calendar = () => {
             // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
             isReminderDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    const foundItems = items.filter(item => moment(moment(item.date).local()).format("DD/MM/yyyy") === date 
+                    const foundItems = items.filter(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date 
                     && item.type === "reminder")
                     if (foundItems.length > 0) {
                         return "#00BD6D solid 4px";
@@ -168,7 +168,7 @@ const Calendar = () => {
                     <h3
                     style={{
                         backgroundColor: CalendarVerifier.isToday(monthDays[number]),
-                        border: CalendarVerifier.isReminderDay(moment(monthDays[number]).format("DD/MM/yyyy")),
+                        border: CalendarVerifier.isReminderDay(monthDays[number]),
                         boxShadow: CalendarVerifier.isEventDay(moment(monthDays[number]).format("DD/MM/yyyy")),
                         color: CalendarVerifier.isCurrentMonth(monthDays[number])
                     }}
