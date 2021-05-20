@@ -31,22 +31,7 @@ const Calendar = () => {
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
-
-    // // array para mostrar o nome dos meses
-    // const monthNames = ["january",
-    //                     "february",
-    //                     "march",
-    //                     "april",
-    //                     "may",
-    //                     "june",
-    //                     "july",
-    //                     "august",
-    //                     "september",
-    //                     "october",
-    //                     "november",
-    //                     "december"
-    //                 ];
-
+    
     useEffect(() => {
 
         // fazendo requisição no banco de dados para receber todos os items do usuário logado
