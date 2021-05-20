@@ -31,10 +31,11 @@ const Calendar = () => {
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
-    
+
     useEffect(() => {
 
         // fazendo requisição no banco de dados para receber todos os items do usuário logado
+        // ao final de tudo, setar todos os reminders e events marcados por esse user em items
         api.get("list", {
             headers: {
                 email: email
@@ -52,13 +53,17 @@ const Calendar = () => {
             // consultando a hora do computador assim que a página carregar
             const hour = moment(new Date()).hour();
             
+            // na array que irá ser passada, encontrar a hora do computador
             if (array.find(number => number === hour)) {
+
+                // setando mensagem do turno da hora do computador
                 setMessage(message);
             } else {
                 return;
             }
         };
 
+        // um desses 3 isInTurn irá retornar sua mensagem
         isInTurn([5,6,7,8,9,10,11], "Good morning");
         isInTurn([12,13,14,15,16,17], "Good afternoon");
         isInTurn([18,19,20,21,22,23,0,1,2,3,4], "Good evening");        
@@ -69,6 +74,7 @@ const Calendar = () => {
 
     useEffect(() => {
 
+        // objeto responsável pelas marcações no calendário
         const CalendarMarker = {
             // verificar se é mês atual, se for, retorna fonte branco clara, se não for, retorna fonte acinzentada
             isCurrentMonth: (date: MomentInput) => {
@@ -150,12 +156,11 @@ const Calendar = () => {
             
 
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
-                return <button 
-                name={moment(monthDays[number]).format("yyyy-MM-DD")}
+                return <button
                 className="numberDays" 
                 key={number}
                 >
-                    <h3 onLoad={() => {console.log("hello")}}
+                    <h3
                     style={{
                         backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("DD/MM/yyyy")),
                         border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("DD/MM/yyyy")),
@@ -233,4 +238,4 @@ const Calendar = () => {
     )
 }
 
-export default Calendar
+export default Calendar;
