@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./styles.css";
 import logo from "../../Assets/calendar2.svg";
@@ -23,6 +24,10 @@ interface Item {
 }
 
 const Calendar = () => {
+
+    // usando o useHistory do react-router-dom
+    const history = useHistory();
+
     // states que vão ser utilizadas na página: year, month e message
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
@@ -75,7 +80,7 @@ const Calendar = () => {
     useEffect(() => {
 
         // objeto responsável pelas marcações no calendário
-        const CalendarMarker = {
+        const CalendarVerifier = {
             // verificar se é mês atual, se for, retorna fonte branco clara, se não for, retorna fonte acinzentada
             isCurrentMonth: (date: MomentInput) => {
                 if(moment(date).month() !== moment(referencedDate).month()) {
@@ -86,7 +91,7 @@ const Calendar = () => {
             },
             // verificar se é o dia de hoje, se for, retorna uma cor azul para backgroundColor
             isToday: (date: MomentInput) => {
-                if(date === new Date().toLocaleDateString()) {
+                if(date === moment().format("yyyy-MM-DD")) {
                     return "#00A4ED"
                 } else {
                     return "";
@@ -162,10 +167,10 @@ const Calendar = () => {
                 >
                     <h3
                     style={{
-                        backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("DD/MM/yyyy")),
-                        border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("DD/MM/yyyy")),
-                        boxShadow: CalendarMarker.isEventDay(moment(monthDays[number]).format("DD/MM/yyyy")),
-                        color: CalendarMarker.isCurrentMonth(moment(monthDays[number]).format("yyyy-MM-DD"))
+                        backgroundColor: CalendarVerifier.isToday(monthDays[number]),
+                        border: CalendarVerifier.isReminderDay(moment(monthDays[number]).format("DD/MM/yyyy")),
+                        boxShadow: CalendarVerifier.isEventDay(moment(monthDays[number]).format("DD/MM/yyyy")),
+                        color: CalendarVerifier.isCurrentMonth(monthDays[number])
                     }}
                     id={moment(monthDays[number]).format("yyyy-MM-DD")}
                     
@@ -187,7 +192,7 @@ const Calendar = () => {
 
             <header>
                 <div id="salute">
-                    <iframe className="logo" src={logo} title="MyCalendar"></iframe>
+                    <iframe onClick={() => {history.push("/")}} className="logo" src={logo} title="MyCalendar"></iframe>
                     <h3>{message} {name}!</h3>
                 </div>
                 
