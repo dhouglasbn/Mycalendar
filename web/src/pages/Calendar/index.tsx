@@ -92,9 +92,9 @@ const Calendar = () => {
             // verificar se é o dia de hoje, se for, retorna uma cor azul para backgroundColor
             isToday: (date: MomentInput) => {
                 if(date === moment().format("yyyy-MM-DD")) {
-                    return "#00A4ED"
+                    return true;
                 } else {
-                    return "";
+                    return false;
                 }
             },
             // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
@@ -103,11 +103,11 @@ const Calendar = () => {
                     const foundItems = items.filter(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date
                     && item.type === "reminder")
                     if (foundItems.length > 0) {
-                        return "#00BD6D solid 4px";
+                        return true;
                     }
-                    return "";
+                    return false;
                 }
-                return "";
+                return false;
                 
             },
             // verificar se há eventos que iniciam no dia tal, se houver, retorna um circulo externo laranja
@@ -168,8 +168,8 @@ const Calendar = () => {
                 >
                     <h3
                     style={{
-                        backgroundColor: CalendarVerifier.isToday(monthDays[number]),
-                        border: CalendarVerifier.isReminderDay(monthDays[number]),
+                        backgroundColor: CalendarVerifier.isToday(monthDays[number]) ? "#00A4ED" : "",
+                        border: CalendarVerifier.isReminderDay(monthDays[number]) ? "#00BD6D solid 4px" : "",
                         boxShadow: CalendarVerifier.isEventDay(monthDays[number]) ? "0.2px 0.2px 0px 5px #FF5D2F" : "",
                         color: CalendarVerifier.isCurrentMonth(monthDays[number]) ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)"
                     }}
