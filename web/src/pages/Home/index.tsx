@@ -9,6 +9,16 @@ import logo from "../../Assets/calendar.svg";
 
 const Home = () => {
 
+    /**
+     * LEMBRAR
+     * DE
+     * APRENDER
+     * A
+     * TRABALHAR
+     * COM
+     * MODALS
+     */
+
     // criando função para fzr a responsividade de páginas
     const history = useHistory();
 

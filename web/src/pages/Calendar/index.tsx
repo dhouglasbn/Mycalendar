@@ -81,7 +81,7 @@ const Calendar = () => {
 
         // objeto responsável pelas marcações no calendário
         const CalendarVerifier = {
-            // verificar se é mês atual, se for, retorna fonte branco clara, se não for, retorna fonte acinzentada
+            // verificar se é mês atual
             isCurrentMonth: (date: MomentInput) => {
                 if(moment(date).month() === moment(referencedDate).month()) {
                     return true;
@@ -89,7 +89,7 @@ const Calendar = () => {
                 return false;
                 
             },
-            // verificar se é o dia de hoje, se for, retorna uma cor azul para backgroundColor
+            // verificar se é o dia de hoje, se for
             isToday: (date: MomentInput) => {
                 if(date === moment().format("yyyy-MM-DD")) {
                     return true;
@@ -97,12 +97,12 @@ const Calendar = () => {
                     return false;
                 }
             },
-            // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
+            // verificar se há lembretes no dia tal
             isReminderDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    const foundItems = items.filter(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date
+                    const foundItem = items.find(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date
                     && item.type === "reminder")
-                    if (foundItems.length > 0) {
+                    if (foundItem) {
                         return true;
                     }
                     return false;
@@ -110,13 +110,13 @@ const Calendar = () => {
                 return false;
                 
             },
-            // verificar se há eventos que iniciam no dia tal, se houver, retorna um circulo externo laranja
+            // verificar se há eventos que iniciam no dia tal, se houver
             isEventDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    const foundItems = items.filter(item => (moment(moment(item.start_date).local()).format("yyyy-MM-DD") === date 
+                    const foundItem = items.find(item => (moment(moment(item.start_date).local()).format("yyyy-MM-DD") === date 
                     || moment(moment(item.finish_date).local()).format("yyyy-MM-DD") === date )
                     && item.type === "event")
-                    if (foundItems.length > 0) {
+                    if (foundItem) {
                         return true;
                     }
                     return false;
@@ -125,6 +125,7 @@ const Calendar = () => {
             }
             
         }
+
 
         // primeiro dia do mes, no primeiro dia daquela semana
         const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
@@ -166,7 +167,8 @@ const Calendar = () => {
                 className="numberDays" 
                 key={number}
                 >
-                    <h3
+
+                    <h3 
                     style={{
                         backgroundColor: CalendarVerifier.isToday(monthDays[number]) ? "#00A4ED" : "",
                         border: CalendarVerifier.isReminderDay(monthDays[number]) ? "#00BD6D solid 4px" : "",
@@ -176,6 +178,7 @@ const Calendar = () => {
                     id={moment(monthDays[number]).format("yyyy-MM-DD")}
                     
                 >
+
                     {moment(monthDays[number]).format("DD")}
                 </h3></button>;
             }
