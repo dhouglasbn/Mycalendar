@@ -83,11 +83,11 @@ const Calendar = () => {
         const CalendarVerifier = {
             // verificar se é mês atual, se for, retorna fonte branco clara, se não for, retorna fonte acinzentada
             isCurrentMonth: (date: MomentInput) => {
-                if(moment(date).month() !== moment(referencedDate).month()) {
-                    return "rgba(255, 255, 255, 0.5)";
-                } else {
-                    return "rgba(255, 255, 255, 0.9)";
+                if(moment(date).month() === moment(referencedDate).month()) {
+                    return true;
                 }
+                return false;
+                
             },
             // verificar se é o dia de hoje, se for, retorna uma cor azul para backgroundColor
             isToday: (date: MomentInput) => {
@@ -100,7 +100,7 @@ const Calendar = () => {
             // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
             isReminderDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    const foundItems = items.filter(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date 
+                    const foundItems = items.filter(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date
                     && item.type === "reminder")
                     if (foundItems.length > 0) {
                         return "#00BD6D solid 4px";
@@ -113,14 +113,15 @@ const Calendar = () => {
             // verificar se há eventos que iniciam no dia tal, se houver, retorna um circulo externo laranja
             isEventDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    const foundItems = items.filter(item => moment(moment(item.start_date).local()).format("DD/MM/yyyy") === date 
+                    const foundItems = items.filter(item => (moment(moment(item.start_date).local()).format("yyyy-MM-DD") === date 
+                    || moment(moment(item.finish_date).local()).format("yyyy-MM-DD") === date )
                     && item.type === "event")
                     if (foundItems.length > 0) {
-                        return "0.2px 0.2px 0px 5px #FF5D2F";
+                        return true;
                     }
-                    return "";
+                    return false;
                 }
-                return "";
+                return false;
             }
             
         }
@@ -169,8 +170,8 @@ const Calendar = () => {
                     style={{
                         backgroundColor: CalendarVerifier.isToday(monthDays[number]),
                         border: CalendarVerifier.isReminderDay(monthDays[number]),
-                        boxShadow: CalendarVerifier.isEventDay(moment(monthDays[number]).format("DD/MM/yyyy")),
-                        color: CalendarVerifier.isCurrentMonth(monthDays[number])
+                        boxShadow: CalendarVerifier.isEventDay(monthDays[number]) ? "0.2px 0.2px 0px 5px #FF5D2F" : "",
+                        color: CalendarVerifier.isCurrentMonth(monthDays[number]) ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)"
                     }}
                     id={moment(monthDays[number]).format("yyyy-MM-DD")}
                     
