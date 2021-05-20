@@ -8,6 +8,7 @@ import api from "../../services/api";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 
+// tipagem dos dados de items
 interface Item {
     id: string;
     user_id: string;
@@ -31,20 +32,20 @@ const Calendar = () => {
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
 
-    // array para mostrar o nome dos meses
-    const monthNames = ["january",
-                        "february",
-                        "march",
-                        "april",
-                        "may",
-                        "june",
-                        "july",
-                        "august",
-                        "september",
-                        "october",
-                        "november",
-                        "december"
-                    ];
+    // // array para mostrar o nome dos meses
+    // const monthNames = ["january",
+    //                     "february",
+    //                     "march",
+    //                     "april",
+    //                     "may",
+    //                     "june",
+    //                     "july",
+    //                     "august",
+    //                     "september",
+    //                     "october",
+    //                     "november",
+    //                     "december"
+    //                 ];
 
     useEffect(() => {
 
@@ -103,20 +104,27 @@ const Calendar = () => {
             // verificar se há lembretes no dia tal, se houver, retorna uma borda verde
             isReminderDay: (date: MomentInput) => {
                 if (items.length > 0) {
-                    const itemFound = items.find(item => new Date(item.date).toLocaleDateString() === date);
-
-                    if(itemFound !== undefined) {
-                        return "#00BD6D solid 4px;";
+                    const foundItems = items.filter(item => moment(moment(item.date).local()).format("DD/MM/yyyy") === date 
+                    && item.type === "reminder")
+                    if (foundItems.length > 0) {
+                        return "#00BD6D solid 4px";
                     }
                     return "";
-                } else{
-                    return "";
                 }
+                return "";
                 
             },
             // verificar se há eventos que iniciam no dia tal, se houver, retorna um circulo externo laranja
             isEventDay: (date: MomentInput) => {
-
+                if (items.length > 0) {
+                    const foundItems = items.filter(item => moment(moment(item.start_date).local()).format("DD/MM/yyyy") === date 
+                    && item.type === "event")
+                    if (foundItems.length > 0) {
+                        return "0.2px 0.2px 0px 5px #FF5D2F";
+                    }
+                    return "";
+                }
+                return "";
             }
             
         }
@@ -160,16 +168,17 @@ const Calendar = () => {
                 return <button 
                 name={moment(monthDays[number]).format("yyyy-MM-DD")}
                 className="numberDays" 
+                key={number}
                 >
-                    <h3
+                    <h3 onLoad={() => {console.log("hello")}}
                     style={{
                         backgroundColor: CalendarMarker.isToday(moment(monthDays[number]).format("DD/MM/yyyy")),
                         border: CalendarMarker.isReminderDay(moment(monthDays[number]).format("DD/MM/yyyy")),
-                        // boxShadow: CalendarMarker.isEventDay(moment(monthDays[number]).format("yyyy-MM-DD")),
+                        boxShadow: CalendarMarker.isEventDay(moment(monthDays[number]).format("DD/MM/yyyy")),
                         color: CalendarMarker.isCurrentMonth(moment(monthDays[number]).format("yyyy-MM-DD"))
                     }}
                     id={moment(monthDays[number]).format("yyyy-MM-DD")}
-                    key={number}
+                    
                 >
                     {moment(monthDays[number]).format("DD")}
                 </h3></button>;
@@ -209,7 +218,7 @@ const Calendar = () => {
                             }}
                             className="arrow"/>
                         </span>
-                        <h3>{monthNames[moment(referencedDate).month()]}, {moment(referencedDate).year()}</h3>
+                        <h3>{moment(referencedDate).format("MMMM")}, {moment(referencedDate).year()}</h3>
                         <span >
                             <MdKeyboardArrowRight
                             onClick={() => { 

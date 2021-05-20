@@ -149,7 +149,7 @@ div#days button.numberDays h3 {
 }
 
 /* button.numberDays h3.currentMonth {
-    
+    color: rgba(255, 255, 255, 0.5);
 }
 
 button.numberDays h3.anotherMonth {
@@ -160,7 +160,7 @@ button.numberDays h3.anotherMonth {
     background-color: var(--blue-color);
 
     REMINDER
-    border: #00BD6D solid 4px;
+    border: var(--green-color) solid 4px;
 
     EVENT 
     box-shadow: 0.2px 0.2px 0px 5px var(--orange-color);
