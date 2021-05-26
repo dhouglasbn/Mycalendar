@@ -32,10 +32,12 @@ const Calendar = () => {
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
+    const [openItemModal, setOpenItemModal] = useState<Boolean>(false)
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
+
 
     useEffect(() => {
 
@@ -50,6 +52,7 @@ const Calendar = () => {
         })
         
     }, [email])
+
     
     // alterando a mensagem de saudação de acordo com o horário do dia
     useEffect(() => {
@@ -159,9 +162,7 @@ const Calendar = () => {
 
         // percorrendo cada item de numbers e atribuindo uma h3 para cada item a days
         const days = numbers.map(number => {
-
             
-
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
                 return <button
                 className="numberDays" 
@@ -189,6 +190,12 @@ const Calendar = () => {
 
     }, [referencedDate, items]);
 
+    function handleLogOut() {
+        localStorage.clear()
+
+        history.push("/")
+    }
+
 
     return (
         <div id="calendar-page">
@@ -196,12 +203,14 @@ const Calendar = () => {
 
             <header>
                 <div id="salute">
-                    <iframe onClick={() => {history.push("/")}} className="logo" src={logo} title="MyCalendar"></iframe>
+                    <iframe className="logo" src={logo} title="MyCalendar">
+                        <button onClick={handleLogOut}></button>
+                    </iframe>
                     <h3>{message} {name}!</h3>
                 </div>
                 
                 <span id="plus-button">
-                    <iframe id="plus" src={plus} title="AddItem"></iframe>
+                    <iframe onClick={() => {setOpenItemModal(true)}} id="plus" src={plus} title="AddItem"></iframe>
                 </span>
                 
             </header>

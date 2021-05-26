@@ -5,7 +5,7 @@
     --orange-color: #FF5D2F;
     --green-color: #00BD6D;
     --content-color: #14181C
-  }
+}
 
 #calendar-page header {
     width: 100vw;
@@ -46,6 +46,15 @@ div#salute h3 {
     padding-left: 56px;
     align-items: center;
     line-height: 30px;
+}
+
+div#salute button {
+    background: none;
+    outline: none;
+    border: none;
+    display: flex;
+    box-sizing: content-box;
+    cursor: pointer;
 }
 
 div#salute iframe.logo {
