@@ -52,16 +52,15 @@ div#salute button {
     background: none;
     outline: none;
     border: none;
-    display: flex;
-    box-sizing: content-box;
     cursor: pointer;
 }
-
+/* 
 div#salute iframe.logo {
     height: 100px;
     width: 100px;
     margin-bottom: 25px;
-}
+    display: flex;
+} */
 
 #calendar {
     position: relative;

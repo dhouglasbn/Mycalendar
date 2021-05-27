@@ -8,6 +8,7 @@ import moment, { MomentInput } from "moment";
 import api from "../../services/api";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
+import { SiGooglecalendar } from "react-icons/si"
 
 // tipagem dos dados de items
 interface Item {
@@ -203,9 +204,9 @@ const Calendar = () => {
 
             <header>
                 <div id="salute">
-                    <iframe className="logo" src={logo} title="MyCalendar">
-                        <button onClick={handleLogOut}></button>
-                    </iframe>
+                    <button onClick={handleLogOut} type="button">
+                        <SiGooglecalendar size={100} color="rgba(255, 255, 255, 0.9)" />
+                    </button>
                     <h3>{message} {name}!</h3>
                 </div>
                 
