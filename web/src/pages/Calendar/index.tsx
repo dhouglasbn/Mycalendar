@@ -9,6 +9,7 @@ import api from "../../services/api";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
+import { BsFillPlusCircleFill } from "react-icons/bs";
 
 // tipagem dos dados de items
 interface Item {
@@ -210,9 +211,9 @@ const Calendar = () => {
                     <h3>{message} {name}!</h3>
                 </div>
                 
-                <span id="plus-button">
-                    <iframe onClick={() => {setOpenItemModal(true)}} id="plus" src={plus} title="AddItem"></iframe>
-                </span>
+                <button id="plus-button" type="button">
+                    <BsFillPlusCircleFill size={124} color="#00A4ED" style={{backgroundColor: "#fff", padding: 0, borderRadius: 160}} />
+                </button>
                 
             </header>
 

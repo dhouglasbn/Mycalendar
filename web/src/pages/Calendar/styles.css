@@ -7,6 +7,8 @@
     --content-color: #14181C
 }
 
+/* tudo o que é relacionado ao cabeçalho da página */
+
 #calendar-page header {
     width: 100vw;
     height: 184px;
@@ -30,16 +32,13 @@ div#salute {
     display: flex;
 }
 
-span#plus-button {
+button#plus-button {
+    
     position: relative;
     right: 120px;
-}
-
-iframe#plus {
-
-    height: 124px;
-    width: 124px;
+    background: none;
     border: none;
+    outline: none;
 }
 
 div#salute h3 {
@@ -54,13 +53,8 @@ div#salute button {
     border: none;
     cursor: pointer;
 }
-/* 
-div#salute iframe.logo {
-    height: 100px;
-    width: 100px;
-    margin-bottom: 25px;
-    display: flex;
-} */
+
+/* tudo o que é relacionado ao calendário */
 
 #calendar {
     position: relative;
