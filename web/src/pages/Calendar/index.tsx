@@ -2,10 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./styles.css";
-import logo from "../../Assets/calendar2.svg";
-import plus from "../../Assets/plus.svg";
 import moment, { MomentInput } from "moment";
 import api from "../../services/api";
+import Modal from "@material-ui/core/Modal";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
@@ -34,7 +33,7 @@ const Calendar = () => {
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
-    const [openItemModal, setOpenItemModal] = useState<Boolean>(false)
+    const [openItemModal, setOpenItemModal] = useState<boolean>(false)
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -192,6 +191,14 @@ const Calendar = () => {
 
     }, [referencedDate, items]);
 
+    function openSelectItem() {
+        setOpenItemModal(true)
+    }
+
+    function closeSelectItem() {
+        setOpenItemModal(false)
+    }
+
     function handleLogOut() {
         localStorage.clear()
 
@@ -210,10 +217,34 @@ const Calendar = () => {
                     </button>
                     <h3>{message} {name}!</h3>
                 </div>
+
                 
-                <button id="plus-button" type="button">
-                    <BsFillPlusCircleFill size={124} color="#00A4ED" style={{backgroundColor: "#fff", padding: 0, borderRadius: 160}} />
+                <button
+                onClick={openSelectItem} 
+                id="plus-button" 
+                type="button"
+                >
+                    <BsFillPlusCircleFill 
+                    size={124} 
+                    color="#00A4ED" 
+                    style={{
+                        backgroundColor: "#fff", 
+                        padding: 0, 
+                        borderRadius: 160
+                        }} />
                 </button>
+
+                <Modal 
+                open={openItemModal}
+                onClose={closeSelectItem}
+                aria-labelledby="event-button"
+                >
+                    <div id="Select">
+                        <button id="event-button">Event</button>
+                        <button id="reminder-button">Reminder</button>
+                    </div>
+
+                </Modal>
                 
             </header>
 

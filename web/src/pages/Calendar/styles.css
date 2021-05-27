@@ -39,6 +39,7 @@ button#plus-button {
     background: none;
     border: none;
     outline: none;
+    cursor: pointer;
 }
 
 div#salute h3 {
