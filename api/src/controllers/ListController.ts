@@ -5,6 +5,9 @@ import moment from "moment";
 
 class ListController {
     async index(request: Request, response: Response) {
+        // paginação
+        const {page = 1} = request.query;
+
         // coletando o email do usuário na requisição
         const email = request.headers.email;
 
