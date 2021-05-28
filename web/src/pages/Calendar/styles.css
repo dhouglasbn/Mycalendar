@@ -179,21 +179,25 @@ div#days button.numberDays h3 {
     
 }
 
-/* button.numberDays h3.currentMonth {
-    color: rgba(255, 255, 255, 0.5);
+/* tudo o que é relacionado ao form modal */
+
+div#form-content {
+    height: 954px;
+    width: 770px;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    background-color: #121619;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-button.numberDays h3.anotherMonth {
-    color: rgba(255, 255, 255, 0.5);
-    
-
-    TODAY
-    background-color: var(--blue-color);
-
-    REMINDER
-    border: var(--green-color) solid 4px;
-
-    EVENT 
-    box-shadow: 0.2px 0.2px 0px 5px var(--orange-color);
+div#form-header {
+    width: 100%;
+    height: 165px;
 }
-*/
+
+div#form-main {
+    width: 100%;
+    height: 705px;
+}

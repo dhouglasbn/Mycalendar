@@ -306,7 +306,7 @@ const Calendar = () => {
             open={openFormModal}
             onClose={closeForm}
             aria-labelledby="form-header">
-                <div>
+                <div id="form-content">
                     <header id="form-header">
 
                     </header>
