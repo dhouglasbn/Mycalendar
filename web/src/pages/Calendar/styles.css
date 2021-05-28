@@ -32,16 +32,6 @@ div#salute {
     display: flex;
 }
 
-button#plus-button {
-    
-    position: relative;
-    right: 120px;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-}
-
 div#salute h3 {
     padding-left: 56px;
     align-items: center;
@@ -53,6 +43,44 @@ div#salute button {
     outline: none;
     border: none;
     cursor: pointer;
+}
+
+button#plus-button {
+    position: relative;
+    right: 120px;
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+div#selector {
+    top: 5.5%;
+    left: 80%;
+    position: relative;
+    height: 300px;
+    width: 250px;
+    background-color: #121619;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+div#selector button {
+    width: 80%;
+    height: 100%;
+    background: none;
+    border: none;
+    color: var(--main-color);
+    font-size: 35px;
+    font-family: Roboto;
+    font-weight: 400;
+    cursor: pointer;
+}
+
+div#selector button#event-button {
+    border-bottom: rgba(255, 255, 255, 0.4) solid 2px;
 }
 
 /* tudo o que é relacionado ao calendário */

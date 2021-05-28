@@ -239,7 +239,7 @@ const Calendar = () => {
                 onClose={closeSelectItem}
                 aria-labelledby="event-button"
                 >
-                    <div id="Select">
+                    <div id="selector">
                         <button id="event-button">Event</button>
                         <button id="reminder-button">Reminder</button>
                     </div>
