@@ -5,6 +5,7 @@ import "./styles.css";
 import moment, { MomentInput } from "moment";
 import api from "../../services/api";
 import Modal from "@material-ui/core/Modal";
+import Grow from "@material-ui/core/Grow";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
@@ -33,7 +34,8 @@ const Calendar = () => {
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
-    const [openItemModal, setOpenItemModal] = useState<boolean>(false)
+    const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
+    const [openFormModal, setOpenFormModal] = useState<boolean>(false);
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -192,11 +194,19 @@ const Calendar = () => {
     }, [referencedDate, items]);
 
     function openSelectItem() {
-        setOpenItemModal(true)
+        setOpenSelectorModal(true)
     }
 
     function closeSelectItem() {
-        setOpenItemModal(false)
+        setOpenSelectorModal(false)
+    }
+
+    function openForm() {
+        setOpenFormModal(true)
+    }
+
+    function closeForm() {
+        setOpenFormModal(false)
     }
 
     function handleLogOut() {
@@ -235,14 +245,20 @@ const Calendar = () => {
                 </button>
 
                 <Modal 
-                open={openItemModal}
+                open={openSelectorModal}
                 onClose={closeSelectItem}
                 aria-labelledby="event-button"
                 >
-                    <div id="selector">
-                        <button id="event-button">Event</button>
-                        <button id="reminder-button">Reminder</button>
-                    </div>
+                    <Grow in={openSelectorModal}>
+                        <div id="selector">
+                            <button 
+                            onClick={() => {closeSelectItem();
+                            openForm()}} 
+                            id="event-button">Event</button>
+                            <button id="reminder-button">Reminder</button>
+                        </div>
+                    </Grow>
+                    
 
                 </Modal>
                 
@@ -285,6 +301,22 @@ const Calendar = () => {
                     </main>
                 </div>
             </main>
+        
+            <Modal 
+            open={openFormModal}
+            onClose={closeForm}
+            aria-labelledby="form-header">
+                <div>
+                    <header id="form-header">
+
+                    </header>
+
+                    <main id="form-main">
+
+                    </main>
+                </div>
+
+            </Modal>
         </div>
     )
 }
