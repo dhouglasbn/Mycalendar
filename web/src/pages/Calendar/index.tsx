@@ -255,7 +255,9 @@ const Calendar = () => {
                             onClick={() => {closeSelectItem();
                             openForm()}} 
                             id="event-button">Event</button>
-                            <button id="reminder-button">Reminder</button>
+                            <button onClick={() => {closeSelectItem();
+                            openForm()}} 
+                            id="reminder-button">Reminder</button>
                         </div>
                     </Grow>
                     
@@ -306,12 +308,12 @@ const Calendar = () => {
             open={openFormModal}
             onClose={closeForm}
             aria-labelledby="form-header">
-                <div id="form-content">
-                    <header id="form-header">
+                <div id="modal-form-content">
+                    <header id="modal-form-header">
 
                     </header>
 
-                    <main id="form-main">
+                    <main id="modal-form-main">
 
                     </main>
                 </div>

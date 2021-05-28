@@ -9,8 +9,14 @@
 
 /* tudo o que é relacionado ao cabeçalho da página */
 
+div#calendar-page {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
 #calendar-page header {
-    width: 100vw;
+    width: 90vw;
     height: 184px;
     display: flex;
     align-items: flex-end;
@@ -28,7 +34,6 @@
 
 div#salute {
     position: relative;
-    left: 120px;
     display: flex;
 }
 
@@ -47,7 +52,6 @@ div#salute button {
 
 button#plus-button {
     position: relative;
-    right: 120px;
     background: none;
     border: none;
     outline: none;
@@ -56,7 +60,7 @@ button#plus-button {
 
 div#selector {
     top: 56px;
-    left: 1472px;
+    left: 1492px;
     position: relative;
     height: 300px;
     width: 250px;
@@ -181,23 +185,27 @@ div#days button.numberDays h3 {
 
 /* tudo o que é relacionado ao form modal */
 
-div#form-content {
+div#modal-form-content {
+    position: relative;
+    left: 535px;
+    top: 60px;
     height: 954px;
     width: 770px;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     background-color: #121619;
-    bottom: 0;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
 }
 
-div#form-header {
+header#modal-form-header { 
     width: 100%;
     height: 165px;
 }
 
-div#form-main {
+main#modal-form-main {
     width: 100%;
     height: 705px;
 }
