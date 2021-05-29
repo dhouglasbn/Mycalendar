@@ -5,9 +5,6 @@ import moment from "moment";
 
 class ListController {
     async index(request: Request, response: Response) {
-        // paginação
-        const {page = 1} = request.query;
-
         // coletando o email do usuário na requisição
         const email = request.headers.email;
 
@@ -32,6 +29,9 @@ class ListController {
     }
 
     async ListDayItems(request: Request, response: Response) {
+        // paginação
+        const {page = 1} = request.query;
+
         // coleta de dados da requisição
         const { date } = request.query;
         const email = request.headers.email;
@@ -55,9 +55,13 @@ class ListController {
         // atribuir minhas reminders a data
         const data = reminders;
 
-        // inserindo cada item de events ao final de data
+        // em showItems é o que vai ser retornado no final
+        const showItems = [];
 
+        // inserindo cada item de events ao final de data
         events.map(item => {data.push(item)});
+
+        // data.map(item => )
 
         // retornando meus dados
         return response.json(data);
