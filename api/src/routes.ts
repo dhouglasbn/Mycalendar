@@ -119,7 +119,8 @@ router.get("/day-items", celebrate({
         email: Joi.string().required().email()
     }).unknown(),
     [Segments.QUERY]: {
-        date: Joi.string().required()
+        date: Joi.string().required(),
+        page: Joi.number().required()
     }
 })
 ,listController.ListDayItems) // coletar todos os itens daquele dia
