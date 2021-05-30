@@ -169,6 +169,10 @@ const Calendar = () => {
             
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
                 return <button
+                onClick={() => {
+                    if( CalendarVerifier.isReminderDay(monthDays[number]) || CalendarVerifier.isEventDay(monthDays[number])) {
+                        openForm()                    }
+                }}
                 className="numberDays" 
                 key={number}
                 >
@@ -313,7 +317,8 @@ const Calendar = () => {
                 direction="up"
                 in={openFormModal}
                 mountOnEnter
-                unmountOnExit>
+                unmountOnExit
+                timeout={350}>
                 <div id="modal-form-content">
                     <header id="modal-form-header">
 
