@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactComponentElement, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./styles.css";
@@ -11,6 +11,7 @@ import Slide from "@material-ui/core/Slide"
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { IndexedAccessType, IndexedAccessTypeNode, IndexInfo, IndexType } from "typescript";
 
 // tipagem dos dados de items
 interface Item {
@@ -37,6 +38,7 @@ const Calendar = () => {
     const [items, setItems] = useState<Item[]>([]);
     const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
     const [openFormModal, setOpenFormModal] = useState<boolean>(false);
+    const [formContent, setFormContent] = useState<Element>()
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -206,7 +208,20 @@ const Calendar = () => {
         setOpenSelectorModal(false)
     }
 
-    function openForm() {
+    function openForm(key: String, day: String = "") {
+        const contents = [
+            <div id="modal-form-content">
+                <header id="modal-form-header">
+
+                </header>
+
+                <main id="modal-form-main">
+
+                </main>
+            </div>
+        ]
+
+        setFormContent(contents[key])
         setOpenFormModal(true)
     }
 
@@ -319,15 +334,7 @@ const Calendar = () => {
                 mountOnEnter
                 unmountOnExit
                 timeout={350}>
-                <div id="modal-form-content">
-                    <header id="modal-form-header">
-
-                    </header>
-
-                    <main id="modal-form-main">
-
-                    </main>
-                </div>
+                {formContent}
                 </Slide>
 
             </Modal>
