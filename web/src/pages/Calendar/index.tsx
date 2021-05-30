@@ -6,6 +6,7 @@ import moment, { MomentInput } from "moment";
 import api from "../../services/api";
 import Modal from "@material-ui/core/Modal";
 import Grow from "@material-ui/core/Grow";
+import Slide from "@material-ui/core/Slide"
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
@@ -308,6 +309,11 @@ const Calendar = () => {
             open={openFormModal}
             onClose={closeForm}
             aria-labelledby="form-header">
+                <Slide
+                direction="up"
+                in={openFormModal}
+                mountOnEnter
+                unmountOnExit>
                 <div id="modal-form-content">
                     <header id="modal-form-header">
 
@@ -317,6 +323,7 @@ const Calendar = () => {
 
                     </main>
                 </div>
+                </Slide>
 
             </Modal>
         </div>
