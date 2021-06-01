@@ -88,9 +88,6 @@ const Calendar = () => {
 
     useEffect(() => {
 
-        
-
-
         // primeiro dia do mes, no primeiro dia daquela semana
         const monthDay = moment(moment(referencedDate).startOf("month")).startOf("week")
 
@@ -134,19 +131,14 @@ const Calendar = () => {
                 className="numberDays" 
                 key={number}
                 >
-
-                    
-                    <h3
+                    <h3 // estilizando cada item do calendário
                     style={{
                         backgroundColor: CalendarVerifier.isToday(monthDays[number]) ? "#00A4ED" : "",
                         border: CalendarVerifier.isReminderDay(monthDays[number], items) ? "#00BD6D solid 4px" : "",
                         boxShadow: CalendarVerifier.isEventDay(monthDays[number], items) ? "0.2px 0.2px 0px 5px #FF5D2F" : "",
                         color: CalendarVerifier.isCurrentMonth(monthDays[number], referencedDate) ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)"
                     }}
-                    id={moment(monthDays[number]).format("yyyy-MM-DD")}
-                    
-                >
-
+                    id={moment(monthDays[number]).format("yyyy-MM-DD")}>
                     {moment(monthDays[number]).format("DD")}
                 </h3></button>;
             }
@@ -168,7 +160,10 @@ const Calendar = () => {
                 </header>
 
                 <main id="modal-form-main">
-
+                    <fieldset id="form-inputs">
+                        <input type="text" name="titleN" id="titleI" className="white-box" placeholder="Remind me to..." />
+                    </fieldset>
+                    <button type="submit"><p>Save</p></button>
                 </main>
             </div>,
 
