@@ -6,7 +6,8 @@ import moment, { MomentInput } from "moment";
 import api from "../../services/api";
 import Modal from "@material-ui/core/Modal";
 import Grow from "@material-ui/core/Grow";
-import Slide from "@material-ui/core/Slide"
+import Slide from "@material-ui/core/Slide";
+import { CalendarVerifier } from "../../services/CalendarService";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
@@ -87,52 +88,7 @@ const Calendar = () => {
 
     useEffect(() => {
 
-        // objeto responsável pelas marcações no calendário
-        const CalendarVerifier = {
-            // verificar se é mês atual
-            isCurrentMonth: (date: MomentInput) => {
-                if(moment(date).month() === moment(referencedDate).month()) {
-                    return true;
-                }
-                return false;
-                
-            },
-            // verificar se é o dia de hoje, se for
-            isToday: (date: MomentInput) => {
-                if(date === moment().format("yyyy-MM-DD")) {
-                    return true;
-                } else {
-                    return false;
-                }
-            },
-            // verificar se há lembretes no dia tal
-            isReminderDay: (date: MomentInput) => {
-                if (items.length > 0) {
-                    const foundItem = items.find(item => moment(moment(item.date).local()).format("yyyy-MM-DD") === date
-                    && item.type === "reminder")
-                    if (foundItem) {
-                        return true;
-                    }
-                    return false;
-                }
-                return false;
-                
-            },
-            // verificar se há eventos que iniciam no dia tal, se houver
-            isEventDay: (date: MomentInput) => {
-                if (items.length > 0) {
-                    const foundItem = items.find(item => (moment(moment(item.start_date).local()).format("yyyy-MM-DD") === date 
-                    || moment(moment(item.finish_date).local()).format("yyyy-MM-DD") === date )
-                    && item.type === "event")
-                    if (foundItem) {
-                        return true;
-                    }
-                    return false;
-                }
-                return false;
-            }
-            
-        }
+        
 
 
         // primeiro dia do mes, no primeiro dia daquela semana
@@ -171,7 +127,7 @@ const Calendar = () => {
             // retornando cada elemento h3 que vai ser renderizado dentro de div#days
                 return <button
                 onClick={() => {
-                    if( CalendarVerifier.isReminderDay(monthDays[number]) || CalendarVerifier.isEventDay(monthDays[number])) {
+                    if( CalendarVerifier.isReminderDay(monthDays[number], items) || CalendarVerifier.isEventDay(monthDays[number], items)) {
                         openForm(2, monthDays[number])
                     }
                 }}
@@ -179,12 +135,13 @@ const Calendar = () => {
                 key={number}
                 >
 
-                    <h3 
+                    
+                    <h3
                     style={{
                         backgroundColor: CalendarVerifier.isToday(monthDays[number]) ? "#00A4ED" : "",
-                        border: CalendarVerifier.isReminderDay(monthDays[number]) ? "#00BD6D solid 4px" : "",
-                        boxShadow: CalendarVerifier.isEventDay(monthDays[number]) ? "0.2px 0.2px 0px 5px #FF5D2F" : "",
-                        color: CalendarVerifier.isCurrentMonth(monthDays[number]) ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)"
+                        border: CalendarVerifier.isReminderDay(monthDays[number], items) ? "#00BD6D solid 4px" : "",
+                        boxShadow: CalendarVerifier.isEventDay(monthDays[number], items) ? "0.2px 0.2px 0px 5px #FF5D2F" : "",
+                        color: CalendarVerifier.isCurrentMonth(monthDays[number], referencedDate) ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)"
                     }}
                     id={moment(monthDays[number]).format("yyyy-MM-DD")}
                     
@@ -200,6 +157,7 @@ const Calendar = () => {
 
     }, [referencedDate, items]);
 
+    // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
     function openForm(key: Number, day: MomentInput = "") {
         const contents = [
 
@@ -249,12 +207,14 @@ const Calendar = () => {
         setOpenFormModal(true)
     }
 
+    // retirando o conteúdo do formulário e fechando-o
     function closeForm() {
         setFormContent(<div id="modal-form-content"></div>)
 
         setOpenFormModal(false)
     }
 
+    // limpando os atributos da local storage e voltando para a home
     function handleLogOut() {
         localStorage.clear()
 
