@@ -200,14 +200,6 @@ const Calendar = () => {
 
     }, [referencedDate, items]);
 
-    function openSelectItem() {
-        setOpenSelectorModal(true)
-    }
-
-    function closeSelectItem() {
-        setOpenSelectorModal(false)
-    }
-
     function openForm(key: Number, day: MomentInput = "") {
         const contents = [
 
@@ -258,6 +250,8 @@ const Calendar = () => {
     }
 
     function closeForm() {
+        setFormContent(<div id="modal-form-content"></div>)
+
         setOpenFormModal(false)
     }
 
@@ -282,7 +276,7 @@ const Calendar = () => {
 
                 
                 <button
-                onClick={openSelectItem} 
+                onClick={() => {setOpenSelectorModal(true)}} 
                 id="plus-button" 
                 type="button"
                 >
@@ -298,16 +292,16 @@ const Calendar = () => {
 
                 <Modal 
                 open={openSelectorModal}
-                onClose={closeSelectItem}
+                onClose={() => {setOpenSelectorModal(false)}}
                 aria-labelledby="event-button"
                 >
                     <Grow in={openSelectorModal}>
                         <div id="selector">
                             <button 
-                            onClick={() => {closeSelectItem();
+                            onClick={() => {setOpenSelectorModal(false)
                             openForm(1)}} 
                             id="event-button">Event</button>
-                            <button onClick={() => {closeSelectItem();
+                            <button onClick={() => {setOpenSelectorModal(false)
                             openForm(0)}} 
                             id="reminder-button">Reminder</button>
                         </div>
