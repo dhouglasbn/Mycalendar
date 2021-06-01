@@ -213,6 +213,8 @@ const Calendar = () => {
 
     function openForm(key: Number, day: String = "") {
         const contents = [
+
+            // Criar reminder
             <div id="modal-form-content">
                 <header id="modal-form-header">
                     Add a reminder
@@ -222,6 +224,8 @@ const Calendar = () => {
 
                 </main>
             </div>,
+
+            // Criar evento
             <div id="modal-form-content">
                 <header id="modal-form-header">
                     Add an event
@@ -230,6 +234,8 @@ const Calendar = () => {
 
                 </main>
             </div>,
+
+            // Listagem de lembretes e eventos de um dia
             <div id="modal-form-content">
                 <header id="modal-form-header">
                     1 de junho
@@ -238,6 +244,8 @@ const Calendar = () => {
 
                 </main>
             </div>,
+
+            // Painel de um lembrete/evento
             <div id="modal-form-content">
                 <header id="modal-form-header">
                     Info de 1 de junho
