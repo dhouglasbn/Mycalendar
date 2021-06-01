@@ -1,4 +1,4 @@
-import React, { ReactComponentElement, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./styles.css";
@@ -11,7 +11,6 @@ import Slide from "@material-ui/core/Slide"
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
 import { BsFillPlusCircleFill } from "react-icons/bs";
-import { IndexedAccessType, IndexedAccessTypeNode, IndexInfo, IndexType } from "typescript";
 
 // tipagem dos dados de items
 interface Item {
@@ -27,6 +26,10 @@ interface Item {
 
 }
 
+interface Index {
+    key: number;
+}
+
 const Calendar = () => {
 
     // usando o useHistory do react-router-dom
@@ -38,7 +41,7 @@ const Calendar = () => {
     const [items, setItems] = useState<Item[]>([]);
     const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
     const [openFormModal, setOpenFormModal] = useState<boolean>(false);
-    const [formContent, setFormContent] = useState<Element>()
+    const [formContent, setFormContent] = useState<JSX.Element>()
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -173,7 +176,7 @@ const Calendar = () => {
                 return <button
                 onClick={() => {
                     if( CalendarVerifier.isReminderDay(monthDays[number]) || CalendarVerifier.isEventDay(monthDays[number])) {
-                        openForm()                    }
+                        openForm(2)                    }
                 }}
                 className="numberDays" 
                 key={number}
@@ -208,20 +211,44 @@ const Calendar = () => {
         setOpenSelectorModal(false)
     }
 
-    function openForm(key: String, day: String = "") {
+    function openForm(key: Number, day: String = "") {
         const contents = [
             <div id="modal-form-content">
                 <header id="modal-form-header">
-
+                    Add a reminder
                 </header>
 
+                <main id="modal-form-main">
+
+                </main>
+            </div>,
+            <div id="modal-form-content">
+                <header id="modal-form-header">
+                    Add an event
+                </header>
+                <main id="modal-form-main">
+
+                </main>
+            </div>,
+            <div id="modal-form-content">
+                <header id="modal-form-header">
+                    1 de junho
+                </header>
+                <main id="modal-form-main">
+
+                </main>
+            </div>,
+            <div id="modal-form-content">
+                <header id="modal-form-header">
+                    Info de 1 de junho
+                </header>
                 <main id="modal-form-main">
 
                 </main>
             </div>
         ]
 
-        setFormContent(contents[key])
+        setFormContent(contents[Number(key)])
         setOpenFormModal(true)
     }
 
@@ -273,10 +300,10 @@ const Calendar = () => {
                         <div id="selector">
                             <button 
                             onClick={() => {closeSelectItem();
-                            openForm()}} 
+                            openForm(1)}} 
                             id="event-button">Event</button>
                             <button onClick={() => {closeSelectItem();
-                            openForm()}} 
+                            openForm(0)}} 
                             id="reminder-button">Reminder</button>
                         </div>
                     </Grow>
