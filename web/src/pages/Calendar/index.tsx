@@ -26,10 +26,6 @@ interface Item {
 
 }
 
-interface Index {
-    key: number;
-}
-
 const Calendar = () => {
 
     // usando o useHistory do react-router-dom
@@ -176,7 +172,8 @@ const Calendar = () => {
                 return <button
                 onClick={() => {
                     if( CalendarVerifier.isReminderDay(monthDays[number]) || CalendarVerifier.isEventDay(monthDays[number])) {
-                        openForm(2)                    }
+                        openForm(2, monthDays[number])
+                    }
                 }}
                 className="numberDays" 
                 key={number}
@@ -211,7 +208,7 @@ const Calendar = () => {
         setOpenSelectorModal(false)
     }
 
-    function openForm(key: Number, day: String = "") {
+    function openForm(key: Number, day: MomentInput = "") {
         const contents = [
 
             // Criar reminder
@@ -238,7 +235,7 @@ const Calendar = () => {
             // Listagem de lembretes e eventos de um dia
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    1 de junho
+                    {moment(day).format("MM")}, {moment(day).format("DD")}
                 </header>
                 <main id="modal-form-main">
 
