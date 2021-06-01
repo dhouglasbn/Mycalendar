@@ -214,7 +214,7 @@ const Calendar = () => {
             // Criar reminder
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    Add a reminder
+                    <h2>Add a reminder</h2>
                 </header>
 
                 <main id="modal-form-main">
@@ -225,7 +225,7 @@ const Calendar = () => {
             // Criar evento
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    Add an event
+                    <h2>Add an event</h2>
                 </header>
                 <main id="modal-form-main">
 
@@ -235,7 +235,7 @@ const Calendar = () => {
             // Listagem de lembretes e eventos de um dia
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    {moment(day).format("MM")}, {moment(day).format("DD")}
+                    <h2>{moment(day).format("MMMM")}, {moment(day).format("DD")}</h2>
                 </header>
                 <main id="modal-form-main">
 
@@ -245,7 +245,7 @@ const Calendar = () => {
             // Painel de um lembrete/evento
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    Info de 1 de junho
+                    <h2>Info de 1 de junho</h2>
                 </header>
                 <main id="modal-form-main">
 
