@@ -38,7 +38,7 @@ div#salute {
 }
 
 div#salute h3 {
-    padding-left: 56px;
+    text-indent: 56px;
     align-items: center;
     line-height: 30px;
 }
@@ -208,7 +208,7 @@ header#modal-form-header {
 }
 
 header#modal-form-header h2{
-    padding-left: 30px;
+    text-indent: 30px;
 }
 
 main#modal-form-main {
@@ -219,8 +219,24 @@ main#modal-form-main {
     justify-content: space-between;
 }
 
-main#modal-form-main .white-box {
+fieldset {
     border: none;
-    background-color: rgba(255, 255, 255, 0.9);
-    padding: none
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
 }
+
+input {
+    box-shadow: none;
+}
+
+.white-box {
+    background-color: rgba(255, 255, 255, 0.9);
+    width: 718px;
+    height: 80px;
+    border-radius: 20px;
+}
+
