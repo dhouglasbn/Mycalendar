@@ -69,6 +69,7 @@ div#selector {
     display: flex;
     flex-direction: column;
     align-items: center;
+    outline: none;
 }
 
 div#selector button {
@@ -223,10 +224,11 @@ fieldset {
     border: none;
     padding: 0;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
 }
 
 input {
@@ -239,5 +241,15 @@ input {
     height: 80px;
     border-radius: 20px;
     border: none;
+    text-indent: 30px;
+    font-family: Nunito;
+    font-weight: 600;
+    font-size: 35px;
+    outline: none;
+    color: var(--text-color);
 }
 
+#dateI {
+    text-indent: none;
+    text-align: center;
+}
