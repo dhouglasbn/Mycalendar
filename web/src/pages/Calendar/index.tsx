@@ -166,16 +166,18 @@ const Calendar = () => {
                         type="text" 
                         name="titleN" id="titleI" 
                         className="white-box" 
-                        placeholder="Remind me to..." />
+                        placeholder="Remind me to..." 
+                        required />
 
                         <input 
                         type="datetime-local" 
                         name="dateN" id="dateI" 
                         className="white-box" 
-                        min={String(moment().format("YYYY-MM-DDTHH:mm"))} />
+                        min={String(moment().format("YYYY-MM-DDTHH:mm"))} 
+                        required />
                     </fieldset>
 
-                    <button type="submit"><p>Save</p></button>
+                    <button type="submit" id="save-button" className="form-button"><p>Save</p></button>
                 </main>
             </div>,
 

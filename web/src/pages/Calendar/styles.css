@@ -218,6 +218,7 @@ main#modal-form-main {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: flex-end;
 }
 
 fieldset {
@@ -247,9 +248,34 @@ input {
     font-size: 35px;
     outline: none;
     color: var(--text-color);
+    margin: 8px 0px 8px 0px
 }
 
 #dateI {
     text-indent: none;
     text-align: center;
+}
+
+
+#save-button {
+    margin-right: 25px;
+    background-color: var(--blue-color);
+}
+
+button.form-button {
+    display: flex;
+    height: 60px;
+    width: 240px;
+    color: #fff;
+    font-family: Roboto;
+    font-weight: 500;
+    font-size: 35px;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    box-shadow: none;
+    cursor: pointer;
 }
