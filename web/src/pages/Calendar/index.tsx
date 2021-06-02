@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
 import "./styles.css";
@@ -36,9 +36,23 @@ const Calendar = () => {
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
+
     const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
     const [openFormModal, setOpenFormModal] = useState<boolean>(false);
+
     const [formContent, setFormContent] = useState<JSX.Element>()
+
+    const [reminderFormData, setReminderFormData] = useState({
+        title: "",
+        date: ""
+    })
+    const [eventFormData, setEventFormData] = useState({
+        title: "",
+        start_date: "",
+        finish_date: "",
+        location: "",
+        description: ""
+    })
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -149,6 +163,50 @@ const Calendar = () => {
 
     }, [referencedDate, items]);
 
+    function handleReminderInputChange(event: ChangeEvent<HTMLInputElement>) {
+        // quando algo for acrescentado no input ....
+        // atribuir nome e valor do target do event
+        // ex: nome do name e valor que é o name q foi digitado, mas serve para o email tbm
+        const { name, value } = event.target;
+
+        // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
+        setReminderFormData({...reminderFormData, [name]: value})
+        // pus name em array pra referenciar o name da target do event
+    }
+
+    function handleEventInputChange(event: ChangeEvent<HTMLInputElement>) {
+        // quando algo for acrescentado no input ....
+        // atribuir nome e valor do target do event
+        // ex: nome do name e valor que é o name q foi digitado, mas serve para o email tbm
+        const { name, value } = event.target;
+
+        // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
+        setEventFormData({...eventFormData, [name]: value})
+        // pus name em array pra referenciar o name da target do event
+    }
+
+    function handleSubmitReminder(event: FormEvent) {
+        event.preventDefault()
+
+        const { title, date } = reminderFormData;
+
+        const data = new FormData();
+
+        data.append("title", title);
+        data.append("date", date);
+
+        try {
+            api.post("remindme", data);
+
+            alert("Reminder created!")
+
+            closeForm();
+
+        } catch (error) {
+            alert("Error! Can't create a reminder!")
+        }
+    }
+
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
     function openForm(key: Number, day: MomentInput = "") {
         const contents = [
@@ -163,21 +221,24 @@ const Calendar = () => {
 
                     <fieldset id="form-inputs">
                         <input 
+                        onChange={handleReminderInputChange}
                         type="text" 
-                        name="titleN" id="titleI" 
+                        name="title" id="titleI" 
                         className="white-box" 
                         placeholder="Remind me to..." 
                         required />
 
                         <input 
+                        onChange={handleEventInputChange}
                         type="datetime-local" 
-                        name="dateN" id="dateI" 
+                        name="date" 
+                        id="dateI"
                         className="white-box" 
                         min={String(moment().format("YYYY-MM-DDTHH:mm"))} 
                         required />
                     </fieldset>
 
-                    <button type="submit" id="save-button" className="form-button"><p>Save</p></button>
+                    <button onSubmit={handleSubmitReminder} type="submit" id="save-button" className="form-button"><p>Save</p></button>
                 </main>
             </div>,
 
