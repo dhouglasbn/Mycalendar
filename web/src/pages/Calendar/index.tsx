@@ -160,10 +160,21 @@ const Calendar = () => {
                 </header>
 
                 <main id="modal-form-main">
+
                     <fieldset id="form-inputs">
-                        <input type="text" name="titleN" id="titleI" className="white-box" placeholder="Remind me to..." />
-                        <input type="datetime-local" name="dateN" id="dateI" className="white-box" contentEditable />
+                        <input 
+                        type="text" 
+                        name="titleN" id="titleI" 
+                        className="white-box" 
+                        placeholder="Remind me to..." />
+
+                        <input 
+                        type="datetime-local" 
+                        name="dateN" id="dateI" 
+                        className="white-box" 
+                        min={String(moment().format("YYYY-MM-DDTHH:mm"))} />
                     </fieldset>
+
                     <button type="submit"><p>Save</p></button>
                 </main>
             </div>,
