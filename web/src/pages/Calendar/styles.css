@@ -238,5 +238,6 @@ input {
     width: 718px;
     height: 80px;
     border-radius: 20px;
+    border: none;
 }
 
