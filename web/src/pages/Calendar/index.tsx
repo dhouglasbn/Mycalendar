@@ -157,8 +157,20 @@ const Calendar = () => {
 
     });
 
-    function handleReminderSubmit () {
-        console.log("yeah!")
+    async function handleReminderSubmit (data: Item) {
+        try {
+            await api.post("remindme", data, {
+                headers: {
+                    email: email
+                }
+            })
+
+            alert("Reminder created successfuly!")
+
+            closeForm()
+        } catch (error) {
+            alert("Error! Somethign went wrong!")
+        }
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
