@@ -1,14 +1,18 @@
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
+import moment, { MomentInput } from "moment";
+import api from "../../services/api";
+
+import { Form } from "@unform/web";
+import Input from "../../Components/Input";
 
 import "./styles.css";
 
-import moment, { MomentInput } from "moment";
-import api from "../../services/api";
 import Modal from "@material-ui/core/Modal";
 import Grow from "@material-ui/core/Grow";
 import Slide from "@material-ui/core/Slide";
+
 import { CalendarVerifier } from "../../services/CalendarService";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
@@ -153,19 +157,9 @@ const Calendar = () => {
 
     });
 
-    
-
-    // function handleEventInputChange(event: ChangeEvent<HTMLInputElement>) {
-    //     // quando algo for acrescentado no input ....
-    //     // atribuir nome e valor do target do event
-    //     // ex: nome do name e valor que é o name q foi digitado, mas serve para o email tbm
-    //     const { name, value } = event.target;
-
-    //     // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
-    //     setEventFormData({...eventFormData, [name]: value})
-    //     // pus name em array pra referenciar o name da target do event
-    // }
-
+    function handleReminderSubmit () {
+        console.log("yeah!")
+    }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
     function openForm(key: Number, day: MomentInput = "") {
@@ -177,27 +171,29 @@ const Calendar = () => {
                     <h2>Add a reminder</h2>
                 </header>
 
-                <main id="modal-form-main">
+                    <Form id="modal-form-main" onSubmit={handleReminderSubmit}>
+                        <fieldset id="form-inputs">
+                            <Input 
+                            type="text"
+                            name="title" 
+                            id="titleI"
+                            className="white-box" 
+                            placeholder="Remind me to ..." 
+                            required />
+                            <Input 
+                            type="datetime-local"
+                            name="date" 
+                            id="dateI"
+                            className="white-box"
+                            min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                            required />
+                        </fieldset>
+                        
+                        <button type="submit" id="save-button" className="form-button"><p>Save</p></button>
+                    </Form>
 
-                    <fieldset id="form-inputs">
-                        <input 
-                        type="text" 
-                        name="title" id="titleI" 
-                        className="white-box" 
-                        placeholder="Remind me to..." 
-                        required />
-
-                        <input 
-                        type="datetime-local" 
-                        name="date" 
-                        id="dateI"
-                        className="white-box" 
-                        min={String(moment().format("YYYY-MM-DDTHH:mm"))}
-                        required />
-                    </fieldset>
-
-                    <button type="button" id="save-button" className="form-button"><p>Save</p></button>
-                </main>
+                    
+                
             </div>,
 
             // Criar evento

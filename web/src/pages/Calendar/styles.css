@@ -213,7 +213,7 @@ header#modal-form-header h2{
     text-indent: 30px;
 }
 
-main#modal-form-main {
+#modal-form-main {
     width: 100%;
     height: 705px;
     display: flex;
