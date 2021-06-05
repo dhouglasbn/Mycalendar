@@ -9,16 +9,6 @@ import logo from "../../Assets/calendar.svg";
 
 const Home = () => {
 
-    /**
-     * LEMBRAR
-     * DE
-     * APRENDER
-     * A
-     * TRABALHAR
-     * COM
-     * MODALS
-     */
-
     // criando função para fzr a responsividade de páginas
     const history = useHistory();
 
@@ -32,12 +22,11 @@ const Home = () => {
     function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
         // quando algo for acrescentado no input ....
         // atribuir nome e valor do target do event
-        // ex: nome do name e valor que é o name q foi digitado, mas serve para o email tbm
         const { name, value } = event.target;
 
         // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
         setFormData({...formData, [name]: value})
-        // pus name em array pra referenciar o name da target do event
+        // pus name em array pra referenciar a chave dentro da state formData
     }
 
     function handleSelectedButton(buttonId: string) {

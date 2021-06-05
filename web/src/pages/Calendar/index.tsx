@@ -1,7 +1,9 @@
 import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import ReactDOM from "react-dom";
+
 import "./styles.css";
+
 import moment, { MomentInput } from "moment";
 import api from "../../services/api";
 import Modal from "@material-ui/core/Modal";
@@ -41,18 +43,6 @@ const Calendar = () => {
     const [openFormModal, setOpenFormModal] = useState<boolean>(false);
 
     const [formContent, setFormContent] = useState<JSX.Element>()
-
-    const [reminderFormData, setReminderFormData] = useState({
-        title: "",
-        date: ""
-    })
-    // const [eventFormData, setEventFormData] = useState({
-    //     title: "",
-    //     start_date: "",
-    //     finish_date: "",
-    //     location: "",
-    //     description: ""
-    // })
 
     // pegando o name que foi setado no localStorage durante o login
     const name = localStorage.getItem("name");
@@ -163,19 +153,7 @@ const Calendar = () => {
 
     });
 
-    function handleReminderInputChange(event: ChangeEvent<HTMLInputElement>) {
-        // quando algo for acrescentado no input ....
-        // atribuir nome e valor do target do event
-        // ex: nome do name e valor que é o name q foi digitado, mas serve para o email tbm
-        const { name, value } = event.target;
-
-        console.log(name, value)
-        // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
-        setReminderFormData({ ...reminderFormData, [name]: value})
-
-        console.log(reminderFormData)
-        // pus name em array pra referenciar o name da target do event
-    }
+    
 
     // function handleEventInputChange(event: ChangeEvent<HTMLInputElement>) {
     //     // quando algo for acrescentado no input ....
@@ -188,35 +166,6 @@ const Calendar = () => {
     //     // pus name em array pra referenciar o name da target do event
     // }
 
-    function handleSubmitReminder(event: FormEvent) {
-        event.preventDefault()
-
-        const { title, date } = reminderFormData;
-
-        const data = new FormData();
-
-        data.append("title", title);
-        data.append("date", date);
-
-        console.log(data, email)
-        try {
-            api.post("remindme", data, {
-                headers: {
-                    email: email
-                }
-            }).then(response => {
-                if(response.status === 200) {
-                    alert("Reminder created!")
-
-                    closeForm();
-                } else {
-                    alert("Error! Can't create a reminder!")
-                }
-            });
-        } catch (error) {
-            alert("Error! Can't create a reminder!")
-        }
-    }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
     function openForm(key: Number, day: MomentInput = "") {
@@ -232,7 +181,6 @@ const Calendar = () => {
 
                     <fieldset id="form-inputs">
                         <input 
-                        onChange={handleReminderInputChange}
                         type="text" 
                         name="title" id="titleI" 
                         className="white-box" 
@@ -240,16 +188,15 @@ const Calendar = () => {
                         required />
 
                         <input 
-                        onChange={handleReminderInputChange}
                         type="datetime-local" 
                         name="date" 
                         id="dateI"
                         className="white-box" 
-                        min={String(moment().format("YYYY-MM-DDTHH:mm"))} 
+                        min={String(moment().format("YYYY-MM-DDTHH:mm"))}
                         required />
                     </fieldset>
 
-                    <button onClick={handleSubmitReminder} type="button" id="save-button" className="form-button"><p>Save</p></button>
+                    <button type="button" id="save-button" className="form-button"><p>Save</p></button>
                 </main>
             </div>,
 
