@@ -170,6 +170,7 @@ button.numberDays {
     border: none;
     padding: none;
     outline: none;
+    cursor: pointer;
 }
 
 div#days button.numberDays h3 {

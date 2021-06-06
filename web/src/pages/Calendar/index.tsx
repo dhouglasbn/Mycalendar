@@ -190,6 +190,21 @@ const Calendar = () => {
         }
     }
 
+    // async function listDayItems (date: MomentInput, page: Number) {
+
+    //     await api.get("day-items", {headers: {
+    //         email: email
+    //     }, params: {
+    //         date: date,
+    //         page: page
+    //     }}).then(response => {
+    //         const dayItems = <div><button className="white-box">{response.data}</button></div>
+    //     })
+
+
+    //     return dayItems;
+    // }
+
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
     function openForm(key: Number, day: MomentInput = "") {
         const contents = [
@@ -283,7 +298,7 @@ const Calendar = () => {
                     <h2>{moment(day).format("MMMM")}, {moment(day).format("DD")}</h2>
                 </header>
                 <main id="modal-form-main">
-
+                    {/* {listDayItems(day, 1)} */}
                 </main>
             </div>,
 
