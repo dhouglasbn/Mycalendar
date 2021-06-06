@@ -238,7 +238,7 @@ const Calendar = () => {
                             id="finish-dateI"
                             className="white-box"
                             min={String(moment().format("YYYY-MM-DDTHH:mm"))}
-                            placeholder="Finish"
+                            
                             required />
 
                             <Input 
