@@ -52,7 +52,7 @@ const Calendar = () => {
     const name = localStorage.getItem("name");
     const email = localStorage.getItem("email");
 
-
+    // fazendo requisição, dos itens do usuário logado, no backend
     useEffect(() => {
 
         // fazendo requisição no banco de dados para receber todos os items do usuário logado
@@ -65,7 +65,7 @@ const Calendar = () => {
             setItems(response.data);
         })
         
-    }, [email])
+    }, [email, openFormModal])
 
     
     // alterando a mensagem de saudação de acordo com o horário do dia
@@ -168,6 +168,7 @@ const Calendar = () => {
             alert("Reminder created successfuly!")
 
             closeForm()
+            history.push("/calendar")
         } catch (error) {
             alert("Error! Somethign went wrong!")
         }
