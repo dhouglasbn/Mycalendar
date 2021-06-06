@@ -13,7 +13,7 @@ import Modal from "@material-ui/core/Modal";
 import Grow from "@material-ui/core/Grow";
 import Slide from "@material-ui/core/Slide";
 
-import { CalendarVerifier } from "../../services/CalendarService";
+import { CalendarVerifier } from "../../Utils/CalendarService";
 
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
@@ -93,7 +93,8 @@ const Calendar = () => {
         
         
     }, [])
-
+    
+    // buildando meu calendário
     useEffect(() => {
 
         // primeiro dia do mes, no primeiro dia daquela semana
@@ -167,8 +168,7 @@ const Calendar = () => {
 
             alert("Reminder created successfuly!")
 
-            closeForm()
-            history.push("/calendar")
+            closeForm();
         } catch (error) {
             alert("Error! Somethign went wrong!")
         }
