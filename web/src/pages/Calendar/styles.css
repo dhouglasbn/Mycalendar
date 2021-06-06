@@ -252,7 +252,7 @@ input {
     margin: 8px 0px 8px 0px
 }
 
-#dateI {
+#dateI, #start-dateI, #finish-dateI {
     text-indent: none;
     text-align: center;
 }

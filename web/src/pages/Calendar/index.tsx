@@ -214,9 +214,51 @@ const Calendar = () => {
                 <header id="modal-form-header">
                     <h2>Add an event</h2>
                 </header>
-                <main id="modal-form-main">
+                <Form id="modal-form-main" onSubmit={handleReminderSubmit}>
+                        <fieldset id="form-inputs">
+                            <Input 
+                            type="text"
+                            name="title" 
+                            id="titleI"
+                            className="white-box" 
+                            placeholder="add a title" 
+                            required />
 
-                </main>
+                            <Input 
+                            type="datetime-local"
+                            name="start_date" 
+                            id="start-dateI"
+                            className="white-box"
+                            min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                            placeholder="Start"
+                            required />
+                            <Input 
+                            type="datetime-local"
+                            name="finish_date" 
+                            id="finish-dateI"
+                            className="white-box"
+                            min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                            placeholder="Finish"
+                            required />
+
+                            <Input 
+                            type="text"
+                            name="description" 
+                            id="desciptionI"
+                            className="white-box"
+                            placeholder="Add a description"/>
+
+                            <Input 
+                            type="text"
+                            name="location" 
+                            id="locationI"
+                            className="white-box"
+                            placeholder="Add a location"/>
+                        </fieldset>
+                        
+                        <button type="submit" id="save-button" className="form-button"><p>Save</p></button>
+                    </Form>
+
             </div>,
 
             // Listagem de lembretes e eventos de um dia
