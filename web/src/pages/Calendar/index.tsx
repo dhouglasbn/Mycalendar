@@ -174,6 +174,22 @@ const Calendar = () => {
         }
     }
 
+    async function handleEventSubmit (data: Item) {
+        try {
+            await api.post("create", data, {
+                headers: {
+                    email: email
+                }
+            })
+
+            alert("Event created successfuly!")
+
+            closeForm();
+        } catch (error) {
+            alert("Error! Somethign went wrong!")
+        }
+    }
+
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
     function openForm(key: Number, day: MomentInput = "") {
         const contents = [
@@ -214,7 +230,7 @@ const Calendar = () => {
                 <header id="modal-form-header">
                     <h2>Add an event</h2>
                 </header>
-                <Form id="modal-form-main" onSubmit={handleReminderSubmit}>
+                <Form id="modal-form-main" onSubmit={handleEventSubmit}>
                         <fieldset id="form-inputs">
                             <Input 
                             type="text"
