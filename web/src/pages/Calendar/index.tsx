@@ -190,23 +190,30 @@ const Calendar = () => {
         }
     }
 
-    // async function listDayItems (date: MomentInput, page: Number) {
+    async function listDayItems (date: MomentInput, page: Number) {
 
-    //     await api.get("day-items", {headers: {
-    //         email: email
-    //     }, params: {
-    //         date: date,
-    //         page: page
-    //     }}).then(response => {
-    //         const dayItems = <div><button className="white-box">{response.data}</button></div>
-    //     })
+        const data: Array<Item> = await api.get("day-items", {headers: {
+            email: email
+        }, params: {
+            date: date,
+            page: page
+        }}).then(response => {
+            // const dayItems = <div><button className="white-box">{response.data}</button></div>
+            return response.data;
+        })
 
-
-    //     return dayItems;
-    // }
+        return data.map(item => <div><button className="whitebox">{item.title}</button></div>);
+    }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
-    function openForm(key: Number, day: MomentInput = "") {
+    async function openForm(key: Number, day: MomentInput = "") {
+        let dayItems: Array<JSX.Element>;
+
+        if(key === 2) {
+            dayItems = listDayItems(day, 1)
+            ReactDOM.render(dayItems, document.getElementById("modal-form-main"))
+        }
+
         const contents = [
 
             // Criar reminder
@@ -298,7 +305,7 @@ const Calendar = () => {
                     <h2>{moment(day).format("MMMM")}, {moment(day).format("DD")}</h2>
                 </header>
                 <main id="modal-form-main">
-                    {/* {listDayItems(day, 1)} */}
+                    
                 </main>
             </div>,
 
