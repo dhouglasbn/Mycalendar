@@ -1,11 +1,19 @@
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import api from "../../services/api";
 import "./styles.css";
 
+import { Form } from "@unform/web";
+import Input from "../../Components/Input";
+
 // await api.post("rota sem /", dados da requisição)
 
 import logo from "../../Assets/calendar.svg";
+
+interface FormData {
+    name: string;
+    email: string;
+}
 
 const Home = () => {
 
@@ -14,20 +22,6 @@ const Home = () => {
 
     // states que serão usadas no código
     const [signValue, setSignValue] = useState("0");
-    const [formData, setFormData] = useState({
-        name: "",
-        email: ""
-    })
-
-    function handleInputChange(event: ChangeEvent<HTMLInputElement>) {
-        // quando algo for acrescentado no input ....
-        // atribuir nome e valor do target do event
-        const { name, value } = event.target;
-
-        // acrescentar em form data a letra q foi digitada tomando como referencia o nome(email ou name)
-        setFormData({...formData, [name]: value})
-        // pus name em array pra referenciar a chave dentro da state formData
-    }
 
     function handleSelectedButton(buttonId: string) {
         // pegando a button do html(seja signIn ou signUp)
@@ -50,24 +44,19 @@ const Home = () => {
         return;
     }
 
-    async function handleSubmit(event: FormEvent) {
-
-        // tornar esse evento cancelável para evitar problemas
-        event.preventDefault()
+    async function handleSubmit(data: FormData) {
 
         // iniciar sessão
         if (signValue === "0") {
-            
-            // coleta de dados do form
-            const { name, email } = formData;
+        
 
             try {
                 // fazendo requisição get no backend e passando os dados
-                await api.get("login", {params: formData})
+                await api.get("login", {params: data})
 
                 // setando em localStorage name e email que vão ser utilizados na /calendar
-                localStorage.setItem("name", name);
-                localStorage.setItem("email", email)
+                localStorage.setItem("name", data.name);
+                localStorage.setItem("email", data.email)
 
                 // empurrando o usuário para calendar
                 history.push("/calendar")
@@ -78,14 +67,6 @@ const Home = () => {
         }
         // registrar
         if (signValue === "1") {
-            // coleta de dados da requisição
-            const { name, email } = formData;
-
-            // criando objeto com meus dados para requisição
-            const data = {
-                name,
-                email
-            }
 
             try {
                 // fazendo requisição post no backend passando a minha data
@@ -113,7 +94,7 @@ const Home = () => {
                 </div>
             </header>
             <main id="home-page-main">
-                <form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                     <div id="form-header">
 
                         <button 
@@ -132,25 +113,24 @@ const Home = () => {
 
                     </div>
                     <div id="form-content">
-                        <input 
+                        <Input 
                         type="text" 
                         name="name" 
                         id="nameI"
                         placeholder="Name"
-                        onChange={handleInputChange}
                         />
 
-                        <input 
+                        <Input 
                         type="text" 
                         name="email" 
                         id="emailI"
                         placeholder="Email"
-                        onChange={handleInputChange}
                         />
 
                         <button id="form-content-button" type="submit">{signValue === "0"? "Sign In" : "Sign Up"}</button>
                     </div>
-                </form>
+                    
+                </Form>
             </main>
         </div>
     )

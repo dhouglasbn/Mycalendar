@@ -92,7 +92,7 @@ div#form-header {
     padding: 0%;
 }
 
-div#form-content {
+#form-content {
     display: flex;
     flex-direction: column;
     align-items: center;
