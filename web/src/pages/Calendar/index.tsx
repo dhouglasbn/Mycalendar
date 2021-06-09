@@ -202,17 +202,16 @@ const Calendar = () => {
             return response.data;
         })
 
-        return data.map(item => <div><button className="whitebox">{item.title}</button></div>);
+        return data.map(item => <button className="whitebox">{item.title}</button>);
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
-    async function openForm(key: Number, day: MomentInput = "") {
-        let dayItems: Array<JSX.Element>;
+    function openForm(key: Number, day: MomentInput = "") {
+        let dayItems: JSX.Element[];
 
-        if(key === 2) {
-            dayItems = listDayItems(day, 1)
-            ReactDOM.render(dayItems, document.getElementById("modal-form-main"))
-        }
+        // if(key === 2) {
+        //     dayItems = listDayItems(day, 1)
+        // }
 
         const contents = [
 

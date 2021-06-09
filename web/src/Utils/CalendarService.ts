@@ -48,9 +48,9 @@ const CalendarVerifier = {
     // verificar se há eventos que iniciam no dia tal, se houver
     isEventDay: (date: MomentInput, items: Item[]) => {
         if (items.length > 0) { // transformar data do backend para local, verificar se há lembrete ou evento
-            const foundItem = items.find(item => (moment(moment(item.start_date).local()).isSameOrBefore(moment(date)) 
-            && moment(moment(item.finish_date).local()).isSameOrAfter(date))
-            && item.type === "event")
+            const foundItem = items.find(item => ( moment(moment(moment(item.start_date).local()).format("yyyy-MM-DD")).isSameOrBefore(date) && 
+            moment(moment(moment(item.finish_date).local()).format("yyyy-MM-DD")).isSameOrAfter(date) ) &&
+            item.type === "event")
             if (foundItem) {
                 return true;
             }
