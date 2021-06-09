@@ -202,16 +202,17 @@ const Calendar = () => {
             return response.data;
         })
 
-        return data.map(item => <button className="whitebox">{item.title}</button>);
+        return data.map(item => <button key={data.indexOf(item)} className="white-box">{item.title}</button>);
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
-    function openForm(key: Number, day: MomentInput = "") {
-        let dayItems: JSX.Element[];
+    async function openForm(key: Number, day: MomentInput = "") {
+        let dayItems: JSX.Element[] = [];
+        let page = 1
 
-        // if(key === 2) {
-        //     dayItems = listDayItems(day, 1)
-        // }
+        if(key === 2) {
+            dayItems = await listDayItems(day, page)
+        }
 
         const contents = [
 
@@ -301,10 +302,13 @@ const Calendar = () => {
             // Listagem de lembretes e eventos de um dia
             <div id="modal-form-content">
                 <header id="modal-form-header">
+                    {/* formatando a data pelo nome do mês e após a virgula o dia em duas casas */}
                     <h2>{moment(day).format("MMMM")}, {moment(day).format("DD")}</h2>
                 </header>
                 <main id="modal-form-main">
-                    
+                    <div id="reminders-events">
+                        {dayItems}
+                    </div>
                 </main>
             </div>,
 

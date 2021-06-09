@@ -61,6 +61,7 @@ class ListController {
         // inserindo cada item de events ao final de data
         events.map(item => {data.push(item)});
 
+        // paginação
         data.map(item => {
             if(showItems.length < 5 && data.indexOf(item) >= (Number(page) - 1) * 5) {
                 showItems.push(item)
