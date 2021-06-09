@@ -250,7 +250,8 @@ input {
     font-size: 35px;
     outline: none;
     color: var(--text-color);
-    margin: 8px 0px 8px 0px
+    margin: 8px 0px 8px 0px;
+    text-align: start;
 }
 
 #dateI, #start-dateI, #finish-dateI {
