@@ -199,7 +199,6 @@ const Calendar = () => {
             date: date,
             page: page
         }}).then(response => {
-            // const dayItems = <div><button className="white-box">{response.data}</button></div>
             return response.data;
         })
 
@@ -212,9 +211,8 @@ const Calendar = () => {
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
-    async function openForm(key: Number, day: MomentInput = "") {
+    async function openForm(key: Number, day: MomentInput = "", page: Number = 1) {
         let dayItems: JSX.Element[] = [];
-        let page = 1
 
         if(key === 2) {
             dayItems = await listDayItems(day, page)
@@ -316,8 +314,20 @@ const Calendar = () => {
                         {dayItems}
                     </div>
                     <div id="page-arrows">
-                        <MdKeyboardArrowLeft className="arrow" />
-                        <MdKeyboardArrowRight className="arrow" />
+                        <MdKeyboardArrowLeft className="arrow" onClick={async () => {
+                            dayItems = await listDayItems(day, Number(page) - 1)
+
+                            dayItems.length > 0 ? 
+                            ReactDOM.render(dayItems, document.getElementById("reminders-events")) : 
+                            dayItems = await listDayItems(day, page)
+                        }} />
+                        <MdKeyboardArrowRight className="arrow" onClick={async () => {
+                            dayItems = await listDayItems(day, Number(page) + 1)
+                            
+                            dayItems.length > 0 ? 
+                            ReactDOM.render(dayItems, document.getElementById("reminders-events")) : 
+                            dayItems = await listDayItems(day, page)
+                        }} />
                     </div>
                     
                 </main>
