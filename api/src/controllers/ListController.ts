@@ -78,8 +78,10 @@ class ListController {
 
     async getOneItem(request: Request, reponse: Response) {
         // coleta de dados da requisição
-        const {id, type} = request.params;
+        const {id, type} = request.query;
         const email = request.headers.email;
+
+        let item: Array<Object>;
 
         // coletando a user_id para meu código coletar apenas dados daquele user
 
@@ -88,25 +90,25 @@ class ListController {
         .select("id")
         .first()
 
+        console.log(id, type, email, user)
+
         // escolhendo qual caminho eu vou seguir, se é pela tabela reminders  ou pela tabela events
-        if(type == "reminder"){
+        if(type === "reminder"){
             // buscar meu item no banco de dados
-            const reminder = await knex("reminders")
+            item = await knex("reminders")
             .where("user_id", user.id)
             .where("id", String(id))
             .select("*");
-
-            return response.status(200).json(reminder);
         }
-        if(type == "event") {
+        if(type === "event") {
             // buscar meu item no banco de dados
-            const event = await knex("events")
+            item = await knex("events")
             .where("user_id", user.id)
             .where("id", String(id))
             .select("*");
-
-            return response.status(200).json(event);
         }
+
+        return response.status(200).json(item)
     }
 }
 
