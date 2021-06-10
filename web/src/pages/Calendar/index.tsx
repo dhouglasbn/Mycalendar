@@ -18,6 +18,7 @@ import { CalendarVerifier } from "../../Utils/CalendarService";
 import { MdKeyboardArrowRight, MdKeyboardArrowLeft } from "react-icons/md";
 import { SiGooglecalendar } from "react-icons/si"
 import { BsFillPlusCircleFill } from "react-icons/bs";
+import { FaCircle } from "react-icons/fa";
 
 // tipagem dos dados de items
 interface Item {
@@ -202,7 +203,12 @@ const Calendar = () => {
             return response.data;
         })
 
-        return data.map(item => <button key={data.indexOf(item)} className="white-box">{item.title}</button>);
+        return data.map(item => 
+        <button 
+        key={data.indexOf(item)} 
+        className="white-box">
+            <FaCircle size={30} color={item.type === "reminder" ? "#00BD6D" : "#FF5D2F"}/> {item.title}
+        </button>);
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
@@ -309,6 +315,11 @@ const Calendar = () => {
                     <div id="reminders-events">
                         {dayItems}
                     </div>
+                    <div id="page-arrows">
+                        <MdKeyboardArrowLeft className="arrow" />
+                        <MdKeyboardArrowRight className="arrow" />
+                    </div>
+                    
                 </main>
             </div>,
 
