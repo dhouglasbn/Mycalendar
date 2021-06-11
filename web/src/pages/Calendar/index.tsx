@@ -43,6 +43,17 @@ const Calendar = () => {
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
+    const [itemData, setItemData] = useState<Item>({
+        id: "",
+        user_id: "",
+        type: "",
+        title: "",
+        date: "",
+        start_date: "",
+        finish_date: "",
+        description: "",
+        location: ""
+    });
 
     const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
     const [openFormModal, setOpenFormModal] = useState<boolean>(false);
@@ -204,10 +215,31 @@ const Calendar = () => {
 
         return data.map(item => 
         <button 
+        onClick={async () => {
+            getItem(item.id, item.type)
+                closeForm();
+                openForm(3, "", 1)
+        }}
         key={data.indexOf(item)} 
         className="white-box">
             <FaCircle size={30} color={item.type === "reminder" ? "#00BD6D" : "#FF5D2F"}/> {item.title}
         </button>);
+    }
+
+    async function getItem(id: String, type: String) {
+        const data: Item =  await api.get("item", {
+            headers: {
+                email: email
+            },
+            params: {
+                id: id,
+                type: type
+            }
+        }).then(response => {
+            return response.data;
+        })
+
+        setItemData({...data});
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
@@ -336,7 +368,7 @@ const Calendar = () => {
             // Painel de um lembrete/evento
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    <h2>Info de 1 de junho</h2>
+                    <h2>{itemData.title}</h2>
                 </header>
                 <main id="modal-form-main">
 

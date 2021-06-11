@@ -9,6 +9,10 @@
 
 /* tudo o que é relacionado ao cabeçalho da página */
 
+button {
+    cursor: pointer;
+}
+
 div#calendar-page {
     display: flex;
     align-items: center;
