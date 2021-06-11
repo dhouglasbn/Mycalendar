@@ -134,7 +134,7 @@ router.get("/item", celebrate({
         type: Joi.string().required()
     }
 })
-,listController.getOneItem) // coletar um unico item
+, listController.getOneItem) // coletar um unico item
 
 
 export { router }
