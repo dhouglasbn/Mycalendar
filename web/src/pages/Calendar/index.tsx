@@ -43,17 +43,6 @@ const Calendar = () => {
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
     const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
-    const [itemData, setItemData] = useState<Item>({
-        id: "",
-        user_id: "",
-        type: "",
-        title: "",
-        date: "",
-        start_date: "",
-        finish_date: "",
-        description: "",
-        location: ""
-    });
 
     const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
     const [openFormModal, setOpenFormModal] = useState<boolean>(false);
@@ -216,9 +205,8 @@ const Calendar = () => {
         return data.map(item => 
         <button 
         onClick={async () => {
-            getItem(item.id, item.type)
                 closeForm();
-                openForm(3, "", 1)
+                openForm(3, "", await getItem(item.id, item.type))
         }}
         key={data.indexOf(item)} 
         className="white-box">
@@ -227,7 +215,7 @@ const Calendar = () => {
     }
 
     async function getItem(id: String, type: String) {
-        const data: Item =  await api.get("item", {
+        return await api.get("item", {
             headers: {
                 email: email
             },
@@ -236,15 +224,24 @@ const Calendar = () => {
                 type: type
             }
         }).then(response => {
-            return response.data;
+            return response.data
         })
-
-        setItemData({...data});
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
-    async function openForm(key: Number, day: MomentInput = "", page: Number = 1) {
+    async function openForm(key: Number, day: MomentInput = "", data: Item = {
+        id: "",
+        user_id: "",
+        type: "",
+        title: "",
+        date: "",
+        start_date: "",
+        finish_date: "",
+        description: "",
+        location: ""
+    }) {
         let dayItems: JSX.Element[] = [];
+        let page = 1
 
         if(key === 2) {
             dayItems = await listDayItems(day, page)
@@ -349,16 +346,22 @@ const Calendar = () => {
                         <MdKeyboardArrowLeft className="arrow" onClick={async () => {
                             dayItems = await listDayItems(day, Number(page) - 1)
 
-                            dayItems.length > 0 ? 
-                            ReactDOM.render(dayItems, document.getElementById("reminders-events")) : 
-                            dayItems = await listDayItems(day, page)
+                            if(dayItems.length > 0 ) {
+                                page--
+                                ReactDOM.render(dayItems, document.getElementById("reminders-events"))
+                            } else {
+                                dayItems = await listDayItems(day, page)
+                            }
                         }} />
                         <MdKeyboardArrowRight className="arrow" onClick={async () => {
                             dayItems = await listDayItems(day, Number(page) + 1)
                             
-                            dayItems.length > 0 ? 
-                            ReactDOM.render(dayItems, document.getElementById("reminders-events")) : 
-                            dayItems = await listDayItems(day, page)
+                            if(dayItems.length > 0 ) {
+                                page++
+                                ReactDOM.render(dayItems, document.getElementById("reminders-events"))
+                            } else {
+                                dayItems = await listDayItems(day, page)
+                            }
                         }} />
                     </div>
                     
@@ -368,7 +371,7 @@ const Calendar = () => {
             // Painel de um lembrete/evento
             <div id="modal-form-content">
                 <header id="modal-form-header">
-                    <h2>{itemData.title}</h2>
+                    <h2>{data.title}</h2>
                 </header>
                 <main id="modal-form-main">
 
