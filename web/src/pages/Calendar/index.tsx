@@ -160,7 +160,27 @@ const Calendar = () => {
     });
 
     async function handleChangeSubmit(data: Item) {
-
+        data.type === "reminder" ?
+        await api.put("putreminder", data, {headers: {
+            email: email
+        }, params: {
+            id: data.id
+        }}).then(response => {
+            if (response.status === 200) {
+                alert("Reminder changed Successfuly!")
+                closeForm()
+            }
+        }) :
+        await api.put("putevent", data, {headers: {
+            email: email
+        }, params: {
+            id: data.id
+        }}).then(response => {
+            if (response.status === 200) {
+                alert("Event changed Successfuly!")
+                closeForm()
+            }
+        })
     }
 
     async function handleDelete(type: String, id: String) {
@@ -248,6 +268,12 @@ const Calendar = () => {
                 type: type
             }
         }).then(response => {
+            if (type === "reminder") {
+                response.data.date = moment(response.data.date).format("yyyy-MM-DDTHH:mm")
+            } else {
+                response.data.start_date = moment(response.data.start_date).format("yyyy-MM-DDTHH:mm")
+                response.data.finish_date = moment(response.data.finish_date).format("yyyy-MM-DDTHH:mm")
+            }
             return response.data
         })
     }
@@ -393,24 +419,84 @@ const Calendar = () => {
             </div>,
 
             // Painel de um lembrete/evento
-            <div>
-                <Form id="modal-form-content" onSubmit={handleChangeSubmit}>
-                    <header id="modal-form-header">
-                        <h3><FaCircle size={30} color={data.type === "reminder" ? "#00BD6D" : "#FF5D2F"}/> {
-                        data.title}</h3>
-                        <div id="item-buttons">
-                            <button id="changer" 
-                            className="form-button" 
-                            type="submit">Alterar</button>
-                            <button onClick={() => {handleDelete(data.type, data.id)}} 
-                            id="deleter" 
-                            className="form-button" 
-                            type="button">Deletar</button>
-                        </div>
-                    </header>
-                    <main id="modal-form-main">
+            <div id="modal-form-content">
+                <header id="modal-form-header">
+                    <h3><FaCircle size={30} color={data.type === "reminder" ? "#00BD6D" : "#FF5D2F"}/> {
+                    data.title}</h3>
+                </header>
+                <Form initialData={data} style={{alignItems: "center"}} id="modal-form-main" onSubmit={handleChangeSubmit}>
+                    {
+                        data.type === "reminder" ?
+                        (
+                            <fieldset id="form-inputs">
+                                    <Input 
+                                    type="text"
+                                    name="title" 
+                                    id="titleI"
+                                    className="white-box" 
+                                    placeholder="Remind me to ..." 
+                                    required />
+                                    <Input 
+                                    type="datetime-local"
+                                    name="date" 
+                                    id="dateI"
+                                    className="white-box"
+                                    min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                                    required />
+                                </fieldset>
+                        ) :
+                        (
+                            <fieldset id="form-inputs">
+                                    <Input 
+                                    type="text"
+                                    name="title" 
+                                    id="titleI"
+                                    className="white-box" 
+                                    placeholder="add a title" 
+                                    required />
 
-                    </main>
+                                    <Input 
+                                    type="datetime-local"
+                                    name="start_date" 
+                                    id="start-dateI"
+                                    className="white-box"
+                                    min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                                    placeholder="Start"
+                                    required />
+                                    <Input 
+                                    type="datetime-local"
+                                    name="finish_date" 
+                                    id="finish-dateI"
+                                    className="white-box"
+                                    min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                                    
+                                    required />
+
+                                    <Input 
+                                    type="text"
+                                    name="description" 
+                                    id="desciptionI"
+                                    className="white-box"
+                                    placeholder="Add a description"/>
+
+                                    <Input 
+                                    type="text"
+                                    name="location" 
+                                    id="locationI"
+                                    className="white-box"
+                                    placeholder="Add a location"/>
+                                </fieldset>
+                        )
+                    }
+                    <div id="item-buttons">
+                        <button id="changer" 
+                        className="form-button" 
+                        type="submit">Alterar</button>
+                        <button onClick={() => {handleDelete(data.type, data.id)}} 
+                        id="deleter" 
+                        className="form-button" 
+                        type="button">Deletar</button>
+                    </div>
                 </Form>
             </div>
         ]

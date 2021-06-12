@@ -12,7 +12,7 @@ export default function Input({ name, ...rest }: InputProps) {
     
     // referência do meu input que vai ser alterada na prop ref do input
     const inputRef = useRef(null) 
-    const { fieldName, registerField } = useField(name)
+    const { fieldName, registerField, defaultValue } = useField(name)
 
     useEffect(() => {
         registerField({
@@ -24,6 +24,6 @@ export default function Input({ name, ...rest }: InputProps) {
 
     return (
         // aqui a input ref passa a ser meu input, e com isso posso acessar todas as propriedades desse componente
-        <input ref={inputRef} {...rest} />
+        <input ref={inputRef} defaultValue={defaultValue} {...rest} />
     )
 }

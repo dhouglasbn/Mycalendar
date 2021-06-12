@@ -220,15 +220,8 @@ header#modal-form-header h2{
 }
 
 header#modal-form-header h3 {
-    text-indent: 30px;
-}
-
-header#modal-form-header div#item-buttons {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    padding: 18px 0px 18px 0px; 
-    margin-right: 40px;
+    text-indent: 15px;
+    word-break: break-all;
 }
 
 #modal-form-main {
@@ -325,3 +318,8 @@ button.form-button {
     justify-content: space-between;
 }
 
+div#item-buttons {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+}
