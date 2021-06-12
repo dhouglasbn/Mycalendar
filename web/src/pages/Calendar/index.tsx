@@ -159,6 +159,30 @@ const Calendar = () => {
 
     });
 
+    async function handleChangeSubmit(data: Item) {
+
+    }
+
+    async function handleDelete(type: String, id: String) {
+        type === "reminder" ?
+        await api.delete(`delreminder/${id}`, {headers: {
+            email: email
+        }}).then(response => {
+            if (response.status === 200) {
+                alert("Reminder deleted Successfuly!")
+                closeForm()
+            }
+        }) :
+        await api.delete(`delevent/${id}`, {headers: {
+            email: email
+        }}).then(response => {
+            if (response.status === 200) {
+                alert("Event deleted Successfuly!")
+                closeForm()
+            }
+        })
+    }
+
     async function handleReminderSubmit (data: Item) {
         try {
             await api.post("remindme", data, {
@@ -369,13 +393,25 @@ const Calendar = () => {
             </div>,
 
             // Painel de um lembrete/evento
-            <div id="modal-form-content">
-                <header id="modal-form-header">
-                    <h2>{data.title}</h2>
-                </header>
-                <main id="modal-form-main">
+            <div>
+                <Form id="modal-form-content" onSubmit={handleChangeSubmit}>
+                    <header id="modal-form-header">
+                        <h3><FaCircle size={30} color={data.type === "reminder" ? "#00BD6D" : "#FF5D2F"}/> {
+                        data.title}</h3>
+                        <div id="item-buttons">
+                            <button id="changer" 
+                            className="form-button" 
+                            type="submit">Alterar</button>
+                            <button onClick={() => {handleDelete(data.type, data.id)}} 
+                            id="deleter" 
+                            className="form-button" 
+                            type="button">Deletar</button>
+                        </div>
+                    </header>
+                    <main id="modal-form-main">
 
-                </main>
+                    </main>
+                </Form>
             </div>
         ]
 

@@ -191,7 +191,7 @@ div#days button.numberDays h3 {
 
 /* tudo o que é relacionado ao form modal */
 
-div#modal-form-content {
+#modal-form-content {
     position: relative;
     left: 535px;
     top: 60px;
@@ -212,10 +212,23 @@ header#modal-form-header {
     height: 165px;
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
 }
 
 header#modal-form-header h2{
     text-indent: 30px;
+}
+
+header#modal-form-header h3 {
+    text-indent: 30px;
+}
+
+header#modal-form-header div#item-buttons {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 18px 0px 18px 0px; 
+    margin-right: 40px;
 }
 
 #modal-form-main {
@@ -271,6 +284,13 @@ input {
     background-color: var(--blue-color);
 }
 
+#changer {
+    background-color: var(--blue-color);
+}
+#deleter {
+    background-color: #F21B40;
+}
+
 button.form-button {
     display: flex;
     height: 60px;
@@ -304,3 +324,4 @@ button.form-button {
     align-items: center;
     justify-content: space-between;
 }
+
