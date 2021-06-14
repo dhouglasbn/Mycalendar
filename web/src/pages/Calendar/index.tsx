@@ -159,28 +159,38 @@ const Calendar = () => {
 
     });
 
-    async function handleChangeSubmit(data: Item) {
-        data.type === "reminder" ?
-        await api.put("putreminder", data, {headers: {
-            email: email
-        }, params: {
-            id: data.id
-        }}).then(response => {
-            if (response.status === 200) {
-                alert("Reminder changed Successfuly!")
-                closeForm()
-            }
-        }) :
-        await api.put("putevent", data, {headers: {
-            email: email
-        }, params: {
-            id: data.id
-        }}).then(response => {
-            if (response.status === 200) {
-                alert("Event changed Successfuly!")
-                closeForm()
-            }
-        })
+    async function handleChangeReminder(data: Item) {
+        try {
+            await api.put("putreminder", data, {
+                headers: {
+                    email: email
+                }
+            })
+    
+            alert("Reminder changed successfuly!")
+    
+            closeForm();
+            } catch (error) {
+                alert(`Error: ${error.message}`)
+        }
+        
+    }
+
+    async function handleChangeEvent(data: Item) {
+        try {
+            await api.put("putevent", data, {
+                headers: {
+                    email: email
+                }
+            })
+    
+            alert("Event changed successfuly!")
+    
+            closeForm();
+            } catch (error) {
+                alert(`Error: ${error.message}`)
+        }
+        
     }
 
     async function handleDelete(type: String, id: String) {
@@ -215,7 +225,7 @@ const Calendar = () => {
 
             closeForm();
         } catch (error) {
-            alert("Error! Somethign went wrong!")
+            alert("Error! Something went wrong!")
         }
     }
 
@@ -267,6 +277,7 @@ const Calendar = () => {
                 id: id,
                 type: type
             }
+            
         }).then(response => {
             if (type === "reminder") {
                 response.data.date = moment(response.data.date).format("yyyy-MM-DDTHH:mm")
@@ -424,29 +435,42 @@ const Calendar = () => {
                     <h3><FaCircle size={30} color={data.type === "reminder" ? "#00BD6D" : "#FF5D2F"}/> {
                     data.title}</h3>
                 </header>
-                <Form initialData={data} style={{alignItems: "center"}} id="modal-form-main" onSubmit={handleChangeSubmit}>
                     {
                         data.type === "reminder" ?
                         (
-                            <fieldset id="form-inputs">
-                                    <Input 
-                                    type="text"
-                                    name="title" 
-                                    id="titleI"
-                                    className="white-box" 
-                                    placeholder="Remind me to ..." 
-                                    required />
-                                    <Input 
-                                    type="datetime-local"
-                                    name="date" 
-                                    id="dateI"
-                                    className="white-box"
-                                    min={String(moment().format("YYYY-MM-DDTHH:mm"))}
-                                    required />
-                                </fieldset>
+                            <Form initialData={data} style={{alignItems: "center"}} id="modal-form-main" onSubmit={handleChangeReminder}>
+                                <fieldset id="form-inputs">
+                                        <Input name="id" type="hidden" />
+                                        <Input 
+                                        type="text"
+                                        name="title" 
+                                        id="titleI"
+                                        className="white-box" 
+                                        placeholder="Remind me to ..." 
+                                        required />
+                                        <Input 
+                                        type="datetime-local"
+                                        name="date" 
+                                        id="dateI"
+                                        className="white-box"
+                                        min={String(moment().format("YYYY-MM-DDTHH:mm"))}
+                                        required />
+                                    </fieldset>
+                                    <div id="item-buttons">
+                                        <button id="changer" 
+                                        className="form-button" 
+                                        type="submit">Modify</button>
+                                        <button onClick={() => {handleDelete(data.type, data.id)}} 
+                                        id="deleter" 
+                                        className="form-button" 
+                                        type="button">Delete</button>
+                                    </div>
+                                </Form>
                         ) :
-                        (
-                            <fieldset id="form-inputs">
+                        (   
+                            <Form initialData={data} style={{alignItems: "center"}} id="modal-form-main" onSubmit={handleChangeEvent}>
+                                <fieldset id="form-inputs">
+                                    <Input name="id" type="hidden" />
                                     <Input 
                                     type="text"
                                     name="title" 
@@ -469,7 +493,7 @@ const Calendar = () => {
                                     id="finish-dateI"
                                     className="white-box"
                                     min={String(moment().format("YYYY-MM-DDTHH:mm"))}
-                                    
+                                        
                                     required />
 
                                     <Input 
@@ -486,18 +510,18 @@ const Calendar = () => {
                                     className="white-box"
                                     placeholder="Add a location"/>
                                 </fieldset>
+                                <div id="item-buttons">
+                                    <button id="changer" 
+                                    className="form-button" 
+                                    type="submit">Modify</button>
+                                    <button onClick={() => {handleDelete(data.type, data.id)}} 
+                                    id="deleter" 
+                                    className="form-button" 
+                                    type="button">Delete</button>
+                                </div>
+                            </Form>
                         )
                     }
-                    <div id="item-buttons">
-                        <button id="changer" 
-                        className="form-button" 
-                        type="submit">Alterar</button>
-                        <button onClick={() => {handleDelete(data.type, data.id)}} 
-                        id="deleter" 
-                        className="form-button" 
-                        type="button">Deletar</button>
-                    </div>
-                </Form>
             </div>
         ]
 

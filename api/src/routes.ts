@@ -59,19 +59,18 @@ router.post("/create", celebrate({
 
 router.put("/putreminder", celebrate({
     [Segments.BODY]: Joi.object().keys({
+        id: Joi.string().uuid().required(),
         title: Joi.string().required(),
         date: Joi.string().required().isoDate()
     }),
     [Segments.HEADERS]: Joi.object({
         email: Joi.string().required().email()
-    }).unknown(),
-    [Segments.QUERY]: {
-        id: Joi.string().required().uuid()
-    }
+    }).unknown()
 }), 
 reminderController.modify) // alterar informações de um reminder
 router.put("/putevent", celebrate({
     [Segments.BODY]: Joi.object().keys({
+        id: Joi.string().uuid().required(),
         title: Joi.string().required(),
         start_date: Joi.string().required().isoDate(),
         finish_date: Joi.string().required().isoDate(),
@@ -80,10 +79,7 @@ router.put("/putevent", celebrate({
     }),
     [Segments.HEADERS]: Joi.object({
         email: Joi.string().required().email()
-    }).unknown(),
-    [Segments.QUERY]: {
-        id: Joi.string().required().uuid()
-    }
+    }).unknown()
 }),
 eventController.modify) // alterar as informações de um event
 

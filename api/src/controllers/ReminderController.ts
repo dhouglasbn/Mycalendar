@@ -63,9 +63,8 @@ class ReminderController {
 
     async modify(request: Request, response: Response) {
         // coletando dados da requisição
-        const { title, date } = request.body;
+        const { title, date, id } = request.body;
         const email = request.headers.email;
-        const {id} = request.query;
 
         // procurar o reminder no banco de dados
         const reminder = await knex("reminders").where("id", String(id)).select("id").first()
