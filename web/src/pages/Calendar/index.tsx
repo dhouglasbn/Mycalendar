@@ -149,8 +149,7 @@ const Calendar = () => {
                         border: CalendarVerifier.isReminderDay(monthDays[number], items) ? "#00BD6D solid 4px" : "",
                         boxShadow: CalendarVerifier.isEventDay(monthDays[number], items) ? "0.2px 0.2px 0px 5px #FF5D2F" : "",
                         color: CalendarVerifier.isCurrentMonth(monthDays[number], referencedDate) ? "rgba(255, 255, 255, 0.9)" : "rgba(255, 255, 255, 0.5)"
-                    }}
-                    id={moment(monthDays[number]).format("yyyy-MM-DD")}>
+                    }}>
                     {moment(monthDays[number]).format("DD")}
                 </h3></button>;
             }
@@ -161,6 +160,7 @@ const Calendar = () => {
 
     });
 
+    // realizar requisição no backend para alterar reminder/event
     async function handleChangeReminder(data: Item) {
         try {
             await api.put("putreminder", data, {
@@ -195,6 +195,7 @@ const Calendar = () => {
         
     }
 
+    // deletar um item
     async function handleDelete(type: String, id: String) {
         type === "reminder" ?
         await api.delete(`delreminder/${id}`, {headers: {
@@ -215,6 +216,7 @@ const Calendar = () => {
         })
     }
 
+    // submits para realizar requisição de criação de reminder/event no backend
     async function handleReminderSubmit (data: Item) {
         try {
             await api.post("remindme", data, {
@@ -247,6 +249,7 @@ const Calendar = () => {
         }
     }
 
+    // listagem de itens pelo dia
     async function listDayItems (date: MomentInput, page: Number) {
 
         const data: Array<Item> = await api.get("day-items", {headers: {
@@ -291,7 +294,13 @@ const Calendar = () => {
         })
     }
 
-    // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
+    /* 
+    *  abrir formulário
+    *  key para saber qual conteúdo deve ser renderizado 
+    *  day para a listagem de itens
+    *  page opcional para paginação de itens
+    *  data opcional para o painel do reminder/event 
+    */
     async function openForm(key: Number, day: MomentInput = "", page: Number = 1,data: Item = {
         id: "",
         user_id: "",
@@ -534,19 +543,20 @@ const Calendar = () => {
         setOpenFormModal(false)
     }
 
-    // limpando os atributos da local storage e voltando para a home
-    function handleLogOut() {
-        localStorage.clear()
-
-        history.push("/")
-    }
-
+    // Selector modal functions
     function openSelector() {
         setOpenSelectorModal(true)
     }
 
     function closeSelector() {
         setOpenSelectorModal(false)
+    }
+
+    // limpando os atributos da local storage e voltando para a home
+    function handleLogOut() {
+        localStorage.clear()
+
+        history.push("/")
     }
 
 
