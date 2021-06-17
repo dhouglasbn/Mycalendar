@@ -34,6 +34,8 @@ interface Item {
 
 }
 
+
+
 const Calendar = () => {
 
     // usando o useHistory do react-router-dom
@@ -260,7 +262,7 @@ const Calendar = () => {
         <button 
         onClick={async () => {
                 closeForm();
-                openForm(3, "", await getItem(item.id, item.type))
+                openForm(3, "", 1, await getItem(item.id, item.type))
         }}
         key={data.indexOf(item)} 
         className="white-box">
@@ -290,7 +292,7 @@ const Calendar = () => {
     }
 
     // abrir formulário, key para saber qual conteúdo deve ser renderizado, day para a listagem de itens
-    async function openForm(key: Number, day: MomentInput = "", data: Item = {
+    async function openForm(key: Number, day: MomentInput = "", page: Number = 1,data: Item = {
         id: "",
         user_id: "",
         type: "",
@@ -302,7 +304,6 @@ const Calendar = () => {
         location: ""
     }) {
         let dayItems: JSX.Element[] = [];
-        let page = 1
 
         if(key === 2) {
             dayItems = await listDayItems(day, page)
@@ -407,21 +408,18 @@ const Calendar = () => {
                         <MdKeyboardArrowLeft className="arrow" onClick={async () => {
                             dayItems = await listDayItems(day, Number(page) - 1)
 
-                            if(dayItems.length > 0 ) {
-                                page--
-                                ReactDOM.render(dayItems, document.getElementById("reminders-events"))
-                            } else {
-                                dayItems = await listDayItems(day, page)
+                            
+                            if(dayItems.length > 0  && page > 1) {
+                                closeForm()
+                                openForm(2, day, Number(page) - 1)
                             }
                         }} />
                         <MdKeyboardArrowRight className="arrow" onClick={async () => {
                             dayItems = await listDayItems(day, Number(page) + 1)
                             
                             if(dayItems.length > 0 ) {
-                                page++
-                                ReactDOM.render(dayItems, document.getElementById("reminders-events"))
-                            } else {
-                                dayItems = await listDayItems(day, page)
+                                closeForm()
+                                openForm(2, day, Number(page) + 1)
                             }
                         }} />
                     </div>
@@ -543,6 +541,14 @@ const Calendar = () => {
         history.push("/")
     }
 
+    function openSelector() {
+        setOpenSelectorModal(true)
+    }
+
+    function closeSelector() {
+        setOpenSelectorModal(false)
+    }
+
 
     return (
         <div id="calendar-page">
@@ -558,7 +564,7 @@ const Calendar = () => {
 
                 
                 <button
-                onClick={() => {setOpenSelectorModal(true)}} 
+                onClick={openSelector} 
                 id="plus-button" 
                 type="button"
                 >
@@ -574,16 +580,16 @@ const Calendar = () => {
 
                 <Modal 
                 open={openSelectorModal}
-                onClose={() => {setOpenSelectorModal(false)}}
+                onClose={closeSelector}
                 aria-labelledby="event-button"
                 >
                     <Grow in={openSelectorModal}>
                         <div id="selector">
                             <button 
-                            onClick={() => {setOpenSelectorModal(false)
+                            onClick={() => {closeSelector()
                             openForm(1)}} 
                             id="event-button">Event</button>
-                            <button onClick={() => {setOpenSelectorModal(false)
+                            <button onClick={() => {closeSelector()
                             openForm(0)}} 
                             id="reminder-button">Reminder</button>
                         </div>

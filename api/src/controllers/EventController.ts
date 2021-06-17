@@ -63,14 +63,14 @@ class EventController {
 
     async modify(request: Request, response: Response) {
         // coletando dados da requisição
-        const { title,
+        const { id, 
+            title,
             start_date,
             finish_date,
             location,
             description } = request.body;
 
         const email = request.headers.email;
-        const {id} = request.query;
 
         // tentar encontrar o event no banco de dados
         const event = await knex("events").select("id").where("id", String(id)).first();
