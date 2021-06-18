@@ -43,7 +43,6 @@ const Calendar = () => {
 
     // states que vão ser utilizadas na página: year, month e message
     const [referencedDate, setReferencedDate] = useState(moment().format("yyyy-MM-DD"));
-    const [message, setMessage] = useState<String>("");
     const [items, setItems] = useState<Item[]>([]);
 
     const [openSelectorModal, setOpenSelectorModal] = useState<boolean>(false);
@@ -69,33 +68,6 @@ const Calendar = () => {
         })
         
     }, [email, openFormModal])
-
-    
-    // alterando a mensagem de saudação de acordo com o horário do dia
-    useEffect(() => {
-
-        function isInTurn(array: Array<Number>, message: String) {
-            // consultando a hora do computador assim que a página carregar
-            const hour = moment(new Date()).hour();
-            
-            // na array que irá ser passada, encontrar a hora do computador
-            if (array.find(number => number === hour)) {
-
-                // setando mensagem do turno da hora do computador
-                setMessage(message);
-            } else {
-                return;
-            }
-        };
-
-        // um desses 3 isInTurn irá retornar sua mensagem
-        isInTurn([5,6,7,8,9,10,11], "Good morning");
-        isInTurn([12,13,14,15,16,17], "Good afternoon");
-        isInTurn([18,19,20,21,22,23,0,1,2,3,4], "Good evening");        
-
-        
-        
-    }, [])
     
     // buildando meu calendário
     useEffect(() => {
@@ -559,6 +531,18 @@ const Calendar = () => {
         history.push("/")
     }
 
+    // alterando a mensagem de saudação de acordo com o horário do dia
+    function setMessage(hour: Number) {
+        if(hour > 5 && hour < 12) {
+            return "Good Morning"
+        } if ( hour >= 12 && hour < 18 ) {
+            return "Good Afternoon";
+        } if ( hour >= 18 || hour < 5) {
+            return "Good Evening";
+        }
+
+    }
+
 
     return (
         <div id="calendar-page">
@@ -569,7 +553,7 @@ const Calendar = () => {
                     <button onClick={handleLogOut} type="button">
                         <SiGooglecalendar size={100} color="rgba(255, 255, 255, 0.9)" />
                     </button>
-                    <h3>{message} {name}!</h3>
+                    <h3>{setMessage(moment().get("hour"))} {name}!</h3>
                 </div>
 
                 

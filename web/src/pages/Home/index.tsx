@@ -21,7 +21,7 @@ const Home = () => {
     const history = useHistory();
 
     // states que serão usadas no código
-    const [signValue, setSignValue] = useState("0");
+    const [signValue, setSignValue] = useState<Boolean>(true);
 
     function handleSelectedButton(buttonId: string) {
         // pegando a button do html(seja signIn ou signUp)
@@ -31,23 +31,16 @@ const Home = () => {
         if(button?.className === "selected") {
             return;
         }
-        
-        // lembrando q signValue começa como 0 ao carregar a página
-        if(signValue === "1") {
-            // depois de signValue ser alterado para um eu posso alterar para 0 novamente
-            setSignValue("0")
-            return;
-        }  
 
-        // o propósito é alterar para 1
-        setSignValue("1");
+        // alterar sign value para o valor oposto
+        setSignValue(!signValue);
         return;
     }
 
     async function handleSubmit(data: FormData) {
 
         // iniciar sessão
-        if (signValue === "0") {
+        if (signValue) {
         
 
             try {
@@ -66,7 +59,7 @@ const Home = () => {
             }
         }
         // registrar
-        if (signValue === "1") {
+        if (!signValue) {
 
             try {
                 // fazendo requisição post no backend passando a minha data
@@ -76,7 +69,7 @@ const Home = () => {
                 alert("email registrado com sucesso!");
 
                 // retornando o usuário para o login
-                setSignValue("0");
+                setSignValue(true);
             } catch (error) {
 
                 // se ocorrer algum erro, o usuário é alertado
@@ -99,14 +92,14 @@ const Home = () => {
 
                         <button 
                         id="signUp" 
-                        className={signValue === "0" ? "unselected" : "selected"} 
+                        className={signValue ? "unselected" : "selected"} 
                         onClick={() => {handleSelectedButton("signUp")}}
                         type="button">Sign Up
                         </button>
 
                         <button 
                         id="signIn" 
-                        className={signValue === "0" ? "selected" : "unselected"} 
+                        className={signValue ? "selected" : "unselected"} 
                         onClick={() => {handleSelectedButton("signIn")}} 
                         type="button">Sign In
                         </button>
@@ -127,7 +120,7 @@ const Home = () => {
                         placeholder="Email"
                         />
 
-                        <button id="form-content-button" type="submit">{signValue === "0"? "Sign In" : "Sign Up"}</button>
+                        <button id="form-content-button" type="submit">{signValue ? "Sign In" : "Sign Up"}</button>
                     </div>
                     
                 </Form>
